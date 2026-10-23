@@ -1,0 +1,14 @@
+name = "globalcare-collector"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+
+[triggers]
+crons = ["0 6 * * *"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "globalcare-db"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+[vars]
+# Set ADMIN_TOKEN as a secret using: npx wrangler secret put ADMIN_TOKEN
