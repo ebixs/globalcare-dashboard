@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS jobs (
   title TEXT NOT NULL,
   company TEXT,
   location TEXT,
-  country TEXT NOT NULL CHECK(country IN ('us','uk','au','nl')),
+  country TEXT NOT NULL CHECK(country IN ('us','uk','au','ca','nl','no')),
   source TEXT,
   url TEXT NOT NULL,
   posted_at TEXT,

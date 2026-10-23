@@ -1,6 +1,6 @@
 import { collect } from './collect.js';
 
-const COUNTRIES = ['us', 'uk', 'au', 'nl'];
+const COUNTRIES = ['us', 'uk', 'au', 'ca', 'nl', 'no'];
 
 const cors = () => ({
   'Access-Control-Allow-Origin': '*',
@@ -36,6 +36,12 @@ export default {
 
     if (request.method === 'OPTIONS' && url.pathname.startsWith('/api/')) {
       return new Response(null, { headers: cors() });
+    }
+
+    if (url.pathname === '/api/health' && request.method === 'GET') {
+      let db = false;
+      try { if (env.DB) { await env.DB.prepare('SELECT 1').first(); db = true; } } catch (e) { db = false; }
+      return Response.json({ ok: true, db }, { headers: cors() });
     }
 
     if (url.pathname === '/api/jobs' && request.method === 'GET') {

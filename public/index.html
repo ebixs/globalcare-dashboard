@@ -3,298 +3,357 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0b0a24">
+<meta name="theme-color" content="#1b1650">
 <meta name="description" content="GlobalCare — داشبورد فرصت‌های شغلی پرستاری بین‌المللی">
 <title>GlobalCare — فرصت‌های شغلی پرستاری</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   color-scheme:dark;
-  --bg:#0b0a24;--glass:rgba(22,20,62,.62);--glass2:rgba(34,30,92,.55);
-  --line:rgba(150,140,255,.22);--text:#f2f0ff;--muted:#a9a6d6;
-  --violet:#8b5cf6;--blue:#38bdf8;--green:#34d399;--pink:#f43f8e;--gold:#fbbf24;
+  --ink:#f3f1ff;--mute:#aeaadb;--line:rgba(143,128,255,.28);
+  --glass:linear-gradient(160deg,rgba(35,30,98,.72),rgba(19,17,62,.78));
+  --violet:#7c5cff;--blue:#2fa8f2;--green:#1fc38b;--pink:#ee3d8a;--gold:#fbbf24;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
 body{
-  font-family:Vazirmatn,Tahoma,"Segoe UI",system-ui,sans-serif;color:var(--text);min-height:100vh;
+  font-family:Vazirmatn,Tahoma,"Segoe UI",system-ui,sans-serif;color:var(--ink);min-height:100vh;padding:clamp(10px,3.4vw,52px);
   background:
-    radial-gradient(1200px 600px at 15% 0%,#f0a6ca55,transparent 60%),
-    radial-gradient(900px 600px at 90% 10%,#7c5cff55,transparent 60%),
-    linear-gradient(180deg,#2a2466 0%,#171446 45%,#0b0a24 100%);
-  background-attachment:fixed;padding:22px;
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 500' preserveAspectRatio='none'><defs><linearGradient id='a' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23dfe6ff'/><stop offset='1' stop-color='%236c78c9'/></linearGradient></defs><path d='M0 500V300l120-90 90 70 150-170 140 150 110-70 170 190 130-120 120 110 170-200 150 170 100-60 130 120 130-110 110 90v250z' fill='url(%23a)' opacity='.7'/><path d='M0 500V380l160-70 130 90 160-110 150 100 150-80 170 110 150-90 180 100 120-70 130 80v150z' fill='%233a428f' opacity='.85'/></svg>") bottom/100% 42vh no-repeat fixed,
+    linear-gradient(180deg,#f0b6d3 0%,#b79af0 20%,#7480e6 42%,#3f4cae 68%,#1a2160 100%) fixed;
 }
 button,input,select{font:inherit;color:inherit}button{cursor:pointer}
-.app{max-width:1440px;margin:auto;border:1px solid var(--line);border-radius:26px;
-  background:linear-gradient(160deg,rgba(18,16,56,.78),rgba(10,9,36,.86));
-  box-shadow:0 30px 90px #0009,0 0 0 1px #ffffff08 inset;backdrop-filter:blur(18px);overflow:hidden}
+.app{max-width:1500px;margin:auto;border:1px solid var(--line);border-radius:28px;direction:ltr;
+  background:linear-gradient(165deg,rgba(21,18,70,.86),rgba(9,8,38,.92));backdrop-filter:blur(22px);
+  box-shadow:0 36px 100px rgba(8,6,40,.7),0 0 0 1px rgba(255,255,255,.04) inset,0 0 60px rgba(124,92,255,.18);overflow:hidden}
+.panel,.mascot,.goal,.slogan,.hero h1,.dream,.live,.stat>div:last-child,.banner,.toast,.foot,.nav a span,.pill,.job .m,.sched span,.pipe li span,.crow span,.crow b,.filters select,.empty,.sample,.panel h2,.hero .l>div{direction:rtl}
+.flag{width:26px;height:26px;border-radius:50%;flex:none;box-shadow:0 0 0 1px #ffffff30}
 /* header */
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:12px;direction:ltr}
-.logo svg{width:44px;height:44px}
-.logo b{display:block;font-size:19px;letter-spacing:.3px}.logo small{color:var(--muted);font-size:12px}
-.slogan{text-align:center;flex:1;min-width:220px}
-.slogan strong{display:block;font-size:17px}.slogan span{color:var(--muted);font-size:12px}
-.topr{display:flex;align-items:center;gap:10px}
-.pill{font-size:12px;border-radius:99px;padding:8px 13px;border:1px solid var(--line);background:#ffffff0a;white-space:nowrap}
-.pill.ok{color:var(--green);border-color:#1f6b52;background:#0f2e2799}
-.pill.warn{color:var(--gold);border-color:#6b5a1f;background:#2e260f99}
-.iconbtn{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:#8b5cf633;display:grid;place-items:center}
-/* layout */
-.layout{display:grid;grid-template-columns:230px minmax(0,1fr) 190px;gap:18px;padding:18px}
-.side{display:flex;flex-direction:column;gap:14px}
-.nav{border:1px solid var(--line);border-radius:18px;background:var(--glass);padding:10px}
-.nav a{display:flex;align-items:center;gap:12px;padding:12px 13px;border-radius:12px;color:#d6d3ff;text-decoration:none;font-size:14px;margin:3px 0}
-.nav a svg{width:20px;height:20px;flex:none;opacity:.9}
-.nav a.active{background:linear-gradient(90deg,#8b5cf6,#6d4be0);color:#fff;box-shadow:0 8px 24px #8b5cf655}
-.nav a:not(.active):hover{background:#ffffff0d}
-.motive{border:1px solid var(--line);border-radius:18px;padding:18px;line-height:2;font-size:14px;
-  background:radial-gradient(circle at 20% 15%,#8b5cf655,transparent 55%),var(--glass)}
-.motive .heart{color:var(--pink)}
-.goal{border:1px solid var(--line);border-radius:16px;background:var(--glass);padding:14px;font-size:12px;color:var(--muted)}
-.goal b{display:block;color:var(--text);font-size:15px;margin:4px 0 10px}
-.bar{height:7px;border-radius:9px;background:#ffffff14;overflow:hidden}.bar i{display:block;height:100%;width:35%;background:linear-gradient(90deg,#8b5cf6,#38bdf8);border-radius:9px}
-.main{min-width:0;display:grid;gap:16px}
-/* hero */
-.hero{position:relative;border:1px solid var(--line);border-radius:20px;padding:26px;overflow:hidden;min-height:210px;
-  background:linear-gradient(100deg,rgba(14,12,48,.92) 0%,rgba(14,12,48,.55) 55%,rgba(14,12,48,.15) 100%)}
-.hero .sky{position:absolute;inset:0;z-index:0;
-  background:radial-gradient(500px 220px at 30% 85%,#ff9a6b66,transparent 70%),linear-gradient(180deg,#3b2c86,#7a3fa0 55%,#e0708a 100%)}
-.hero .sky svg{position:absolute;bottom:0;left:0;width:70%;height:100%}
-.hero .fade{position:absolute;inset:0;z-index:1;background:linear-gradient(270deg,rgba(14,12,48,.95) 0%,rgba(14,12,48,.7) 40%,rgba(14,12,48,.05) 100%)}
-.hero .in{position:relative;z-index:2;max-width:560px}
-.hero h1{margin:0 0 10px;font-size:clamp(24px,3vw,32px)}
-.flags{display:flex;gap:18px;flex-wrap:wrap;margin:8px 0 16px}
-.flags span{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px}
-.flags em{font-style:normal;font-size:26px;line-height:1}
-.live{display:inline-flex;align-items:center;gap:9px;border:1px solid #8b5cf6;background:#5b3fd9aa;border-radius:12px;padding:9px 16px;font-size:13px}
-.dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}
-.dot.off{background:var(--gold);box-shadow:0 0 10px var(--gold)}
-.dream{position:absolute;z-index:2;left:26px;top:26px;font-size:20px;line-height:1.8;color:#cbe9ff;text-shadow:0 2px 14px #0008}
+.top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;padding:16px 26px;border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:12px;direction:ltr;justify-self:start}
+.logo svg{width:46px;height:46px;filter:drop-shadow(0 4px 14px #38bdf877)}
+.logo b{display:block;font-family:Inter,Vazirmatn,sans-serif;font-size:21px;font-weight:600;letter-spacing:.2px;line-height:1.2}
+.logo small{color:var(--mute);font-family:Inter,sans-serif;font-size:13px}
+.slogan{text-align:center}
+.slogan strong{display:block;font-size:19px;font-weight:700}
+.slogan span{display:block;margin-top:4px;color:var(--mute);font-size:13px}
+.slogan .h{color:#ff5fa0}
+.topr{display:flex;align-items:center;gap:10px;justify-self:end;direction:ltr}
+.os{display:flex;border:1px solid var(--line);border-radius:14px;background:#ffffff0c;padding:4px;gap:2px}
+.os button{display:flex;align-items:center;gap:8px;border:0;background:none;border-radius:11px;padding:8px 14px;font-size:13px;font-family:Inter,sans-serif}
+.os button.on{background:#ffffff1c;box-shadow:0 0 0 1px #ffffff22 inset}
+.os svg{width:17px;height:17px}
+.ib{width:40px;height:40px;border-radius:12px;border:1px solid #9f86ff77;background:#7c5cff33;display:grid;place-items:center}
+.ib svg{width:20px;height:20px}
+.pill{font-size:12px;border-radius:99px;padding:8px 13px;border:1px solid var(--line);background:#ffffff0a;white-space:nowrap;direction:rtl}
+.pill.ok{color:#5eead4;border-color:#1f7a63;background:#0e3a3199}
+.pill.warn{color:var(--gold);border-color:#7a6320;background:#3a2e0e88}
+/* body grid */
+.body{display:grid;grid-template-columns:236px minmax(0,1fr);gap:18px;padding:18px}
+.sb{display:flex;flex-direction:column;gap:14px;min-width:0}
+.nav{border:1px solid var(--line);border-radius:20px;background:var(--glass);padding:10px}
+.nav a{white-space:nowrap;display:flex;align-items:center;justify-content:flex-start;gap:13px;direction:ltr;padding:13px 14px;border-radius:13px;color:#dcd8ff;text-decoration:none;font-size:14px;margin:3px 0;transition:background .15s}
+.nav a svg{width:21px;height:21px;flex:none;opacity:.92}
+.nav a span{direction:rtl}
+.nav a.on{background:linear-gradient(90deg,#7c5cff,#6a4ae6);color:#fff;box-shadow:0 10px 26px #7c5cff55}
+.nav a:not(.on):hover{background:#ffffff0f}
+.nav a:focus-visible,.crow:focus-visible,.job:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #b9a7ff;outline-offset:2px}
+.mascot{border:1px solid var(--line);border-radius:20px;background:var(--glass);overflow:hidden}
+.mascot img{display:block;width:100%;height:112px;object-fit:cover;object-position:center}
+.mascot p{margin:0;padding:14px 18px 18px;font-size:16px;line-height:2;text-align:right;font-weight:500}
+.mascot .h{color:#ff6fae}
+.goal{border:1px solid var(--line);border-radius:16px;background:var(--glass);padding:14px 16px;font-size:12px;color:var(--mute)}
+.goal b{display:block;color:var(--ink);font-size:16px;margin:2px 0 11px;font-weight:700}
+.bar{height:8px;border-radius:9px;background:#ffffff18;overflow:hidden}.bar i{display:block;height:100%;width:34%;border-radius:9px;background:linear-gradient(90deg,#7c5cff,#a78bfa)}
+/* content */
+.content{min-width:0;display:grid;gap:16px;align-content:start}
+.row1{display:grid;grid-template-columns:minmax(0,1fr) 206px;gap:16px}
+.hero{position:relative;border:1px solid var(--line);border-radius:20px;overflow:hidden;min-height:204px;display:flex;justify-content:space-between;align-items:stretch;padding:24px 28px;
+  background:#1a1550 url("assets/london.jpg") center 38%/cover no-repeat}
+.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(14,11,52,.9) 0%,rgba(14,11,52,.68) 36%,rgba(14,11,52,.08) 70%,rgba(14,11,52,.35) 100%)}
+.hero>*{position:relative}
+.hero h1{margin:0 0 12px;font-size:clamp(22px,2.6vw,31px);font-weight:800;line-height:1.5}
+.hero .l{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;gap:12px;direction:ltr}
+.hero .l>*{align-self:flex-start}
+.cs{display:flex;gap:0;margin:0 0 4px;direction:ltr}
+.cs div{display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 13px;border-left:1px solid #ffffff2e;direction:rtl;font-size:13px;font-weight:500}
+.cs div:first-child{border-left:0;padding-left:0}
+.cs .flag{width:30px;height:30px}
+.live{display:inline-flex;align-items:center;gap:10px;border:1px solid #9f86ff;background:rgba(95,66,222,.68);border-radius:12px;padding:9px 18px;font-size:13px;font-weight:500;box-shadow:0 8px 24px rgba(95,66,222,.4)}
+.dot{width:10px;height:10px;border-radius:50%;background:#2be39b;box-shadow:0 0 12px #2be39b}
+.dot.off{background:var(--gold);box-shadow:0 0 12px var(--gold)}
+.dream{align-self:center;text-align:right;font-size:clamp(18px,2vw,23px);line-height:1.75;color:#bfe8ff;text-shadow:0 2px 16px #000a;font-weight:500}
+.dream .h{display:block;color:#ffd6ea;margin-top:6px;font-size:20px}
+.clock{border:1px solid var(--line);border-radius:20px;background:var(--glass);padding:16px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;direction:ltr}
+.clock .t{display:flex;align-items:center;gap:7px;direction:ltr;font-family:Inter,sans-serif;font-size:21px;font-weight:600}
+.clock .t svg{width:19px;height:19px;color:#e9e6ff}
+.clock .d{margin-top:8px;font-size:12px;color:var(--ink);text-align:left;direction:ltr;font-family:Inter,sans-serif}
+.clock .z{font-size:11px;color:var(--mute);text-align:left;direction:ltr;font-family:Inter,sans-serif;margin-top:5px}
+.orb{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;border:1.5px solid #7c9bff;background:radial-gradient(circle at 40% 30%,#3b46c9,#1b1a6b);box-shadow:0 0 30px #5b6dff77}
+.orb svg{width:36px;height:36px}
 /* stats */
 .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.stat{border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;min-width:0}
-.stat .ico{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;flex:none}
-.stat .ico svg{width:23px;height:23px}
-.stat b{display:block;font-size:26px;direction:ltr;text-align:right}
-.stat span{font-size:13px;color:#dcd9ff;display:block}.stat small{font-size:11px;color:var(--muted)}
-.s1{background:linear-gradient(135deg,#4c1d95aa,#2e1a7099)}.s1 .ico{background:#8b5cf6}
-.s2{background:linear-gradient(135deg,#075985aa,#0c3b7a99)}.s2 .ico{background:#0ea5e9}
-.s3{background:linear-gradient(135deg,#065f46aa,#0b3f4c99)}.s3 .ico{background:#10b981}
-.s4{background:linear-gradient(135deg,#9d174daa,#5b1a6a99)}.s4 .ico{background:#f43f8e}
-/* panels */
-.panel{border:1px solid var(--line);border-radius:18px;background:var(--glass);padding:18px;min-width:0}
-.panel h2{margin:0 0 14px;font-size:15px;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.panel h2 a,.panel h2 button{font-size:12px;color:#b9a7ff;background:none;border:0;text-decoration:none;padding:0}
-.grid2{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:16px}
-.map{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center}
-.map svg{width:100%;height:auto;opacity:.95}
-.crow{display:flex;align-items:center;gap:10px;padding:11px 6px;border-bottom:1px solid #ffffff12;cursor:pointer;border-radius:8px}
-.crow:last-child{border:0}.crow:hover,.crow.sel{background:#ffffff0d}
-.crow em{font-style:normal;font-size:22px}.crow b{margin-right:auto;font-size:16px;direction:ltr}
-.crow span{font-size:14px}.crow i{color:var(--muted);font-style:normal}
-/* jobs */
-.filters{display:grid;grid-template-columns:1fr 150px auto;gap:8px;margin-bottom:12px}
-.filters input,.filters select{width:100%;background:#0b0a2488;border:1px solid var(--line);border-radius:11px;padding:10px 12px;outline:none}
-.filters input:focus,.filters select:focus{border-color:var(--violet)}
-.filters button{border:0;border-radius:11px;padding:0 16px;background:linear-gradient(90deg,#8b5cf6,#6d4be0);font-weight:700}
-.jobs{display:grid;gap:9px;max-height:430px;overflow:auto;padding-left:2px}
-.job{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px;border:1px solid #ffffff14;border-radius:13px;background:#ffffff08;text-decoration:none;color:inherit}
-.job:hover{border-color:#8b5cf6aa;background:#ffffff0f}
-.job .jb{width:40px;height:40px;border-radius:11px;background:#4338ca66;display:grid;place-items:center;font-size:18px}
-.job h3{margin:0 0 4px;font-size:13px;direction:ltr;text-align:left;font-weight:600}
-.job p{margin:0;font-size:11px;color:var(--muted);direction:ltr;text-align:left}
-.job .t{font-size:11px;color:var(--muted);white-space:nowrap;text-align:center}
-.badge{display:inline-block;margin-bottom:4px;font-size:10px;border-radius:8px;padding:3px 8px;border:1px solid}
-.b-ok{color:#5eead4;border-color:#14756a;background:#0d3a3699}
-.b-info{color:#fda4af;border-color:#7a2a4d;background:#4a1830aa}
-.b-new{color:#7dd3fc;border-color:#1d5f8a;background:#0c2e4aaa}
-.empty{padding:26px 12px;text-align:center;color:var(--muted);font-size:13px;line-height:2;border:1px dashed var(--line);border-radius:14px}
-.sample{margin:0 0 10px;font-size:11px;color:var(--gold);border:1px solid #6b5a1f;background:#2e260f66;border-radius:10px;padding:8px 11px;line-height:1.9}
-/* bottom */
-.sched{list-style:none;margin:0;padding:0;display:grid;gap:12px;font-size:13px}
-.sched li{display:flex;gap:14px;direction:rtl}.sched time{color:var(--muted);direction:ltr;width:48px;flex:none}
-.pipe{list-style:none;margin:0;padding:0;display:grid;gap:11px;font-size:13px}
-.pipe li{display:flex;align-items:center;gap:10px}
-.pipe svg{width:20px;height:20px;flex:none}
-.tag{font-size:11px;color:var(--green);border:1px solid #1f6b52;background:#0f2e2799;border-radius:9px;padding:3px 10px}
-.tag.warn{color:var(--gold);border-color:#6b5a1f;background:#2e260f99}
-.banner{border:1px solid var(--line);border-radius:16px;min-height:96px;padding:18px 22px;position:relative;overflow:hidden;
-  background:linear-gradient(270deg,rgba(11,10,36,.92),rgba(11,10,36,.35)),linear-gradient(180deg,#6b5bd6,#f08a9d);font-size:14px;line-height:2}
-.banner b{font-size:16px}
-/* right column */
-.rail{display:flex;flex-direction:column;gap:14px}
-.clock{border:1px solid var(--line);border-radius:18px;background:var(--glass);padding:16px;text-align:center}
-.clock b{display:block;font-size:26px;direction:ltr}.clock span{font-size:12px;color:var(--muted);display:block;margin-top:4px}
-.orb{margin:auto;width:84px;height:84px;border-radius:50%;display:grid;place-items:center;border:1px solid #8b5cf6;background:radial-gradient(circle,#4338ca,#1e1b4b);box-shadow:0 0 36px #8b5cf655}
-.orb svg{width:44px;height:44px}
-.foot{padding:10px 22px 18px;text-align:center;color:var(--muted);font-size:11px;line-height:2}
-@media(max-width:1200px){.layout{grid-template-columns:210px minmax(0,1fr)}.rail{display:none}}
-@media(max-width:900px){body{padding:10px}.layout{grid-template-columns:1fr}.side{order:2}.nav{display:flex;overflow:auto}.nav a{white-space:nowrap}.stats{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}.dream{display:none}.slogan{order:3;flex-basis:100%}}
-@media(max-width:560px){.stats{grid-template-columns:1fr}.map{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.filters input{grid-column:1/-1}.filters button{padding:10px}.job{grid-template-columns:auto 1fr}.job .t{grid-column:1/-1;text-align:right}}
+.stat{border:1px solid var(--line);border-radius:17px;padding:15px 16px;display:flex;align-items:center;gap:14px;direction:ltr;min-width:0}
+.stat>div:last-child{direction:rtl;text-align:right;flex:1;min-width:0}
+.stat .ic{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;flex:none;box-shadow:0 8px 22px #0006}
+.stat .ic svg{width:24px;height:24px}
+.stat b{font-size:27px;font-weight:700;line-height:1.15;display:block}
+.stat span{display:block;margin-top:2px;font-size:13.5px;font-weight:500;color:#e6e3ff}
+.stat small{display:block;margin-top:7px;font-size:11px;color:#9cf0cf}
+.stat.q small{color:var(--mute)}
+.s1{background:linear-gradient(135deg,rgba(88,50,200,.62),rgba(44,30,128,.7))}.s1 .ic{background:#7c5cff}
+.s2{background:linear-gradient(135deg,rgba(18,98,160,.58),rgba(15,52,120,.7))}.s2 .ic{background:#2fa8f2}
+.s3{background:linear-gradient(135deg,rgba(14,110,92,.58),rgba(12,62,84,.7))}.s3 .ic{background:#1fc38b}
+.s4{background:linear-gradient(135deg,rgba(160,28,98,.58),rgba(88,28,110,.7))}.s4 .ic{background:#ee3d8a}
+/* columns */
+.cols{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
+.stack{display:grid;gap:16px;min-width:0}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.panel{border:1px solid var(--line);border-radius:19px;background:var(--glass);padding:17px 18px;min-width:0}
+.panel h2{margin:0 0 14px;font-size:15px;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.panel h2 button{font-size:12px;color:#b9a7ff;background:none;border:0;padding:0;font-weight:500}
+.loc{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:12px;align-items:center}
+.loc img{width:100%;height:auto;display:block;filter:drop-shadow(0 0 10px #6a5cff55)}
+.crow{display:flex;align-items:center;gap:11px;padding:9px 8px;border-bottom:1px solid #ffffff14;cursor:pointer;border-radius:10px;direction:ltr;transition:background .15s;background:none;border-inline:0;border-top:0;width:100%;text-align:right}
+.crow:last-child{border-bottom:0}.crow:hover,.crow.sel{background:#ffffff10}
+.crow i{font-style:normal;color:var(--mute);font-size:19px;line-height:1}
+.crow b{font-size:17px;font-weight:700;direction:rtl;min-width:26px;text-align:left}
+.crow span{margin-inline-start:auto;font-size:14.5px;direction:rtl;font-weight:500}
+.filters{display:grid;grid-template-columns:auto 128px minmax(0,1fr);gap:8px;margin-bottom:12px;direction:ltr}
+.filters input,.filters select{width:100%;background:#0a083088;border:1px solid var(--line);border-radius:11px;padding:9px 11px;font-size:12.5px}
+.filters input{direction:ltr;text-align:left}
+.filters button{border:0;border-radius:11px;padding:0 16px;background:linear-gradient(90deg,#7c5cff,#6a4ae6);font-weight:700;font-size:13px}
+.jobs{display:grid;gap:9px;max-height:376px;overflow:auto;padding:1px 2px 1px 0}
+.job{display:flex;align-items:center;gap:12px;direction:ltr;padding:10px 11px;border:1px solid #ffffff17;border-radius:14px;background:#ffffff09;text-decoration:none;color:inherit;transition:border-color .15s,background .15s}
+.job:hover{border-color:#8b78ffaa;background:#ffffff12}
+.job .jb{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#4a45c9,#2d2a8c);display:grid;place-items:center;flex:none}
+.job .jb svg{width:21px;height:21px}
+.job .in{flex:1;min-width:0;direction:ltr;text-align:left}
+.job h3{margin:0 0 3px;font-size:12.5px;font-weight:600;font-family:Inter,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.job p{margin:0;font-size:11px;color:var(--mute);font-family:Inter,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.job .c{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:11px;color:#d7d3ff;direction:ltr;font-family:Inter,sans-serif}
+.job .c .flag{width:15px;height:15px}
+.job .m{text-align:center;flex:none}
+.job .m small{display:block;margin-top:6px;font-size:10.5px;color:var(--mute)}
+.job .go{color:var(--mute);font-size:20px;line-height:1}
+.badge{display:inline-block;font-size:10.5px;border-radius:9px;padding:4px 10px;border:1px solid;white-space:nowrap}
+.b-ok{color:#5eead4;border-color:#177a6b;background:#0c3a3699}
+.b-new{color:#7dd3fc;border-color:#1d6a9a;background:#0b2f4eaa}
+.b-info{color:#fda4af;border-color:#8a2c55;background:#4d1833aa}
+.empty{padding:24px 12px;text-align:center;color:var(--mute);font-size:13px;line-height:2;border:1px dashed var(--line);border-radius:14px}
+.sample{margin:0 0 10px;font-size:11px;line-height:1.9;color:#fcd773;border:1px solid #7a6320;background:#3a2e0e66;border-radius:10px;padding:8px 11px}
+.sched{list-style:none;margin:0;padding:0;display:grid;gap:13px;font-size:12.5px}
+.sched li{display:flex;gap:12px;align-items:baseline;direction:ltr}
+.sched time{color:var(--mute);width:42px;flex:none;font-family:Inter,sans-serif;font-size:12px}
+.sched span{direction:rtl;flex:1}
+.pipe{list-style:none;margin:0;padding:0;display:grid;gap:12px;font-size:12.5px}
+.pipe li{display:flex;align-items:center;gap:10px;direction:ltr}
+.pipe li span{direction:rtl;flex:1}
+.pipe svg{width:21px;height:21px;flex:none}
+.tag{font-size:11px;color:#34e0a8;border:1px solid #17795c;background:#0c3a2e99;border-radius:10px;padding:3px 11px;font-weight:600}
+.tag.warn{color:var(--gold);border-color:#7a6320;background:#3a2e0e88}
+.banner{position:relative;border:1px solid var(--line);border-radius:18px;min-height:96px;padding:18px 22px;overflow:hidden;font-size:14px;line-height:1.9;
+  background:linear-gradient(270deg,rgba(11,9,44,.55),rgba(11,9,44,.2)),linear-gradient(180deg,#5a63d4,#ee8fa8)}
+.banner:after{content:"";position:absolute;inset:auto 0 0 0;height:60%;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100' preserveAspectRatio='none'><path d='M0 100V60l50-30 40 25 60-45 50 40 50-20 60 40 50-30 40 20v40z' fill='%23dfe6ff' opacity='.55'/><path d='M0 100V75l60-25 50 25 70-35 60 30 60-20 100 35v15z' fill='%232a3180' opacity='.9'/></svg>") bottom/100% 100% no-repeat}
+.banner>*{position:relative;z-index:1}
+.banner b{font-size:15px;font-weight:700}
+.banner .h{color:#ffb3d6}
+.toast{position:fixed;inset:auto 50% 22px auto;transform:translateX(50%);background:#1d1865f2;border:1px solid #9f86ff;border-radius:12px;padding:11px 18px;font-size:13px;box-shadow:0 12px 40px #0009;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9;max-width:90vw;text-align:center;direction:rtl}
+.toast.on{opacity:1}
+.foot{padding:6px 24px 18px;text-align:center;color:var(--mute);font-size:11px;line-height:2}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media(max-width:1180px){.cols{grid-template-columns:1fr}.row1{grid-template-columns:1fr}.clock{display:none}}
+@media(max-width:900px){.body{grid-template-columns:1fr}.sb{order:2}.nav{display:flex;overflow:auto;gap:4px}.nav a{white-space:nowrap}.mascot,.goal{display:none}.stats{grid-template-columns:1fr 1fr}.top{grid-template-columns:1fr auto}.slogan{grid-column:1/-1;order:3}.os{display:none}.dream{display:none}}
+@media(max-width:600px){.stats{grid-template-columns:1fr}.pair{grid-template-columns:1fr}.loc{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.filters input{grid-column:1/-1}.cs div{padding:0 8px}.hero{padding:18px}}
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
-    <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></symbol>
-    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
-    <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 3 3 10l7 3 3 7z"/><path d="m10 13 11-10"/></symbol>
-    <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 17h6"/></symbol>
-    <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></symbol>
-    <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17V11a6 6 0 1 1 12 0v6l2 2H4z"/><path d="M10 21h4"/></symbol>
-    <symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" stroke-linecap="round"/></symbol>
-    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
-    <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="m7.5 12.5 3 3 6-6.5" fill="none" stroke="#06231a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-    <symbol id="i-heart" viewBox="0 0 48 48"><defs><linearGradient id="hg" x1="0" x2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs><path d="M24 42S6 31 6 17.5A9.5 9.5 0 0 1 24 13a9.5 9.5 0 0 1 18 4.5C42 31 24 42 24 42Z" fill="url(#hg)"/><path d="M9 24h9l3-6 5 12 3-6h10" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <clipPath id="fc"><circle cx="12" cy="12" r="12"/></clipPath>
+    <g id="jack"><rect width="24" height="24" fill="#012169"/><path d="M0 0 24 24M24 0 0 24" stroke="#fff" stroke-width="4.4"/><path d="M0 0 24 24M24 0 0 24" stroke="#c8102e" stroke-width="1.5"/><path d="M12 0v24M0 12h24" stroke="#fff" stroke-width="7"/><path d="M12 0v24M0 12h24" stroke="#c8102e" stroke-width="4"/></g>
+    <linearGradient id="hg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
   </defs>
+  <symbol id="f-uk" viewBox="0 0 24 24"><g clip-path="url(#fc)"><use href="#jack"/></g></symbol>
+  <symbol id="f-us" viewBox="0 0 24 24"><g clip-path="url(#fc)"><rect width="24" height="24" fill="#fff"/><path d="M0 .9h24M0 4.6h24M0 8.3h24M0 12h24M0 15.7h24M0 19.4h24M0 23.1h24" stroke="#b22234" stroke-width="1.85"/><rect width="12" height="13" fill="#3c3b6e"/><g fill="#fff"><circle cx="2.5" cy="2.5" r=".7"/><circle cx="6" cy="2.5" r=".7"/><circle cx="9.5" cy="2.5" r=".7"/><circle cx="4.2" cy="5.8" r=".7"/><circle cx="7.8" cy="5.8" r=".7"/><circle cx="2.5" cy="9.2" r=".7"/><circle cx="6" cy="9.2" r=".7"/><circle cx="9.5" cy="9.2" r=".7"/></g></g></symbol>
+  <symbol id="f-au" viewBox="0 0 24 24"><g clip-path="url(#fc)"><rect width="24" height="24" fill="#012169"/><g transform="scale(.5)"><use href="#jack"/></g><g fill="#fff"><circle cx="6.5" cy="18" r="2"/><circle cx="17" cy="4.5" r="1.1"/><circle cx="20.5" cy="9.5" r="1.1"/><circle cx="14.5" cy="11.5" r="1.1"/><circle cx="18" cy="18.5" r="1.1"/></g></g></symbol>
+  <symbol id="f-ca" viewBox="0 0 24 24"><g clip-path="url(#fc)"><rect width="24" height="24" fill="#d80621"/><rect x="6" width="12" height="24" fill="#fff"/><path d="M12 4.8l1.3 3.5 2.6-1-.9 4 2.2 1.1-4.2 2.5v3.6h-2v-3.6L6.8 12.4l2.2-1.1-.9-4 2.6 1z" fill="#d80621"/></g></symbol>
+  <symbol id="f-nl" viewBox="0 0 24 24"><g clip-path="url(#fc)"><rect width="24" height="8" fill="#ae1c28"/><rect y="8" width="24" height="8" fill="#fff"/><rect y="16" width="24" height="8" fill="#21468b"/></g></symbol>
+  <symbol id="f-no" viewBox="0 0 24 24"><g clip-path="url(#fc)"><rect width="24" height="24" fill="#ba0c2f"/><path d="M8 0v24M0 12h24" stroke="#fff" stroke-width="5"/><path d="M8 0v24M0 12h24" stroke="#00205b" stroke-width="2.4"/></g></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-tray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v10H4z"/><path d="M4 14l2 6h12l2-6M9 8h6M9 11h6"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round"><path d="M21 3 3 10l7 3 3 7z"/><path d="m10 13 11-10"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 13h6M9 17h6"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4M8 14h2M12 14h2M8 17h2"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17V11a6 6 0 1 1 12 0v6l2 2H4z"/><path d="M10 21h4"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 6.5V12l3.5 2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="m7.3 12.4 3.2 3.2 6.2-6.7" fill="none" stroke="#052a20" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 48 48"><path d="M24 42S6 31 6 17.5A9.5 9.5 0 0 1 24 13a9.5 9.5 0 0 1 18 4.5C42 31 24 42 24 42Z" fill="url(#hg)"/><path d="M9 24h9l3-6 5 12 3-6h10" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-cross" viewBox="0 0 24 24" fill="none" stroke="#c9c4ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 7.5v9M7.5 12h9"/></symbol>
+  <symbol id="i-win" viewBox="0 0 24 24"><path fill="#4cc2ff" d="M3 5.2 10.5 4v7H3zm8.7-1.4L21 2.5V11h-9.3zM3 12.5h7.5v7L3 18.3zm8.7 0H21v8.5l-9.300-1.300z"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24"><path fill="#fff" d="M16.4 12.6c0-2.300 1.900-3.400 2-3.500-1.100-1.600-2.800-1.800-3.400-1.800-1.400-.1-2.800.9-3.500.9s-1.800-.9-3-.8C6.900 7.400 5.500 8.300 4.700 9.700c-1.600 2.800-.4 6.900 1.200 9.100.8 1.100 1.700 2.300 2.900 2.300 1.200 0 1.600-.7 3-.7s1.800.7 3 .7c1.300 0 2.100-1.100 2.800-2.200.9-1.300 1.300-2.500 1.300-2.600-.1 0-2.500-1-2.500-3.700zM14.200 5.800c.6-.8 1.100-1.900.9-3-.9 0-2.100.6-2.700 1.400-.6.700-1.100 1.800-1 2.900 1 .1 2.100-.5 2.800-1.300z"/></symbol>
 </svg>
 
-<div class="app">
+<div class="app" id="app">
   <header class="top">
-    <div class="logo"><svg><use href="#i-heart"/></svg><div><b>GlobalCare</b><small>Nursing Job Pipeline</small></div></div>
-    <div class="slogan"><strong>آینده شغلی بهتر، قدم به قدم…</strong><span><span style="color:var(--pink)">♥</span> جست‌وجو، فرصت، درخواست . برای مهتاب</span></div>
-    <div class="topr"><span class="pill warn" id="status">● در حال بررسی اتصال</span><button class="iconbtn" id="refresh" title="تازه‌سازی" aria-label="تازه‌سازی"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button></div>
+    <div class="logo"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#i-heart"/></svg><div><b>GlobalCare</b><small>Nursing Job Pipeline</small></div></div>
+    <div class="slogan"><strong>آینده شغلی بهتر، قدم به قدم…</strong><span>جست‌وجو، فرصت، درخواست . برای مهتاب <span class="h">♥</span></span></div>
+    <div class="topr">
+      <span class="pill warn" id="status">● در حال بررسی اتصال</span>
+      <div class="os" role="group" aria-label="سیستم‌عامل"><button class="on" id="osWin"><svg><use href="#i-win"/></svg>Windows</button><button id="osMac"><svg><use href="#i-apple"/></svg>macOS</button></div>
+      <button class="ib" id="refresh" title="تازه‌سازی" aria-label="تازه‌سازی"><svg viewBox="0 0 24 24" fill="none" stroke="#e9e3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button>
+    </div>
   </header>
 
-  <div class="layout">
-    <!-- sidebar -->
-    <aside class="side">
+  <div class="body">
+    <aside class="sb">
       <nav class="nav" aria-label="منوی اصلی">
-        <a href="#top" class="active"><svg><use href="#i-home"/></svg>داشبورد</a>
-        <a href="#jobsPanel"><svg><use href="#i-search"/></svg>جست‌وجوی مشاغل</a>
-        <a href="#locPanel"><svg><use href="#i-send"/></svg>موقعیت‌های فعال</a>
-        <a href="#pipePanel"><svg><use href="#i-doc"/></svg>وضعیت پایپ‌لاین</a>
-        <a href="#schedPanel"><svg><use href="#i-cal"/></svg>برنامهٔ روزانه</a>
-        <a href="#noticePanel"><svg><use href="#i-bell"/></svg>اطلاعیه‌ها</a>
-        <a href="#pipePanel"><svg><use href="#i-gear"/></svg>تنظیمات</a>
+        <a href="#top" class="on" data-go="top"><svg><use href="#i-home"/></svg><span>داشبورد</span></a>
+        <a href="#jobsPanel" data-go="jobsPanel"><svg><use href="#i-search"/></svg><span>جستجوی مشاغل</span></a>
+        <a href="#" data-soon="درخواست‌های ارسال‌شده به‌زودی اضافه می‌شود."><svg><use href="#i-tray"/></svg><span>درخواست‌های ارسال‌شده</span></a>
+        <a href="#" data-soon="رزومه و کاورلتر به‌زودی اضافه می‌شود."><svg><use href="#i-doc"/></svg><span>رزومه و کاورلتر</span></a>
+        <a href="#schedPanel" data-go="schedPanel"><svg><use href="#i-cal"/></svg><span>برنامه روزانه</span></a>
+        <a href="#noticePanel" data-go="noticePanel"><svg><use href="#i-bell"/></svg><span>اطلاعیه‌ها</span></a>
+        <a href="#pipePanel" data-go="pipePanel"><svg><use href="#i-gear"/></svg><span>تنظیمات</span></a>
       </nav>
-      <div class="motive">مهتاب،<br>تو می‌تونی<br>و من اینجام <span class="heart">♡</span></div>
+      <div class="mascot"><img src="assets/stethoscope.jpg" alt="" width="195" height="108"><p>مهتاب،<br>تو می‌تونی<br>و من اینجام <span class="h">♡</span></p></div>
       <div class="goal">هدف ما:<b>یک آیندهٔ روشن</b><div class="bar"><i></i></div></div>
     </aside>
 
-    <!-- main -->
-    <main class="main" id="top">
-      <section class="hero">
-        <div class="sky" aria-hidden="true">
-          <svg viewBox="0 0 400 210" preserveAspectRatio="xMinYMax slice"><g fill="#1b1648" opacity=".9"><path d="M0 210V150h22v-20h14v20h18V120l8-14 8 14v30h22v-40h10v40h24V135h16v75z"/><path d="M190 210V140h16v-30l10-20 10 20v30h14v70z"/><rect x="262" y="120" width="10" height="90"/><rect x="278" y="132" width="14" height="78"/></g><circle cx="130" cy="96" r="48" fill="none" stroke="#ffd1e8" stroke-opacity=".7" stroke-width="3"/><circle cx="130" cy="96" r="30" fill="none" stroke="#ffd1e8" stroke-opacity=".3" stroke-width="1.5"/></svg>
-        </div>
-        <div class="fade"></div>
-        <div class="dream">رویاهات<br>دست‌یافتنیه…</div>
-        <div class="in">
-          <h1>فرصت‌های شغلی پرستاری</h1>
-          <div class="flags"><span><em>🇺🇸</em>آمریکا</span><span><em>🇬🇧</em>بریتانیا</span><span><em>🇦🇺</em>استرالیا</span><span><em>🇳🇱</em>هلند</span></div>
-          <span class="live"><span class="dot off" id="liveDot"></span><span id="liveTxt">جست‌وجوی روزانه</span></span>
-        </div>
-      </section>
-
-      <section class="stats">
-        <div class="stat s1"><div class="ico"><svg><use href="#i-search"/></svg></div><div><b id="stTotal">—</b><span>آگهی در دیتابیس</span><small id="stTotalNote">در انتظار API</small></div></div>
-        <div class="stat s2"><div class="ico"><svg><use href="#i-send"/></svg></div><div><b id="stCountries">—</b><span>کشور دارای آگهی</span><small>از ۴ کشور هدف</small></div></div>
-        <div class="stat s3"><div class="ico"><svg><use href="#i-doc"/></svg></div><div><b id="stShown">—</b><span>نتیجهٔ فیلتر فعلی</span><small>برای جست‌وجوی شما</small></div></div>
-        <div class="stat s4"><div class="ico"><svg><use href="#i-clock"/></svg></div><div><b id="stLast" style="font-size:20px">—</b><span>آخرین جمع‌آوری</span><small>زمان محلی شما</small></div></div>
-      </section>
-
-      <div class="grid2">
-        <section class="panel" id="locPanel">
-          <h2>موقعیت‌های فعال</h2>
-          <div class="map">
-            <svg viewBox="0 0 220 130" aria-hidden="true"><g fill="#3b4bb8" opacity=".55"><path d="M18 30c10-8 28-10 40-4l8 10-6 14-14 4-8 16-10-6-6-18z"/><path d="M52 78l14 4 6 18-8 18-10-12z"/><path d="M96 28l18-6 20 4 8 10-6 10-14 4-10 12-10-6-8-14z"/><path d="M110 62l16 2 8 18-4 22-14 4-8-20z"/><path d="M138 24l30-6 28 8 10 14-8 14-22 4-16 14-14-8-6-18z"/><path d="M176 86l22 4 6 14-14 8-16-8z"/></g><g fill="#a5b4fc"><circle cx="40" cy="38" r="2.2"/><circle cx="100" cy="36" r="2.2"/><circle cx="184" cy="100" r="2.2"/><circle cx="108" cy="44" r="2.2"/></g></svg>
-            <div id="locList"></div>
+    <main class="content" id="top">
+      <div class="row1">
+        <section class="hero" aria-label="فرصت‌های شغلی پرستاری">
+          <div class="l">
+            <div>
+              <h1>فرصت‌های شغلی پرستاری</h1>
+              <div class="cs" id="heroFlags"></div>
+            </div>
+            <span class="live"><span class="dot off" id="liveDot"></span><span id="liveTxt">جست‌وجوی روزانه</span></span>
           </div>
+          <div class="dream">رویاهات<br>دست‌یافتنیه…<span class="h">♡</span></div>
         </section>
-
-        <section class="panel" id="jobsPanel">
-          <h2>آخرین فرصت‌های شغلی <button id="allJobs">مشاهده همه</button></h2>
-          <div class="filters">
-            <input id="q" placeholder="Registered Nurse یا London" aria-label="جست‌وجو">
-            <select id="country" aria-label="کشور"><option value="">همهٔ کشورها</option><option value="us">🇺🇸 آمریکا</option><option value="uk">🇬🇧 بریتانیا</option><option value="au">🇦🇺 استرالیا</option><option value="nl">🇳🇱 هلند</option></select>
-            <button id="search">جست‌وجو</button>
-          </div>
-          <div id="sampleNote"></div>
-          <div class="jobs" id="jobs"></div>
-        </section>
+        <aside class="clock"><div><div class="t"><svg><use href="#i-clock"/></svg><span id="clk">--:--</span></div><div class="d" id="clkDate"></div><div class="z" id="clkTz"></div></div><div class="orb"><svg viewBox="0 0 48 48"><use href="#i-heart"/></svg></div></aside>
       </div>
 
-      <div class="grid2">
-        <section class="panel" id="schedPanel">
-          <h2>برنامهٔ روزانه</h2>
-          <ul class="sched">
-            <li><time>06:00</time><span>جمع‌آوری خودکار آگهی‌ها (UTC)</span></li>
-            <li><time>—</time><span>فیلتر عنوان‌های پرستاری و چهار کشور هدف</span></li>
-            <li><time>—</time><span>ذخیره در دیتابیس و نمایش در همین داشبورد</span></li>
-          </ul>
-        </section>
-        <section class="panel" id="pipePanel">
-          <h2>وضعیت پایپ‌لاین <span class="tag warn" id="pipeTag">در حال بررسی</span></h2>
-          <ul class="pipe" id="pipe"></ul>
-        </section>
-      </div>
+      <section class="stats" aria-label="خلاصه وضعیت">
+        <div class="stat s1"><div class="ic"><svg><use href="#i-search"/></svg></div><div><b id="stNew">—</b><span>فرصت جدید پیدا شد</span><small id="stNewNote">در انتظار API</small></div></div>
+        <div class="stat s2 q"><div class="ic"><svg><use href="#i-send"/></svg></div><div><b style="font-family:Inter,sans-serif">0</b><span>درخواست ارسال شد</span><small>هنوز درخواستی ثبت نشده</small></div></div>
+        <div class="stat s3 q"><div class="ic"><svg><use href="#i-doc"/></svg></div><div><b style="font-family:Inter,sans-serif">0</b><span>در حال بررسی</span><small>هنوز پاسخی ثبت نشده</small></div></div>
+        <div class="stat s4 q"><div class="ic"><svg><use href="#i-clock"/></svg></div><div><b style="font-family:Inter,sans-serif">0</b><span>نیاز به اقدام شما</span><small>همه‌چیز مرتب است</small></div></div>
+      </section>
 
-      <section class="banner" id="noticePanel"><b>هر قدم کوچک،</b><br>تو رو به هدف بزرگت نزدیک‌تر می‌کنه. <span style="color:var(--pink)">♡</span><br><small style="color:#d9d4ff">پیش از درخواست، شرایط مجوز، زبان و ویزا را در سایت رسمی کارفرما بررسی کن؛ این داشبورد خودش درخواستی ارسال نمی‌کند.</small></section>
+      <div class="cols">
+        <div class="stack">
+          <section class="panel" id="locPanel">
+            <h2>موقعیت‌های فعال</h2>
+            <div class="loc"><img src="assets/map.svg" alt="" width="400" height="153"><div id="locList"></div></div>
+          </section>
+          <div class="pair">
+            <section class="panel" id="schedPanel">
+              <h2>برنامه روزانه</h2>
+              <ul class="sched" id="sched"></ul>
+            </section>
+            <section class="panel" id="pipePanel">
+              <h2>وضعیت پایپ‌لاین <span class="tag warn" id="pipeTag">در حال بررسی</span></h2>
+              <ul class="pipe" id="pipe"></ul>
+            </section>
+          </div>
+        </div>
+        <div class="stack">
+          <section class="panel" id="jobsPanel">
+            <h2>آخرین فرصت‌های شغلی <button id="allJobs">مشاهده همه</button></h2>
+            <div class="filters">
+              <button id="search">جستجو</button>
+              <select id="country" aria-label="کشور"></select>
+              <input id="q" placeholder="Registered Nurse" aria-label="جست‌وجوی عنوان، کارفرما یا مکان">
+            </div>
+            <div id="sampleNote"></div>
+            <div class="jobs" id="jobs" aria-live="polite"></div>
+          </section>
+          <section class="banner" id="noticePanel"><b>هر قدم کوچک،</b><br>تو رو به هدف بزرگت نزدیک‌تر می‌کنه. <span class="h">♡</span></section>
+        </div>
+      </div>
     </main>
-
-    <!-- right rail -->
-    <aside class="rail">
-      <div class="clock"><div class="orb"><svg><use href="#i-heart"/></svg></div><b id="clk" style="margin-top:12px">--:--</b><span id="clkDate"></span><span id="clkTz"></span></div>
-    </aside>
   </div>
-  <footer class="foot">GLOBALCARE · INTERNATIONAL NURSING CAREERS — پوشش همهٔ آگهی‌ها تضمین‌شده نیست؛ برای جزئیات به منبع اصلی آگهی مراجعه کنید.</footer>
+  <footer class="foot">GlobalCare — پوشش همهٔ آگهی‌ها تضمین‌شده نیست؛ برای جزئیات و شرایط به منبع اصلی آگهی مراجعه کنید. پیش از درخواست، شرایط مجوز پرستاری، زبان و ویزا را در سایت رسمی کارفرما بررسی کنید.</footer>
 </div>
+<div class="toast" id="toast" role="status"></div>
 
 <script>
 const $=id=>document.getElementById(id);
 const fa=n=>Number(n).toLocaleString('fa-IR');
-const CN={us:{n:'آمریکا',f:'🇺🇸'},uk:{n:'بریتانیا',f:'🇬🇧'},au:{n:'استرالیا',f:'🇦🇺'},nl:{n:'هلند',f:'🇳🇱'}};
+const CN={us:'آمریکا',uk:'بریتانیا',au:'استرالیا',ca:'کانادا',nl:'هلند',no:'نروژ'};
+const ORDER=['us','uk','au','ca','nl','no'];
+const flag=(c,cls='')=>`<svg class="flag ${cls}" viewBox="0 0 24 24" aria-hidden="true"><use href="#f-${c}"/></svg>`;
 const SAMPLE=[
-  {title:'Registered Nurse – Medical Ward',company:'St. Vincent\'s Hospital, Sydney',country:'au',url:''},
-  {title:'Nurse (International Graduate Program)',company:'BUPA Health Services',country:'uk',url:''},
-  {title:'Registered Nurse – Med/Surg',company:'HCA Healthcare',country:'us',url:''},
-  {title:'Verpleegkundige (Nurse)',company:'Zorggroep',country:'nl',url:''}
+  {title:'Registered Nurse – Medical Ward',company:"St. Vincent's Hospital, Sydney",country:'au'},
+  {title:'Nurse (International Graduate Program)',company:'BUPA Health Services',country:'uk'},
+  {title:'Registered Nurse – Med/Surg',company:'HCA Healthcare',country:'us'},
+  {title:'Verpleegkundige (Nurse)',company:'Zorggroep',country:'nl'}
 ];
-let all=[],isSample=false,apiOk=false,lastSuccess=null,selCountry='';
+let all=[],isSample=true,apiOk=false,lastSuccess=null,selCountry='',toastT;
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function ago(iso){if(!iso)return{t:'تاریخ نامشخص',c:'b-info',l:'—'};const h=(Date.now()-new Date(iso).getTime())/36e5;if(!isFinite(h))return{t:'تاریخ نامشخص',c:'b-info',l:'—'};
-  const l=h<1?'کمتر از ۱ ساعت پیش':h<24?fa(Math.floor(h))+' ساعت پیش':fa(Math.floor(h/24))+' روز پیش';
-  return h<24?{t:'تازه',c:'b-new',l}:{t:'فعال',c:'b-ok',l}}
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),3200)}
+function when(iso){const t=iso?new Date(iso).getTime():NaN;if(!isFinite(t))return{b:'فعال',c:'b-ok',l:''};
+  const h=(Date.now()-t)/36e5;const l=h<1?'کمتر از ۱ ساعت پیش':h<24?fa(Math.floor(h))+' ساعت پیش':fa(Math.floor(h/24))+' روز پیش';
+  return h<24?{b:'جدید',c:'b-new',l}:{b:'فعال',c:'b-ok',l}}
 function filtered(){const q=$('q').value.trim().toLowerCase(),c=$('country').value||selCountry;
   return all.filter(j=>(!c||j.country===c)&&(!q||[j.title,j.company,j.location].some(x=>String(x||'').toLowerCase().includes(q))))}
-function renderLoc(){const cnt={us:0,uk:0,au:0,nl:0};all.forEach(j=>{if(cnt[j.country]!==undefined)cnt[j.country]++});
-  $('locList').innerHTML=Object.keys(CN).map(k=>`<div class="crow ${selCountry===k?'sel':''}" data-c="${k}"><em>${CN[k].f}</em><span>${CN[k].n}</span><b>${isSample?'—':fa(cnt[k])}</b><i>‹</i></div>`).join('');
-  document.querySelectorAll('.crow').forEach(r=>r.addEventListener('click',()=>{selCountry=selCountry===r.dataset.c?'':r.dataset.c;$('country').value=selCountry;render();document.getElementById('jobsPanel').scrollIntoView({behavior:'smooth',block:'nearest'})}));
-  return cnt}
-function render(){const cnt=renderLoc(),list=filtered();
-  $('stTotal').textContent=isSample?'—':fa(all.length);
-  $('stTotalNote').textContent=isSample?'API هنوز داده‌ای برنگردانده':'از دیتابیس متصل';
-  $('stCountries').textContent=isSample?'—':fa(Object.values(cnt).filter(x=>x>0).length);
-  $('stShown').textContent=isSample?'—':fa(list.length);
-  $('sampleNote').innerHTML=isSample?'<div class="sample">این چهار کارت فقط <b>نمونهٔ نمایشی</b> طراحی هستند و آگهی واقعی نیستند. بعد از اتصال دیتابیس و اجرای جمع‌آوری، آگهی‌های واقعی جایگزین می‌شوند.</div>':'';
-  if(!list.length){$('jobs').innerHTML='<div class="empty">آگهی‌ای با این فیلتر پیدا نشد.</div>';return}
-  $('jobs').innerHTML=list.slice(0,100).map(j=>{const a=isSample?{t:'نمونه',c:'b-info',l:''}:ago(j.posted_at||j.collected_at);
-    const ok=/^https?:\/\//i.test(j.url||'');
-    const tag=ok?'a href="'+esc(j.url)+'" target="_blank" rel="noopener noreferrer"':'div';const end=ok?'a':'div';
-    return `<${tag} class="job"><div class="jb">🩺</div><div><h3>${esc(j.title||'Untitled')}</h3><p>${esc(j.company||'—')}${j.location?' · '+esc(j.location):''} · ${CN[j.country]?CN[j.country].f:''}</p></div><div class="t"><span class="badge ${a.c}">${a.t}</span><br>${a.l}</div></${end}>`}).join('')}
-function renderPipe(){const steps=[['جمع‌آوری روزانه (Worker + Cron)',lastSuccess!==null],['فیلتر عنوان‌های پرستاری',lastSuccess!==null],['ذخیره در دیتابیس D1',apiOk],['نمایش از طریق API',apiOk&&!isSample]];
-  $('pipe').innerHTML=steps.map(([t,ok])=>`<li><svg style="color:${ok?'var(--green)':'#6b6a99'}"><use href="#i-check"/></svg><span style="${ok?'':'color:var(--muted)'}">${t}</span></li>`).join('');
-  const t=$('pipeTag');t.textContent=apiOk&&!isSample?'فعال':apiOk?'منتظر اولین جمع‌آوری':'نیازمند تنظیم';t.className='tag'+(apiOk&&!isSample?'':' warn')}
+function renderStatic(){
+  $('heroFlags').innerHTML=ORDER.map(c=>`<div><span>${CN[c]}</span>${flag(c)}</div>`).join('');
+  $('country').innerHTML='<option value="">همهٔ کشورها</option>'+ORDER.map(c=>`<option value="${c}">${CN[c]}</option>`).join('');
+  const u=new Date();u.setUTCHours(6,0,0,0);
+  const lt=u.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  $('sched').innerHTML=`<li><time>${lt}</time><span>جمع‌آوری خودکار آگهی‌های جدید (روزانه)</span></li><li><time>—</time><span>فیلتر عنوان‌های پرستاری و کشورهای هدف</span></li><li><time>—</time><span>ذخیره در دیتابیس و نمایش در همین داشبورد</span></li>`}
+function renderLoc(){const cnt={};ORDER.forEach(c=>cnt[c]=0);all.forEach(j=>{if(cnt[j.country]!==undefined)cnt[j.country]++});
+  $('locList').innerHTML=ORDER.map(k=>`<button class="crow ${selCountry===k?'sel':''}" data-c="${k}">${flag(k)}<span>${CN[k]}</span><b>${isSample?'—':fa(cnt[k])}</b><i>›</i></button>`).join('');
+  document.querySelectorAll('.crow').forEach(r=>r.addEventListener('click',()=>{selCountry=selCountry===r.dataset.c?'':r.dataset.c;$('country').value=selCountry;render();$('jobsPanel').scrollIntoView({behavior:'smooth',block:'nearest'})}));return cnt}
+function renderPipe(){const live=apiOk&&!isSample;
+  const steps=[['جست‌وجوی روزانه (بدون تاریخ پایان)',lastSuccess!==null],['فیلتر عنوان‌های پرستاری و کشورهای هدف',lastSuccess!==null],['ذخیره در دیتابیس',apiOk],['نمایش آگهی‌ها در داشبورد',live]];
+  $('pipe').innerHTML=steps.map(([t,ok])=>`<li><svg style="color:${ok?'#2bd6a0':'#4d4a86'}"><use href="#i-check"/></svg><span style="${ok?'':'color:var(--mute)'}">${t}</span></li>`).join('');
+  const t=$('pipeTag');t.textContent=live?'فعال':apiOk?'منتظر اولین جمع‌آوری':'نیازمند تنظیم';t.className='tag'+(live?'':' warn')}
+function render(){renderLoc();const list=filtered();
+  const day=all.filter(j=>{const t=new Date(j.collected_at||j.posted_at).getTime();return isFinite(t)&&Date.now()-t<864e5}).length;
+  $('stNew').textContent=isSample?'—':fa(day);
+  $('stNewNote').textContent=isSample?'در انتظار اولین جمع‌آوری':'در ۲۴ ساعت گذشته جمع‌آوری شد';
+  $('sampleNote').innerHTML=isSample?'<div class="sample">این چهار کارت فقط <b>نمونهٔ طراحی</b> هستند و آگهی واقعی نیستند. بعد از اولین جمع‌آوری، آگهی‌های واقعی جایگزین می‌شوند.</div>':'';
+  if(!list.length){$('jobs').innerHTML='<div class="empty">آگهی‌ای با این فیلتر پیدا نشد.<br>کشور یا عبارت دیگری را امتحان کن.</div>';return}
+  $('jobs').innerHTML=list.slice(0,100).map(j=>{const w=isSample?{b:'نمونه',c:'b-info',l:''}:when(j.posted_at||j.collected_at);const ok=/^https?:\/\//i.test(j.url||'');
+    const o=ok?`a href="${esc(j.url)}" target="_blank" rel="noopener noreferrer"`:'div';const e=ok?'a':'div';
+    return `<${o} class="job"><div class="jb"><svg><use href="#i-cross"/></svg></div><div class="in"><h3>${esc(j.title||'Untitled')}</h3><p>${esc(j.company||'—')}${j.location?' · '+esc(j.location):''}</p><div class="c">${CN[j.country]?flag(j.country):''}<span>${esc({us:'United States',uk:'United Kingdom',au:'Australia',ca:'Canada',nl:'Netherlands',no:'Norway'}[j.country]||'')}</span></div></div><div class="m"><span class="badge ${w.c}">${w.b}</span><small>${w.l}</small></div><span class="go">›</span></${e}>`}).join('')}
+function setStatus(txt,cls){$('status').textContent=txt;$('status').className='pill '+cls}
 async function load(){
-  $('status').textContent='● در حال بررسی';$('status').className='pill warn';
-  try{const r=await fetch('/api/jobs',{cache:'no-store'});const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||'HTTP '+r.status);
-    all=Array.isArray(d.jobs)?d.jobs:[];apiOk=true;lastSuccess=d.last_success||null;isSample=all.length===0;
-    $('status').textContent='● API متصل';$('status').className='pill ok';
-  }catch(e){all=[];apiOk=false;isSample=true;lastSuccess=null;$('status').textContent='● نیازمند تنظیم API';$('status').className='pill warn';$('status').title=String(e.message||e).slice(0,160)}
-  if(isSample)all=SAMPLE;
-  const live=apiOk&&!isSample;$('liveDot').className='dot'+(live?'':' off');$('liveTxt').textContent=live?'جست‌وجوی روزانه فعال':'جست‌وجوی روزانه — در انتظار راه‌اندازی';
-  $('stLast').textContent=lastSuccess?new Date(lastSuccess).toLocaleString('fa-IR',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
+  setStatus('● در حال بررسی اتصال','warn');
+  const ac=new AbortController(),to=setTimeout(()=>ac.abort(),8000);
+  try{const r=await fetch('/api/jobs',{cache:'no-store',signal:ac.signal});const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||'HTTP '+r.status);
+    const jobs=Array.isArray(d.jobs)?d.jobs:[];apiOk=true;lastSuccess=d.last_success||null;
+    if(jobs.length){all=jobs;isSample=false}else{all=SAMPLE;isSample=true}
+    setStatus('● API متصل','ok');
+  }catch(e){apiOk=false;lastSuccess=null;all=SAMPLE;isSample=true;setStatus('● نیازمند تنظیم API','warn');$('status').title=e.name==='AbortError'?'پاسخی از API نیامد (timeout)':String(e.message||e).slice(0,160)}
+  clearTimeout(to);
+  const live=apiOk&&!isSample;$('liveDot').className='dot'+(live?'':' off');$('liveTxt').textContent=live?'جست‌وجوی روزانه فعال':'جست‌وجوی روزانه در انتظار راه‌اندازی';
   render();renderPipe()}
 function tick(){const d=new Date();$('clk').textContent=d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
-  $('clkDate').textContent=d.toLocaleDateString('fa-IR',{weekday:'long',day:'numeric',month:'long'});$('clkTz').textContent=Intl.DateTimeFormat().resolvedOptions().timeZone}
+  $('clkDate').textContent=d.toLocaleDateString('en-US',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  const tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';const off=-d.getTimezoneOffset();const h=Math.trunc(off/60),m=Math.abs(off%60);
+  $('clkTz').textContent=tz.split('/').pop().replace(/_/g,' ')+' (GMT'+(off>=0?'+':'-')+Math.abs(h)+(m?':'+String(m).padStart(2,'0'):'')+')'}
 $('refresh').addEventListener('click',load);
 $('search').addEventListener('click',render);
 $('q').addEventListener('keydown',e=>{if(e.key==='Enter')render()});
 $('country').addEventListener('change',()=>{selCountry=$('country').value;render()});
 $('allJobs').addEventListener('click',()=>{$('q').value='';$('country').value='';selCountry='';render()});
-document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href').slice(1);const el=document.getElementById(id);if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});document.querySelectorAll('.nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active')}}));
-tick();setInterval(tick,30000);load();
+$('osWin').addEventListener('click',()=>toast('برای ساخت میانبر: در Edge، منوی ⋯ ← Apps ← Install this site as an app'));
+$('osMac').addEventListener('click',()=>toast('در مک (Safari): Share ← Add to Dock'));
+document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();
+  if(a.dataset.soon){toast(a.dataset.soon);return}
+  const el=$(a.dataset.go);if(el){el.scrollIntoView({behavior:'smooth',block:'start'});document.querySelectorAll('.nav a').forEach(x=>x.classList.remove('on'));a.classList.add('on')}}));
+renderStatic();tick();setInterval(tick,30000);
+all=SAMPLE;isSample=true;render();renderPipe();
+load();
 </script>
 </body>
 </html>
