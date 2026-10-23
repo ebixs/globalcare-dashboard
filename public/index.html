@@ -179,9 +179,7 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
   <symbol id="f-uk" viewBox="0 0 24 24"><g clip-path="url(#fc)"><use href="#jack"/></g></symbol>
   <symbol id="f-us" viewBox="0 0 24 24"><g clip-path="url(#fc)"><rect width="24" height="24" fill="#fff"/><path d="M0 .9h24M0 4.6h24M0 8.3h24M0 12h24M0 15.7h24M0 19.4h24M0 23.1h24" stroke="#b22234" stroke-width="1.85"/><rect width="12" height="13" fill="#3c3b6e"/><g fill="#fff"><circle cx="2.5" cy="2.5" r=".7"/><circle cx="6" cy="2.5" r=".7"/><circle cx="9.5" cy="2.5" r=".7"/><circle cx="4.2" cy="5.8" r=".7"/><circle cx="7.8" cy="5.8" r=".7"/><circle cx="2.5" cy="9.2" r=".7"/><circle cx="6" cy="9.2" r=".7"/><circle cx="9.5" cy="9.2" r=".7"/></g></g></symbol>
   <symbol id="f-au" viewBox="0 0 24 24"><g clip-path="url(#fc)"><rect width="24" height="24" fill="#012169"/><g transform="scale(.5)"><use href="#jack"/></g><g fill="#fff"><circle cx="6.5" cy="18" r="2"/><circle cx="17" cy="4.5" r="1.1"/><circle cx="20.5" cy="9.5" r="1.1"/><circle cx="14.5" cy="11.5" r="1.1"/><circle cx="18" cy="18.5" r="1.1"/></g></g></symbol>
-  <symbol id="f-ca" viewBox="0 0 24 24"><g clip-path="url(#fc)"><rect width="24" height="24" fill="#d80621"/><rect x="6" width="12" height="24" fill="#fff"/><path d="M12 4.8l1.3 3.5 2.6-1-.9 4 2.2 1.1-4.2 2.5v3.6h-2v-3.6L6.8 12.4l2.2-1.1-.9-4 2.6 1z" fill="#d80621"/></g></symbol>
   <symbol id="f-nl" viewBox="0 0 24 24"><g clip-path="url(#fc)"><rect width="24" height="8" fill="#ae1c28"/><rect y="8" width="24" height="8" fill="#fff"/><rect y="16" width="24" height="8" fill="#21468b"/></g></symbol>
-  <symbol id="f-no" viewBox="0 0 24 24"><g clip-path="url(#fc)"><rect width="24" height="24" fill="#ba0c2f"/><path d="M8 0v24M0 12h24" stroke="#fff" stroke-width="5"/><path d="M8 0v24M0 12h24" stroke="#00205b" stroke-width="2.4"/></g></symbol>
   <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
   <symbol id="i-tray" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v10H4z"/><path d="M4 14l2 6h12l2-6M9 8h6M9 11h6"/></symbol>
@@ -286,8 +284,8 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
 <script>
 const $=id=>document.getElementById(id);
 const fa=n=>Number(n).toLocaleString('fa-IR');
-const CN={us:'آمریکا',uk:'بریتانیا',au:'استرالیا',ca:'کانادا',nl:'هلند',no:'نروژ'};
-const ORDER=['us','uk','au','ca','nl','no'];
+const CN={us:'آمریکا',uk:'بریتانیا',au:'استرالیا',nl:'هلند'};
+const ORDER=['us','uk','au','nl'];
 const flag=(c,cls='')=>`<svg class="flag ${cls}" viewBox="0 0 24 24" aria-hidden="true"><use href="#f-${c}"/></svg>`;
 const SAMPLE=[
   {title:'Registered Nurse – Medical Ward',company:"St. Vincent's Hospital, Sydney",country:'au'},
@@ -324,7 +322,7 @@ function render(){renderLoc();const list=filtered();
   if(!list.length){$('jobs').innerHTML='<div class="empty">آگهی‌ای با این فیلتر پیدا نشد.<br>کشور یا عبارت دیگری را امتحان کن.</div>';return}
   $('jobs').innerHTML=list.slice(0,100).map(j=>{const w=isSample?{b:'نمونه',c:'b-info',l:''}:when(j.posted_at||j.collected_at);const ok=/^https?:\/\//i.test(j.url||'');
     const o=ok?`a href="${esc(j.url)}" target="_blank" rel="noopener noreferrer"`:'div';const e=ok?'a':'div';
-    return `<${o} class="job"><div class="jb"><svg><use href="#i-cross"/></svg></div><div class="in"><h3>${esc(j.title||'Untitled')}</h3><p>${esc(j.company||'—')}${j.location?' · '+esc(j.location):''}</p><div class="c">${CN[j.country]?flag(j.country):''}<span>${esc({us:'United States',uk:'United Kingdom',au:'Australia',ca:'Canada',nl:'Netherlands',no:'Norway'}[j.country]||'')}</span></div></div><div class="m"><span class="badge ${w.c}">${w.b}</span><small>${w.l}</small></div><span class="go">›</span></${e}>`}).join('')}
+    return `<${o} class="job"><div class="jb"><svg><use href="#i-cross"/></svg></div><div class="in"><h3>${esc(j.title||'Untitled')}</h3><p>${esc(j.company||'—')}${j.location?' · '+esc(j.location):''}</p><div class="c">${CN[j.country]?flag(j.country):''}<span>${esc({us:'United States',uk:'United Kingdom',au:'Australia',nl:'Netherlands'}[j.country]||'')}</span></div></div><div class="m"><span class="badge ${w.c}">${w.b}</span><small>${w.l}</small></div><span class="go">›</span></${e}>`}).join('')}
 function setStatus(txt,cls){$('status').textContent=txt;$('status').className='pill '+cls}
 async function load(){
   setStatus('● در حال بررسی اتصال','warn');

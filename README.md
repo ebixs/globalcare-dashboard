@@ -22,7 +22,6 @@ The dashboard is deployed from this repository through Cloudflare's Git integrat
 - `src/collect.js` — feed collector that writes to D1
 - `wrangler.jsonc` — Worker, assets, D1 binding and cron configuration
 - `sql/schema.sql` — D1 schema
-- `sql/002_add_canada_norway.sql` — one-time migration for databases created before Canada and Norway were added
 - `README_FA.md` — Persian setup guide
 
 ## Important limitations
@@ -34,7 +33,7 @@ Listings are informational and may be incomplete or stale. Verify each role and 
 1. Create a D1 database and run `sql/schema.sql` in its Console.
 2. Put the database ID in `wrangler.jsonc`.
 3. Connect this repository to a Cloudflare Worker named `globalcare-dashboard` (Workers & Pages → Git integration).
-   Target countries: US, UK, Australia, Canada, Netherlands, Norway.
+   Target countries: US, UK, Australia, Netherlands.
 4. Optionally set an `ADMIN_TOKEN` secret to allow a manual `POST /api/collect` with `Authorization: Bearer <token>`.
 
 Never commit API tokens, passwords, or other secrets.

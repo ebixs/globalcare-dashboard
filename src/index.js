@@ -1,6 +1,6 @@
 import { collect } from './collect.js';
 
-const COUNTRIES = ['us', 'uk', 'au', 'ca', 'nl', 'no'];
+const COUNTRIES = ['us', 'uk', 'au', 'nl'];
 
 const cors = () => ({
   'Access-Control-Allow-Origin': '*',
