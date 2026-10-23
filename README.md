@@ -16,8 +16,8 @@ The dashboard is deployed from this repository through Cloudflare's Git integrat
 
 ## Repository layout
 
-- `public/index.html` — dashboard UI
-- `public/assets/` — static images
+- `src/dashboard.html` — dashboard UI (served by the Worker, only after login)
+- `public/assets/` — decorative images (public, no private data)
 - `src/index.js` — Worker entry: `/api/jobs`, `/api/collect`, static assets, cron handler
 - `src/collect.js` — feed collector that writes to D1
 - `wrangler.jsonc` — Worker, assets, D1 binding and cron configuration

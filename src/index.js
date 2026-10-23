@@ -1,9 +1,15 @@
 import { collect } from './collect.js';
+import dashboardHtml from './dashboard.html';
 import { isLoggedIn, passwordMatches, sessionCookie, clearedCookie, loginPage, setupPage } from './auth.js';
 
 const COUNTRIES = ['us', 'uk', 'au', 'nl'];
 
 const cors = () => ({ 'Cache-Control': 'no-store' });
+
+const withTimeout = (promise, ms) => Promise.race([
+  promise,
+  new Promise((_, reject) => setTimeout(() => reject(new Error('Database timeout')), ms))
+]);
 
 async function listJobs(url, env) {
   if (!env.DB) {
@@ -16,8 +22,8 @@ async function listJobs(url, env) {
   if (COUNTRIES.includes(country)) { sql += ' AND country = ?'; args.push(country); }
   if (q) { sql += ' AND (title LIKE ? OR company LIKE ? OR location LIKE ?)'; args.push(`%${q}%`, `%${q}%`, `%${q}%`); }
   sql += ' ORDER BY COALESCE(posted_at, collected_at) DESC LIMIT 200';
-  const { results } = await env.DB.prepare(sql).bind(...args).all();
-  const meta = await env.DB.prepare('SELECT value FROM metadata WHERE key = ?').bind('last_success').first();
+  const { results } = await withTimeout(env.DB.prepare(sql).bind(...args).all(), 6000);
+  const meta = await withTimeout(env.DB.prepare('SELECT value FROM metadata WHERE key = ?').bind('last_success').first(), 6000);
   return Response.json({
     jobs: results,
     count: results.length,
@@ -86,7 +92,12 @@ export default {
 
     if (isApi) return new Response('Not found', { status: 404, headers: cors() });
 
-    // Everything else is the static dashboard.
+    // The dashboard page is served by the Worker, so it is only visible after login.
+    if ((path === '/' || path === '/index.html') && request.method === 'GET') {
+      return new Response(dashboardHtml, { headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } });
+    }
+
+    // Decorative images only (no private data).
     return env.ASSETS.fetch(request);
   },
 

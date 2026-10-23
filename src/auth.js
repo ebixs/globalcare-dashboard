@@ -52,16 +52,15 @@ export async function isLoggedIn(request, password) {
 const SHELL = (body) => `<!doctype html>
 <html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex"><title>GlobalCare — ورود</title>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:20px;color:#f3f1ff;font-family:Vazirmatn,Tahoma,"Segoe UI",sans-serif;
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:20px;color:#f3f1ff;font-family:"Segoe UI",Tahoma,"Noto Sans Arabic",system-ui,sans-serif;
 background:linear-gradient(180deg,#f0b6d3 0%,#b79af0 20%,#7480e6 42%,#3f4cae 68%,#1a2160 100%)}
 .card{width:min(400px,100%);border:1px solid rgba(143,128,255,.35);border-radius:24px;padding:30px 26px;background:linear-gradient(165deg,rgba(21,18,70,.9),rgba(9,8,38,.94));box-shadow:0 30px 80px rgba(8,6,40,.6)}
-.logo{display:flex;align-items:center;gap:12px;direction:ltr;margin-bottom:22px}.logo svg{width:44px;height:44px}.logo b{display:block;font:600 20px Inter,sans-serif}.logo small{color:#aeaadb;font:13px Inter,sans-serif}
+.logo{display:flex;align-items:center;gap:12px;direction:ltr;margin-bottom:22px}.logo svg{width:44px;height:44px}.logo b{display:block;font:600 20px 'Segoe UI',system-ui,sans-serif}.logo small{color:#aeaadb;font:13px 'Segoe UI',system-ui,sans-serif}
 h1{margin:0 0 6px;font-size:20px;font-weight:800}p{margin:0 0 18px;color:#aeaadb;font-size:13px;line-height:1.9}
 label{display:block;font-size:13px;margin-bottom:8px}input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(143,128,255,.4);background:#0a083099;color:inherit;font:inherit;direction:ltr;text-align:left}
 input:focus-visible,button:focus-visible{outline:2px solid #b9a7ff;outline-offset:2px}
-button{width:100%;margin-top:16px;padding:12px;border:0;border-radius:12px;background:linear-gradient(90deg,#7c5cff,#6a4ae6);color:#fff;font:700 14px Vazirmatn,Tahoma,sans-serif;cursor:pointer}
+button{width:100%;margin-top:16px;padding:12px;border:0;border-radius:12px;background:linear-gradient(90deg,#7c5cff,#6a4ae6);color:#fff;font:700 14px 'Segoe UI',Tahoma,sans-serif;cursor:pointer}
 .err{margin:0 0 14px;padding:10px 12px;border:1px solid #8a2c55;background:#4d1833aa;border-radius:10px;color:#fda4af;font-size:13px}
 code{direction:ltr;unicode-bidi:isolate;background:#ffffff14;border-radius:6px;padding:1px 6px}
 </style></head><body><main class="card">

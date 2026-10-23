@@ -10,8 +10,8 @@ GlobalCare یک داشبورد جست‌وجوی آگهی‌های شغلی پر
 - هرگز توکن یا رمز را در مخزن عمومی commit نکنید.
 
 ## ساختار
-- `public/index.html`: رابط داشبورد
-- `public/assets/`: تصاویر
+- `src/dashboard.html`: رابط داشبورد (فقط بعد از ورود توسط Worker نمایش داده می‌شود)
+- `public/assets/`: تصاویر تزئینی (عمومی و بدون اطلاعات شخصی)
 - `src/index.js`: ورودی Worker (مسیرهای `/api/jobs` و `/api/collect`، فایل‌های استاتیک و cron)
 - `src/collect.js`: جمع‌آورندهٔ آگهی‌ها که در D1 می‌نویسد
 - `wrangler.jsonc`: تنظیمات Worker، فایل‌های استاتیک، دیتابیس و زمان‌بندی
