@@ -34,6 +34,7 @@ Listings are informational and may be incomplete or stale. Verify each role and 
 2. Put the database ID in `wrangler.jsonc`.
 3. Connect this repository to a Cloudflare Worker named `globalcare-dashboard` (Workers & Pages → Git integration).
    Target countries: US, UK, Australia, Netherlands.
-4. Optionally set an `ADMIN_TOKEN` secret to allow a manual `POST /api/collect` with `Authorization: Bearer <token>`.
+4. Set a `APP_PASSWORD` secret (Workers & Pages → the Worker → Settings → Variables and Secrets → type **Secret**). Without it the site shows only a setup notice. Everything, including the API, requires this password.
+5. Optionally set an `ADMIN_TOKEN` secret to allow a manual `POST /api/collect` with `Authorization: Bearer <token>`.
 
 Never commit API tokens, passwords, or other secrets.

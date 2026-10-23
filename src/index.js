@@ -1,13 +1,9 @@
 import { collect } from './collect.js';
+import { isLoggedIn, passwordMatches, sessionCookie, clearedCookie, loginPage, setupPage } from './auth.js';
 
 const COUNTRIES = ['us', 'uk', 'au', 'nl'];
 
-const cors = () => ({
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET,OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Cache-Control': 'no-store'
-});
+const cors = () => ({ 'Cache-Control': 'no-store' });
 
 async function listJobs(url, env) {
   if (!env.DB) {
@@ -33,27 +29,11 @@ async function listJobs(url, env) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    const path = url.pathname;
+    const isApi = path.startsWith('/api/');
 
-    if (request.method === 'OPTIONS' && url.pathname.startsWith('/api/')) {
-      return new Response(null, { headers: cors() });
-    }
-
-    if (url.pathname === '/api/health' && request.method === 'GET') {
-      let db = false;
-      try { if (env.DB) { await env.DB.prepare('SELECT 1').first(); db = true; } } catch (e) { db = false; }
-      return Response.json({ ok: true, db }, { headers: cors() });
-    }
-
-    if (url.pathname === '/api/jobs' && request.method === 'GET') {
-      try {
-        return await listJobs(url, env);
-      } catch (e) {
-        return Response.json({ error: String(e.message || e).slice(0, 200), jobs: [], count: 0 }, { status: 500, headers: cors() });
-      }
-    }
-
-    // Manual collection trigger, protected by the ADMIN_TOKEN secret.
-    if (url.pathname === '/api/collect' && request.method === 'POST') {
+    // Manual collection trigger: its own bearer token, independent of the login.
+    if (path === '/api/collect' && request.method === 'POST') {
       if (!env.ADMIN_TOKEN || request.headers.get('Authorization') !== `Bearer ${env.ADMIN_TOKEN}`) {
         return new Response('Unauthorized', { status: 401, headers: cors() });
       }
@@ -65,9 +45,46 @@ export default {
       }
     }
 
-    if (url.pathname.startsWith('/api/')) {
-      return new Response('Not found', { status: 404, headers: cors() });
+    // Reveals nothing private: only whether the Worker and database respond.
+    if (path === '/api/health' && request.method === 'GET') {
+      let db = false;
+      try { if (env.DB) { await env.DB.prepare('SELECT 1').first(); db = true; } } catch (e) { db = false; }
+      return Response.json({ ok: true, db, login: Boolean(env.APP_PASSWORD) }, { headers: cors() });
     }
+
+    // Fail closed: without APP_PASSWORD nothing else is served.
+    const password = env.APP_PASSWORD;
+    if (!password) {
+      return isApi ? Response.json({ error: 'Login is not configured' }, { status: 503, headers: cors() }) : setupPage();
+    }
+
+    if (path === '/login' && request.method === 'POST') {
+      let input = '';
+      try { input = String((await request.formData()).get('password') || '').slice(0, 200); } catch (e) { input = ''; }
+      if (input && await passwordMatches(input, password)) {
+        return new Response(null, { status: 303, headers: { Location: '/', 'Set-Cookie': await sessionCookie(password), 'Cache-Control': 'no-store' } });
+      }
+      await new Promise(r => setTimeout(r, 800)); // slow down guessing
+      return loginPage('رمز عبور درست نیست.');
+    }
+
+    if (path === '/logout' && request.method === 'POST') {
+      return new Response(null, { status: 303, headers: { Location: '/', 'Set-Cookie': clearedCookie(), 'Cache-Control': 'no-store' } });
+    }
+
+    if (!(await isLoggedIn(request, password))) {
+      return isApi ? Response.json({ error: 'Login required' }, { status: 401, headers: cors() }) : loginPage();
+    }
+
+    if (path === '/api/jobs' && request.method === 'GET') {
+      try {
+        return await listJobs(url, env);
+      } catch (e) {
+        return Response.json({ error: String(e.message || e).slice(0, 200), jobs: [], count: 0 }, { status: 500, headers: cors() });
+      }
+    }
+
+    if (isApi) return new Response('Not found', { status: 404, headers: cors() });
 
     // Everything else is the static dashboard.
     return env.ASSETS.fetch(request);
