@@ -1,0 +1,22 @@
+{
+  "name": "globalcare-dashboard",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "globalcaredb",
+      "database_id": "bd63770d-0640-4ea8-a71c-1f973803d337"
+    }
+  ],
+  "triggers": {
+    "crons": ["0 6 * * *"]
+  },
+  "observability": {
+    "enabled": true
+  }
+}

@@ -1,38 +1,38 @@
 # GlobalCare Dashboard
 
-A nursing-job discovery dashboard for exploring public listings and preparing a deployment with Cloudflare Pages, D1, and a scheduled Worker.
+A nursing-job discovery dashboard for exploring public listings. It runs as a single Cloudflare Worker that serves the static dashboard, a read-only jobs API, and a daily collector backed by a D1 database.
 
 ## Project status
 
-This repository contains the application source and deployment configuration. A GitHub commit alone does not publish the site; Cloudflare configuration and a successful deployment are still required.
+The dashboard is deployed from this repository through Cloudflare's Git integration. Listings only appear after the D1 database has data, which the daily collector (or a manual trigger) provides. Until then the dashboard shows clearly labelled sample cards.
 
 ## Features
 
-- Responsive job-search dashboard
-- Public job-feed fallback when the API is unavailable
-- Cloudflare Pages Functions API endpoint
-- Worker-based scheduled job collection
+- Responsive Persian (RTL) job-search dashboard
+- Clearly labelled sample cards when the API has no data
+- `/api/jobs` read-only endpoint backed by D1
+- Scheduled daily collection from public job feeds (06:00 UTC)
 - D1 database schema
 
 ## Repository layout
 
-- `index.html` — dashboard UI
-- `functions/api/jobs.js` — Pages API endpoint
-- `collector/worker.js` — scheduled collector
-- `collector/wrangler.toml` — Worker configuration template
+- `public/index.html` — dashboard UI
+- `public/assets/` — static images
+- `src/index.js` — Worker entry: `/api/jobs`, `/api/collect`, static assets, cron handler
+- `src/collect.js` — feed collector that writes to D1
+- `wrangler.jsonc` — Worker, assets, D1 binding and cron configuration
 - `sql/schema.sql` — D1 schema
-- `.github/workflows/deploy-pages.yml` — GitHub Actions deployment workflow
-- `README_FA.md` — Persian setup and deployment guide
+- `README_FA.md` — Persian setup guide
 
 ## Important limitations
 
-Listings are informational and may be incomplete or stale. Verify each role and eligibility requirements on the employer's official website. The current collector uses public feeds and keyword-based filtering; it is not a comprehensive search of every employer or country. The dashboard does not submit job applications.
+Listings are informational and may be incomplete or stale. Verify each role and eligibility requirements on the employer's official website. The collector uses public feeds and keyword-based filtering; it is not a comprehensive search of every employer or country. The dashboard does not submit job applications.
 
-## Deployment overview
+## Setup overview
 
-1. Read `README_FA.md` and configure the required Cloudflare resources.
-2. Set the repository secrets and variables required by `.github/workflows/deploy-pages.yml`.
-3. Configure the D1 database and Worker bindings using the provided templates.
-4. Push to `main`, then verify the GitHub Actions run and deployed Pages URL.
+1. Create a D1 database and run `sql/schema.sql` in its Console.
+2. Put the database ID in `wrangler.jsonc`.
+3. Connect this repository to a Cloudflare Worker named `globalcare-dashboard` (Workers & Pages → Git integration).
+4. Optionally set an `ADMIN_TOKEN` secret to allow a manual `POST /api/collect` with `Authorization: Bearer <token>`.
 
 Never commit API tokens, passwords, or other secrets.

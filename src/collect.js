@@ -4,11 +4,7 @@ const FEEDS = [
 ];
 const NURSING = /\bnurs(e|ing|es)\b|registered nurse|staff nurse|healthcare assistant|care assistant|midwi(fe|fery)|verpleegkundige|pflegefach|pflegekraft|clinical support worker|patient care/i;
 function countryOf(s='') { s=s.toLowerCase(); if (/united states|\busa\b|u\.s\.a|america|new york|california|texas|florida|boston|chicago/.test(s)) return 'us'; if (/united kingdom|\buk\b|england|scotland|wales|northern ireland|london|manchester|birmingham/.test(s)) return 'uk'; if (/australia|sydney|melbourne|brisbane|perth|adelaide/.test(s)) return 'au'; if (/netherlands|nederland|holland|amsterdam|rotterdam|utrecht|eindhoven/.test(s)) return 'nl'; return 'other'; }
-export default {
- async scheduled(controller, env, ctx) { ctx.waitUntil(collect(env)); },
- async fetch(request, env) { if (new URL(request.url).pathname === '/health') return Response.json({ok:true,service:'GlobalCare collector'}); if (!env.ADMIN_TOKEN || request.headers.get('Authorization') !== `Bearer ${env.ADMIN_TOKEN}`) return new Response('Unauthorized',{status:401}); await collect(env); return Response.json({ok:true,message:'Collection finished'}); }
-};
-async function collect(env) {
+export async function collect(env) {
  if (!env.DB) throw new Error('D1 binding DB is not configured');
  const collected = new Date().toISOString(); let total = 0; const errors=[];
  for (const feed of FEEDS) { try { const r=await fetch(feed.url,{headers:{Accept:'application/json','User-Agent':'GlobalCareJobPipeline/1.0'}}); if(!r.ok) throw new Error(`HTTP ${r.status}`); const body=await r.json(); const items=Array.isArray(body.data)?body.data:(Array.isArray(body)?body:[]);
