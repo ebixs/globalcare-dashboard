@@ -11,7 +11,7 @@ The dashboard is deployed from this repository through Cloudflare's Git integrat
 - Responsive Persian (RTL) job-search dashboard
 - Clearly labelled sample cards when the API has no data
 - `/api/jobs` read-only endpoint backed by D1
-- Scheduled daily collection from public job feeds (06:00 UTC)
+- Scheduled daily collection from public job feeds (every 6 hours)
 - D1 database schema
 
 ## Repository layout

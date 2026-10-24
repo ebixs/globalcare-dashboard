@@ -302,9 +302,7 @@ function filtered(){const q=$('q').value.trim().toLowerCase(),c=$('country').val
 function renderStatic(){
   $('heroFlags').innerHTML=ORDER.map(c=>`<div><span>${CN[c]}</span>${flag(c)}</div>`).join('');
   $('country').innerHTML='<option value="">همهٔ کشورها</option>'+ORDER.map(c=>`<option value="${c}">${CN[c]}</option>`).join('');
-  const u=new Date();u.setUTCHours(6,0,0,0);
-  const lt=u.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
-  $('sched').innerHTML=`<li><time>${lt}</time><span>جمع‌آوری خودکار آگهی‌های جدید (روزانه)</span></li><li><time>—</time><span>فیلتر عنوان‌های پرستاری و کشورهای هدف</span></li><li><time>—</time><span>ذخیره در دیتابیس و نمایش در همین داشبورد</span></li>`}
+  $('sched').innerHTML=`<li><time>۶ ساعت</time><span>جمع‌آوری خودکار آگهی‌های جدید (هر ۶ ساعت)</span></li><li><time>—</time><span>فیلتر عنوان‌های پرستاری و کشورهای هدف</span></li><li><time>—</time><span>ذخیره در دیتابیس و نمایش در همین داشبورد</span></li>`}
 function renderLoc(){const cnt={};ORDER.forEach(c=>cnt[c]=0);all.forEach(j=>{if(cnt[j.country]!==undefined)cnt[j.country]++});
   $('locList').innerHTML=ORDER.map(k=>`<button class="crow ${selCountry===k?'sel':''}" data-c="${k}">${flag(k)}<span>${CN[k]}</span><b>${isSample?'—':fa(cnt[k])}</b><i>›</i></button>`).join('');
   document.querySelectorAll('.crow').forEach(r=>r.addEventListener('click',()=>{selCountry=selCountry===r.dataset.c?'':r.dataset.c;$('country').value=selCountry;render();$('jobsPanel').scrollIntoView({behavior:'smooth',block:'nearest'})}));return cnt}
@@ -332,7 +330,7 @@ async function load(){
   }catch(e){apiOk=false;lastSuccess=null;all=SAMPLE;isSample=true;setStatus('● نیازمند تنظیم API','warn');apiErr=e.name==='AbortError'?'No response from the server within 25 seconds':String(e.message||e).slice(0,160);$('status').title=apiErr}
   clearTimeout(to);
   if(!apiOk){apiErr+=' | '+await probe();}
-  const live=apiOk&&!isSample;$('liveDot').className='dot'+(live?'':' off');$('liveTxt').textContent=live?'جست‌وجوی روزانه فعال':'جست‌وجوی روزانه در انتظار راه‌اندازی';
+  const live=apiOk&&!isSample;$('liveDot').className='dot'+(live?'':' off');$('liveTxt').textContent=live?'جست‌وجوی خودکار فعال':'جست‌وجوی خودکار در انتظار اولین جمع‌آوری';
   render();renderPipe()}
 async function probe(){
   const t0=performance.now();
