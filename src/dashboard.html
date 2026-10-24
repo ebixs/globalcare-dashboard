@@ -291,7 +291,7 @@ const SAMPLE=[
   {title:'Registered Nurse – Med/Surg',company:'HCA Healthcare',country:'us'},
   {title:'Verpleegkundige (Nurse)',company:'Zorggroep',country:'nl'}
 ];
-let all=[],isSample=true,apiOk=false,lastSuccess=null,selCountry='',toastT;
+let apiErr='',all=[],isSample=true,apiOk=false,lastSuccess=null,selCountry='',toastT;
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),3200)}
 function when(iso){const t=iso?new Date(iso).getTime():NaN;if(!isFinite(t))return{b:'فعال',c:'b-ok',l:''};
@@ -316,7 +316,7 @@ function render(){renderLoc();const list=filtered();
   const day=all.filter(j=>{const t=new Date(j.collected_at||j.posted_at).getTime();return isFinite(t)&&Date.now()-t<864e5}).length;
   $('stNew').textContent=isSample?'—':fa(day);
   $('stNewNote').textContent=isSample?'در انتظار اولین جمع‌آوری':'در ۲۴ ساعت گذشته جمع‌آوری شد';
-  $('sampleNote').innerHTML=isSample?'<div class="sample">این چهار کارت فقط <b>نمونهٔ طراحی</b> هستند و آگهی واقعی نیستند. بعد از اولین جمع‌آوری، آگهی‌های واقعی جایگزین می‌شوند.</div>':'';
+  $('sampleNote').innerHTML=isSample?(apiErr?'<div class="sample" dir="ltr" style="text-align:left;color:#fda4af;border-color:#8a2c55;background:#4d183366">API error: '+esc(apiErr)+'</div>':'')+'<div class="sample">این چهار کارت فقط <b>نمونهٔ طراحی</b> هستند و آگهی واقعی نیستند. بعد از اولین جمع‌آوری، آگهی‌های واقعی جایگزین می‌شوند.</div>':'';
   if(!list.length){$('jobs').innerHTML='<div class="empty">آگهی‌ای با این فیلتر پیدا نشد.<br>کشور یا عبارت دیگری را امتحان کن.</div>';return}
   $('jobs').innerHTML=list.slice(0,100).map(j=>{const w=isSample?{b:'نمونه',c:'b-info',l:''}:when(j.posted_at||j.collected_at);const ok=/^https?:\/\//i.test(j.url||'');
     const o=ok?`a href="${esc(j.url)}" target="_blank" rel="noopener noreferrer"`:'div';const e=ok?'a':'div';
@@ -329,7 +329,7 @@ async function load(){
     const jobs=Array.isArray(d.jobs)?d.jobs:[];apiOk=true;lastSuccess=d.last_success||null;
     if(jobs.length){all=jobs;isSample=false}else{all=SAMPLE;isSample=true}
     setStatus('● API متصل','ok');
-  }catch(e){apiOk=false;lastSuccess=null;all=SAMPLE;isSample=true;setStatus('● نیازمند تنظیم API','warn');$('status').title=e.name==='AbortError'?'پاسخی از API نیامد (timeout)':String(e.message||e).slice(0,160)}
+  }catch(e){apiOk=false;lastSuccess=null;all=SAMPLE;isSample=true;setStatus('● نیازمند تنظیم API','warn');apiErr=e.name==='AbortError'?'پاسخی از API نیامد (timeout)':String(e.message||e).slice(0,160);$('status').title=apiErr}
   clearTimeout(to);
   const live=apiOk&&!isSample;$('liveDot').className='dot'+(live?'':' off');$('liveTxt').textContent=live?'جست‌وجوی روزانه فعال':'جست‌وجوی روزانه در انتظار راه‌اندازی';
   render();renderPipe()}

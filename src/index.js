@@ -51,11 +51,13 @@ export default {
       }
     }
 
-    // Reveals nothing private: only whether the Worker and database respond.
+    // Reveals nothing private: only whether the Worker, database and tables respond.
     if (path === '/api/health' && request.method === 'GET') {
-      let db = false;
-      try { if (env.DB) { await env.DB.prepare('SELECT 1').first(); db = true; } } catch (e) { db = false; }
-      return Response.json({ ok: true, db, login: Boolean(env.APP_PASSWORD) }, { headers: cors() });
+      const check = async (sql) => { try { await withTimeout(env.DB.prepare(sql).first(), 4000); return true; } catch (e) { console.error('health check failed', sql, String(e && e.message || e)); return false; } };
+      const hasDb = Boolean(env.DB);
+      const jobs = hasDb ? await check('SELECT 1 FROM jobs LIMIT 1') : false;
+      const metadata = hasDb ? await check('SELECT 1 FROM metadata LIMIT 1') : false;
+      return Response.json({ ok: true, db: hasDb, tables: { jobs, metadata }, login: Boolean(env.APP_PASSWORD) }, { headers: cors() });
     }
 
     // Fail closed: without APP_PASSWORD nothing else is served.
@@ -86,6 +88,7 @@ export default {
       try {
         return await listJobs(url, env);
       } catch (e) {
+        console.error('jobs query failed', String(e && e.message || e));
         return Response.json({ error: String(e.message || e).slice(0, 200), jobs: [], count: 0 }, { status: 500, headers: cors() });
       }
     }
