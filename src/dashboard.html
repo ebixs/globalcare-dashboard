@@ -331,8 +331,18 @@ async function load(){
     setStatus('● API متصل','ok');
   }catch(e){apiOk=false;lastSuccess=null;all=SAMPLE;isSample=true;setStatus('● نیازمند تنظیم API','warn');apiErr=e.name==='AbortError'?'No response from the server within 25 seconds':String(e.message||e).slice(0,160);$('status').title=apiErr}
   clearTimeout(to);
+  if(!apiOk){apiErr+=' | '+await probe();}
   const live=apiOk&&!isSample;$('liveDot').className='dot'+(live?'':' off');$('liveTxt').textContent=live?'جست‌وجوی روزانه فعال':'جست‌وجوی روزانه در انتظار راه‌اندازی';
   render();renderPipe()}
+async function probe(){
+  const t0=performance.now();
+  try{const ac=new AbortController(),x=setTimeout(()=>ac.abort(),10000);
+    const r=await fetch('/api/health',{cache:'no-store',signal:ac.signal});clearTimeout(x);
+    const d=await r.json().catch(()=>({}));const ms=Math.round(performance.now()-t0);
+    const tb=d.tables?('jobs '+(d.tables.jobs?'ok':'FAIL')+' '+((d.ms||{}).jobs??'?')+'ms, metadata '+(d.tables.metadata?'ok':'FAIL')+' '+((d.ms||{}).metadata??'?')+'ms'):'no table info';
+    return 'health: HTTP '+r.status+' in '+ms+'ms; '+tb;
+  }catch(e){return 'health: no response in 10s ('+(e.name||'error')+')'}
+}
 function tick(){const d=new Date();$('clk').textContent=d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
   $('clkDate').textContent=d.toLocaleDateString('en-US',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
   const tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';const off=-d.getTimezoneOffset();const h=Math.trunc(off/60),m=Math.abs(off%60);
