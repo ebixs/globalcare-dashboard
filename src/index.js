@@ -6,9 +6,9 @@ const COUNTRIES = ['us', 'uk', 'au', 'nl'];
 
 const cors = () => ({ 'Cache-Control': 'no-store' });
 
-const withTimeout = (promise, ms) => Promise.race([
+const withTimeout = (promise, ms, label = 'Database') => Promise.race([
   promise,
-  new Promise((_, reject) => setTimeout(() => reject(new Error('Database timeout')), ms))
+  new Promise((_, reject) => setTimeout(() => reject(new Error(label + ' timeout after ' + ms + 'ms')), ms))
 ]);
 
 async function listJobs(url, env) {
@@ -22,12 +22,18 @@ async function listJobs(url, env) {
   if (COUNTRIES.includes(country)) { sql += ' AND country = ?'; args.push(country); }
   if (q) { sql += ' AND (title LIKE ? OR company LIKE ? OR location LIKE ?)'; args.push(`%${q}%`, `%${q}%`, `%${q}%`); }
   sql += ' ORDER BY COALESCE(posted_at, collected_at) DESC LIMIT 200';
-  const { results } = await withTimeout(env.DB.prepare(sql).bind(...args).all(), 6000);
-  const meta = await withTimeout(env.DB.prepare('SELECT value FROM metadata WHERE key = ?').bind('last_success').first(), 6000);
+  const started = Date.now();
+  const stmt = args.length ? env.DB.prepare(sql).bind(...args) : env.DB.prepare(sql);
+  const [rows, meta] = await Promise.all([
+    withTimeout(stmt.all(), 9000, 'jobs query'),
+    withTimeout(env.DB.prepare('SELECT value FROM metadata WHERE key = ?').bind('last_success').first(), 9000, 'metadata query')
+  ]);
+  const results = rows.results || [];
   return Response.json({
     jobs: results,
     count: results.length,
     last_success: meta?.value || null,
+    ms: Date.now() - started,
     source_coverage: 'Public Arbeitnow feeds only; not comprehensive.'
   }, { headers: cors() });
 }
@@ -53,11 +59,16 @@ export default {
 
     // Reveals nothing private: only whether the Worker, database and tables respond.
     if (path === '/api/health' && request.method === 'GET') {
-      const check = async (sql) => { try { await withTimeout(env.DB.prepare(sql).first(), 4000); return true; } catch (e) { console.error('health check failed', sql, String(e && e.message || e)); return false; } };
+      const check = async (sql) => {
+        const t0 = Date.now();
+        try { await withTimeout(env.DB.prepare(sql).first(), 8000, 'health check'); return { ok: true, ms: Date.now() - t0 }; }
+        catch (e) { console.error('health check failed', sql, String(e && e.message || e)); return { ok: false, ms: Date.now() - t0 }; }
+      };
       const hasDb = Boolean(env.DB);
-      const jobs = hasDb ? await check('SELECT 1 FROM jobs LIMIT 1') : false;
-      const metadata = hasDb ? await check('SELECT 1 FROM metadata LIMIT 1') : false;
-      return Response.json({ ok: true, db: hasDb, tables: { jobs, metadata }, login: Boolean(env.APP_PASSWORD) }, { headers: cors() });
+      const jobsCheck = hasDb ? await check('SELECT 1 FROM jobs LIMIT 1') : { ok: false, ms: 0 };
+      const metaCheck = hasDb ? await check('SELECT 1 FROM metadata LIMIT 1') : { ok: false, ms: 0 };
+      const jobs = jobsCheck.ok, metadata = metaCheck.ok;
+      return Response.json({ ok: true, db: hasDb, tables: { jobs, metadata }, ms: { jobs: jobsCheck.ms, metadata: metaCheck.ms }, login: Boolean(env.APP_PASSWORD) }, { headers: cors() });
     }
 
     // Fail closed: without APP_PASSWORD nothing else is served.

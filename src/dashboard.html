@@ -324,12 +324,12 @@ function render(){renderLoc();const list=filtered();
 function setStatus(txt,cls){$('status').textContent=txt;$('status').className='pill '+cls}
 async function load(){
   setStatus('● در حال بررسی اتصال','warn');
-  const ac=new AbortController(),to=setTimeout(()=>ac.abort(),8000);
+  const ac=new AbortController(),to=setTimeout(()=>ac.abort(),25000);
   try{const r=await fetch('/api/jobs',{cache:'no-store',signal:ac.signal});const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||'HTTP '+r.status);
     const jobs=Array.isArray(d.jobs)?d.jobs:[];apiOk=true;lastSuccess=d.last_success||null;
     if(jobs.length){all=jobs;isSample=false}else{all=SAMPLE;isSample=true}
     setStatus('● API متصل','ok');
-  }catch(e){apiOk=false;lastSuccess=null;all=SAMPLE;isSample=true;setStatus('● نیازمند تنظیم API','warn');apiErr=e.name==='AbortError'?'پاسخی از API نیامد (timeout)':String(e.message||e).slice(0,160);$('status').title=apiErr}
+  }catch(e){apiOk=false;lastSuccess=null;all=SAMPLE;isSample=true;setStatus('● نیازمند تنظیم API','warn');apiErr=e.name==='AbortError'?'No response from the server within 25 seconds':String(e.message||e).slice(0,160);$('status').title=apiErr}
   clearTimeout(to);
   const live=apiOk&&!isSample;$('liveDot').className='dot'+(live?'':' off');$('liveTxt').textContent=live?'جست‌وجوی روزانه فعال':'جست‌وجوی روزانه در انتظار راه‌اندازی';
   render();renderPipe()}
