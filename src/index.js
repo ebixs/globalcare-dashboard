@@ -34,7 +34,7 @@ async function listJobs(url, env) {
     count: results.length,
     last_success: meta?.value || null,
     ms: Date.now() - started,
-    source_coverage: 'Public Arbeitnow feeds only; not comprehensive.'
+    source_coverage: 'Public Arbeitnow feeds and Adzuna (when configured); not comprehensive.'
   }, { headers: cors() });
 }
 
@@ -50,8 +50,8 @@ export default {
         return new Response('Unauthorized', { status: 401, headers: cors() });
       }
       try {
-        await collect(env);
-        return Response.json({ ok: true, message: 'Collection finished' }, { headers: cors() });
+        const summary = await collect(env);
+        return Response.json({ ok: true, ...summary }, { headers: cors() });
       } catch (e) {
         return Response.json({ ok: false, error: String(e.message || e).slice(0, 200) }, { status: 500, headers: cors() });
       }
@@ -68,7 +68,7 @@ export default {
       const jobsCheck = hasDb ? await check('SELECT 1 FROM jobs LIMIT 1') : { ok: false, ms: 0 };
       const metaCheck = hasDb ? await check('SELECT 1 FROM metadata LIMIT 1') : { ok: false, ms: 0 };
       const jobs = jobsCheck.ok, metadata = metaCheck.ok;
-      return Response.json({ ok: true, db: hasDb, tables: { jobs, metadata }, ms: { jobs: jobsCheck.ms, metadata: metaCheck.ms }, login: Boolean(env.APP_PASSWORD) }, { headers: cors() });
+      return Response.json({ ok: true, db: hasDb, tables: { jobs, metadata }, ms: { jobs: jobsCheck.ms, metadata: metaCheck.ms }, login: Boolean(env.APP_PASSWORD), adzuna: Boolean(env.ADZUNA_APP_ID && env.ADZUNA_APP_KEY) }, { headers: cors() });
     }
 
     // Fail closed: without APP_PASSWORD nothing else is served.
@@ -93,6 +93,23 @@ export default {
 
     if (!(await isLoggedIn(request, password))) {
       return isApi ? Response.json({ error: 'Login required' }, { status: 401, headers: cors() }) : loginPage();
+    }
+
+    // Logged-in users can trigger a collection, at most once every 30 minutes.
+    if (path === '/api/refresh' && request.method === 'POST') {
+      try {
+        const last = await withTimeout(env.DB.prepare("SELECT value FROM metadata WHERE key = 'last_manual'").first(), 5000, 'metadata query');
+        const mins = last && last.value ? (Date.now() - Date.parse(last.value)) / 60000 : Infinity;
+        if (mins < 30) {
+          return Response.json({ error: 'Collected recently', retry_after_min: Math.ceil(30 - mins) }, { status: 429, headers: cors() });
+        }
+        await withTimeout(env.DB.prepare("INSERT INTO metadata(key,value) VALUES('last_manual',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value").bind(new Date().toISOString()).run(), 5000, 'metadata write');
+        const summary = await withTimeout(collect(env), 25000, 'collection');
+        return Response.json({ ok: true, matched: summary.matched, sources: summary.sources, adzuna: summary.adzuna, errors: summary.errors }, { headers: cors() });
+      } catch (e) {
+        console.error('refresh failed', String(e && e.message || e));
+        return Response.json({ ok: false, error: String(e.message || e).slice(0, 200) }, { status: 500, headers: cors() });
+      }
     }
 
     if (path === '/api/jobs' && request.method === 'GET') {

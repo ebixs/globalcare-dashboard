@@ -261,7 +261,7 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
         </div>
         <div class="stack">
           <section class="panel" id="jobsPanel">
-            <h2>آخرین فرصت‌های شغلی <button id="allJobs">مشاهده همه</button></h2>
+            <h2>آخرین فرصت‌های شغلی <span style="display:flex;gap:14px"><button id="refreshJobs" title="جمع‌آوری آگهی‌های جدید (هر ۳۰ دقیقه یک بار)">به‌روزرسانی آگهی‌ها</button><button id="allJobs">مشاهده همه</button></span></h2>
             <div class="filters">
               <button id="search">جستجو</button>
               <select id="country" aria-label="کشور"></select>
@@ -275,7 +275,7 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
       </div>
     </main>
   </div>
-  <footer class="foot">GlobalCare — پوشش همهٔ آگهی‌ها تضمین‌شده نیست؛ برای جزئیات و شرایط به منبع اصلی آگهی مراجعه کنید. پیش از درخواست، شرایط مجوز پرستاری، زبان و ویزا را در سایت رسمی کارفرما بررسی کنید.</footer>
+  <footer class="foot">آگهی‌ها از منابع عمومی و <a href="https://www.adzuna.com" target="_blank" rel="noopener noreferrer" style="color:#b9a7ff">Jobs by Adzuna</a> گرفته می‌شوند. GlobalCare — پوشش همهٔ آگهی‌ها تضمین‌شده نیست؛ برای جزئیات و شرایط به منبع اصلی آگهی مراجعه کنید. پیش از درخواست، شرایط مجوز پرستاری، زبان و ویزا را در سایت رسمی کارفرما بررسی کنید.</footer>
 </div>
 <div class="toast" id="toast" role="status"></div>
 
@@ -293,7 +293,7 @@ const SAMPLE=[
 ];
 let apiErr='',all=[],isSample=true,apiOk=false,lastSuccess=null,selCountry='',toastT;
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),3200)}
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),5500)}
 function when(iso){const t=iso?new Date(iso).getTime():NaN;if(!isFinite(t))return{b:'فعال',c:'b-ok',l:''};
   const h=(Date.now()-t)/36e5;const l=h<1?'کمتر از ۱ ساعت پیش':h<24?fa(Math.floor(h))+' ساعت پیش':fa(Math.floor(h/24))+' روز پیش';
   return h<24?{b:'جدید',c:'b-new',l}:{b:'فعال',c:'b-ok',l}}
@@ -351,6 +351,14 @@ $('refresh').addEventListener('click',load);
 $('search').addEventListener('click',render);
 $('q').addEventListener('keydown',e=>{if(e.key==='Enter')render()});
 $('country').addEventListener('change',()=>{selCountry=$('country').value;render()});
+$('refreshJobs').addEventListener('click',async()=>{
+  const b=$('refreshJobs');b.disabled=true;toast('در حال جمع‌آوری آگهی‌ها… چند ثانیه صبر کن.');
+  try{const r=await fetch('/api/refresh',{method:'POST'});const d=await r.json().catch(()=>({}));
+    if(r.status===429)toast('به‌تازگی جمع‌آوری شده. '+fa(d.retry_after_min||30)+' دقیقهٔ دیگر دوباره امتحان کن.');
+    else if(!r.ok)toast('جمع‌آوری انجام نشد: '+String(d.error||('HTTP '+r.status)).slice(0,120));
+    else{toast(d.adzuna?(fa(d.matched)+' آگهی ذخیره شد.'):'کلید Adzuna هنوز تنظیم نشده؛ فقط منبع عمومی بررسی شد ('+fa(d.matched)+' آگهی).');await load();}
+  }catch(e){toast('اتصال برقرار نشد.')}
+  b.disabled=false});
 $('allJobs').addEventListener('click',()=>{$('q').value='';$('country').value='';selCountry='';render()});
 $('osWin').addEventListener('click',()=>toast('برای ساخت میانبر: در Edge، منوی ⋯ ← Apps ← Install this site as an app'));
 $('osMac').addEventListener('click',()=>toast('در مک (Safari): Share ← Add to Dock'));

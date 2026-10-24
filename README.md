@@ -35,6 +35,7 @@ Listings are informational and may be incomplete or stale. Verify each role and 
 3. Connect this repository to a Cloudflare Worker named `globalcare-dashboard` (Workers & Pages → Git integration).
    Target countries: US, UK, Australia, Netherlands.
 4. Set a `APP_PASSWORD` secret (Workers & Pages → the Worker → Settings → Variables and Secrets → type **Secret**). Without it the site shows only a setup notice. Everything, including the API, requires this password.
-5. Optionally set an `ADMIN_TOKEN` secret to allow a manual `POST /api/collect` with `Authorization: Bearer <token>`.
+5. Optional, for real listings: create a free Adzuna developer account and set two Secrets, `ADZUNA_APP_ID` and `ADZUNA_APP_KEY`. Check Adzuna's terms and keep the "Jobs by Adzuna" attribution. Without the keys only the small public Arbeitnow feeds are used.
+6. Optionally set an `ADMIN_TOKEN` secret to allow a manual `POST /api/collect` with `Authorization: Bearer <token>`.
 
 Never commit API tokens, passwords, or other secrets.

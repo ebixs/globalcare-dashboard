@@ -22,7 +22,8 @@ GlobalCare یک داشبورد جست‌وجوی آگهی‌های شغلی پر
 2. شناسهٔ دیتابیس را در `wrangler.jsonc` بگذارید.
 3. مخزن را در Cloudflare به یک Worker با نام `globalcare-dashboard` وصل کنید (Workers & Pages و اتصال Git).
 4. یک secret با نام `APP_PASSWORD` بسازید (Workers & Pages ← همین Worker ← Settings ← Variables and Secrets ← نوع **Secret**). بدون آن فقط پیام راه‌اندازی نمایش داده می‌شود. کل سایت و API با این رمز محافظت می‌شود و رمز را هرگز در مخزن نگذارید.
-5. اختیاری: برای اجرای دستی جمع‌آوری، `ADMIN_TOKEN` را فقط به‌صورت secret در Cloudflare تنظیم کنید و درخواست `POST /api/collect` را با هدر `Authorization: Bearer <token>` بفرستید.
+5. برای آگهی‌های واقعی: در سایت Adzuna (بخش developer) یک حساب رایگان بسازید و دو secret با نام `ADZUNA_APP_ID` و `ADZUNA_APP_KEY` اضافه کنید. شرایط استفادهٔ Adzuna را بخوانید و نوشتهٔ «Jobs by Adzuna» را نگه دارید. بدون این کلیدها فقط فید عمومی کوچک Arbeitnow استفاده می‌شود.
+6. اختیاری: برای اجرای دستی جمع‌آوری، `ADMIN_TOKEN` را فقط به‌صورت secret در Cloudflare تنظیم کنید و درخواست `POST /api/collect` را با هدر `Authorization: Bearer <token>` بفرستید.
 
 ## زمان‌بندی
 جمع‌آوری آگهی‌ها هر روز ساعت 06:00 UTC اجرا می‌شود.
