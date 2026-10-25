@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#1b1650">
 <meta name="description" content="GlobalCare — داشبورد فرصت‌های شغلی پرستاری بین‌المللی">
-<title>GlobalCare — فرصت‌های شغلی پرستاری</title>
+<title>IMATI — فرصت‌های شغلی پرستاری</title>
 <style>
 :root{
   color-scheme:dark;
@@ -160,6 +160,38 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
 .toast{position:fixed;inset:auto 50% 22px auto;transform:translateX(50%);background:#1d1865f2;border:1px solid #9f86ff;border-radius:12px;padding:11px 18px;font-size:13px;box-shadow:0 12px 40px #0009;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9;max-width:90vw;text-align:center;direction:rtl}
 .toast.on{opacity:1}
 .foot{padding:6px 24px 18px;text-align:center;color:var(--mute);font-size:11px;line-height:2}
+
+.modal{position:fixed;inset:0;background:#05031ccc;display:grid;place-items:center;z-index:50;padding:14px}
+.modal[hidden]{display:none}
+.mbox{width:min(780px,100%);max-height:92vh;overflow:auto;border:1px solid var(--line);border-radius:20px;background:linear-gradient(165deg,#1a1660,#0d0b3a);padding:20px;direction:rtl}
+.fld{display:grid;gap:5px;margin-bottom:12px;font-size:12.5px}
+.fld label{color:#d7d3ff;line-height:1.7}
+.fld input,.fld textarea,.fld select{background:#ffffff0d;border:1px solid var(--line);border-radius:11px;padding:9px 11px;color:var(--ink);width:100%;font-size:13px}
+.fld select option{color:#111}
+.fld textarea{resize:vertical;line-height:1.75}
+.fld small{color:var(--mute);font-size:11px;line-height:1.7}
+.btn{background:linear-gradient(90deg,#7c5cff,#6a4ae6);border:0;border-radius:11px;padding:10px 16px;font-weight:600;color:#fff;font-size:13px}
+.btn.sec{background:#ffffff14;border:1px solid var(--line)}
+.btn[disabled]{opacity:.55;cursor:wait}
+.rw{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.ac{border:1px solid #ffffff1c;border-radius:15px;background:#ffffff0a;padding:13px 14px;margin-bottom:10px;line-height:1.9}
+.ac.unread{border-color:#9f86ff;background:#7c5cff1c}
+.ac h3{margin:0;font-size:14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ac .meta{font-size:11.5px;color:var(--mute)}
+.ac pre{white-space:pre-wrap;word-break:break-word;margin:8px 0 0;font:12.5px/1.75 "Segoe UI",system-ui,sans-serif;direction:ltr;text-align:left;background:#00000026;border-radius:11px;padding:11px}
+.ac details{margin-top:8px;font-size:12.5px}
+.ac summary{cursor:pointer;color:#c9bcff}
+.ac select{background:#ffffff12;border:1px solid var(--line);border-radius:9px;padding:4px 8px;color:var(--ink);font-size:12px}
+.ac select option{color:#111}
+.ref{font-family:"Segoe UI",system-ui,sans-serif;direction:ltr;font-size:11px;border:1px solid #6a58c8;border-radius:8px;padding:2px 8px;color:#d2c8ff}
+.mk{flex:none;background:linear-gradient(90deg,#7c5cff,#6a4ae6);border:0;border-radius:10px;padding:8px 11px;font-size:11.5px;font-weight:600;color:#fff;white-space:nowrap}
+.mk.done{background:#0c3a3699;border:1px solid #177a6b;color:#5eead4}
+.job a.in{display:block;color:inherit;text-decoration:none}
+.nbd{font-style:normal;background:#ee3d8a;color:#fff;border-radius:10px;font-size:11px;padding:1px 7px;margin-inline-start:auto}
+.guide ol{margin:0;padding:0 20px 0 0;display:grid;gap:12px;line-height:2;font-size:13.5px}
+.guide h3{margin:18px 0 6px;font-size:14px;color:#cfc4ff}
+.guide p,.guide li{color:#e6e3ff}
+.note2{border:1px solid #7a6320;background:#3a2e0e66;color:#fcd773;border-radius:12px;padding:10px 13px;font-size:12px;line-height:1.9;margin-bottom:12px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 @media(max-width:1180px){.cols{grid-template-columns:1fr}.row1{grid-template-columns:1fr}.clock{display:none}}
 @media(max-width:900px){.body{grid-template-columns:1fr}.sb{order:2}.nav{display:flex;overflow:auto;gap:4px}.nav a{white-space:nowrap}.mascot,.goal{display:none}.stats{grid-template-columns:1fr 1fr}.top{grid-template-columns:1fr auto}.slogan{grid-column:1/-1;order:3}.os{display:none}.dream{display:none}}
@@ -185,6 +217,7 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
   <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4M8 14h2M12 14h2M8 17h2"/></symbol>
   <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17V11a6 6 0 1 1 12 0v6l2 2H4z"/><path d="M10 21h4"/></symbol>
   <symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M9.5 9.3a2.6 2.6 0 1 1 3.6 2.4c-.7.4-1.1.9-1.1 1.7M12 17h.01"/></symbol>
   <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 6.5V12l3.5 2"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="m7.3 12.4 3.2 3.2 6.2-6.7" fill="none" stroke="#052a20" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-heart" viewBox="0 0 48 48"><path d="M24 42S6 31 6 17.5A9.5 9.5 0 0 1 24 13a9.5 9.5 0 0 1 18 4.5C42 31 24 42 24 42Z" fill="url(#hg)"/><path d="M9 24h9l3-6 5 12 3-6h10" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -195,7 +228,7 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
 
 <div class="app" id="app">
   <header class="top">
-    <div class="logo"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#i-heart"/></svg><div><b>GlobalCare</b><small>Nursing Job Pipeline</small></div></div>
+    <div class="logo"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#i-heart"/></svg><div><b>IMATI</b><small>Nursing Job Pipeline</small></div></div>
     <div class="slogan"><strong>آینده شغلی بهتر، قدم به قدم…</strong><span>جست‌وجو، فرصت، درخواست . برای مهتاب <span class="h">♥</span></span></div>
     <div class="topr">
       <span class="pill warn" id="status">● در حال بررسی اتصال</span>
@@ -208,19 +241,20 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
   <div class="body">
     <aside class="sb">
       <nav class="nav" aria-label="منوی اصلی">
-        <a href="#top" class="on" data-go="top"><svg><use href="#i-home"/></svg><span>داشبورد</span></a>
-        <a href="#jobsPanel" data-go="jobsPanel"><svg><use href="#i-search"/></svg><span>جستجوی مشاغل</span></a>
-        <a href="#" data-soon="درخواست‌های ارسال‌شده به‌زودی اضافه می‌شود."><svg><use href="#i-tray"/></svg><span>درخواست‌های ارسال‌شده</span></a>
-        <a href="#" data-soon="رزومه و کاورلتر به‌زودی اضافه می‌شود."><svg><use href="#i-doc"/></svg><span>رزومه و کاورلتر</span></a>
-        <a href="#schedPanel" data-go="schedPanel"><svg><use href="#i-cal"/></svg><span>برنامه روزانه</span></a>
-        <a href="#noticePanel" data-go="noticePanel"><svg><use href="#i-bell"/></svg><span>اطلاعیه‌ها</span></a>
-        <a href="#pipePanel" data-go="pipePanel"><svg><use href="#i-gear"/></svg><span>تنظیمات</span></a>
+        <a href="#" class="on" data-view="dash"><svg><use href="#i-home"/></svg><span>داشبورد</span></a>
+        <a href="#" data-view="dash" data-go="jobsPanel"><svg><use href="#i-search"/></svg><span>جستجوی مشاغل</span></a>
+        <a href="#" data-view="apps"><svg><use href="#i-tray"/></svg><span>درخواست‌های ارسال‌شده</span><em class="nbd" id="nbApps" hidden></em></a>
+        <a href="#" data-view="resume"><svg><use href="#i-doc"/></svg><span>رزومه و کاورلتر</span></a>
+        <a href="#" data-view="dash" data-go="schedPanel"><svg><use href="#i-cal"/></svg><span>برنامه روزانه</span></a>
+        <a href="#" data-view="notices"><svg><use href="#i-bell"/></svg><span>اطلاعیه‌ها</span><em class="nbd" id="nbNotices" hidden></em></a>
+        <a href="#" data-view="guide"><svg><use href="#i-help"/></svg><span>راهنمای استفاده</span></a>
       </nav>
       <div class="mascot"><img src="data:image/jpeg;base64,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" alt="" width="195" height="108"><p>مهتاب،<br>تو می‌تونی<br>و من اینجام <span class="h">♡</span></p></div>
       <div class="goal">هدف ما:<b>یک آیندهٔ روشن</b><div class="bar"><i></i></div></div>
     </aside>
 
     <main class="content" id="top">
+<div id="v-dash" class="view">
       <div class="row1">
         <section class="hero" aria-label="فرصت‌های شغلی پرستاری">
           <div class="l">
@@ -237,9 +271,9 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
 
       <section class="stats" aria-label="خلاصه وضعیت">
         <div class="stat s1"><div class="ic"><svg><use href="#i-search"/></svg></div><div><b id="stNew">—</b><span>فرصت جدید پیدا شد</span><small id="stNewNote">در انتظار API</small></div></div>
-        <div class="stat s2 q"><div class="ic"><svg><use href="#i-send"/></svg></div><div><b style="font-family:"Segoe UI",system-ui,sans-serif">0</b><span>درخواست ارسال شد</span><small>هنوز درخواستی ثبت نشده</small></div></div>
-        <div class="stat s3 q"><div class="ic"><svg><use href="#i-doc"/></svg></div><div><b style="font-family:"Segoe UI",system-ui,sans-serif">0</b><span>در حال بررسی</span><small>هنوز پاسخی ثبت نشده</small></div></div>
-        <div class="stat s4 q"><div class="ic"><svg><use href="#i-clock"/></svg></div><div><b style="font-family:"Segoe UI",system-ui,sans-serif">0</b><span>نیاز به اقدام شما</span><small>همه‌چیز مرتب است</small></div></div>
+        <div class="stat s2 q"><div class="ic"><svg><use href="#i-send"/></svg></div><div><b id="stSent">0</b><span>درخواست ارسال شد</span><small id="stSentNote">هنوز درخواستی ثبت نشده</small></div></div>
+        <div class="stat s3 q"><div class="ic"><svg><use href="#i-doc"/></svg></div><div><b id="stReview">0</b><span>در حال بررسی</span><small id="stReviewNote">هنوز پاسخی ثبت نشده</small></div></div>
+        <div class="stat s4 q"><div class="ic"><svg><use href="#i-clock"/></svg></div><div><b id="stAction">0</b><span>نیاز به اقدام شما</span><small id="stActionNote">همه‌چیز مرتب است</small></div></div>
       </section>
 
       <div class="cols">
@@ -270,12 +304,89 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
             <div id="sampleNote"></div>
             <div class="jobs" id="jobs" aria-live="polite"></div>
           </section>
-          <section class="banner" id="noticePanel"><b>هر قدم کوچک،</b><br>تو رو به هدف بزرگت نزدیک‌تر می‌کنه. <span class="h">♡</span></section>
+          <section class="banner" id="bannerPanel"><b>هر قدم کوچک،</b><br>تو رو به هدف بزرگت نزدیک‌تر می‌کنه. <span class="h">♡</span></section>
         </div>
       </div>
+</div>
+<div id="v-apps" class="view" hidden>
+  <section class="panel"><h2>درخواست‌های ارسال‌شده <span class="tag" id="appCount"></span></h2>
+    <div id="appList"></div></section>
+</div>
+<div id="v-notices" class="view" hidden>
+  <section class="panel"><h2>اطلاعیه‌ها و پاسخ شرکت‌ها <span><button id="markAll">همه را خوانده‌شده کن</button></span></h2>
+    <div class="note2">پاسخ ایمیل شرکت‌ها را اینجا ثبت کن تا به درخواست درست وصل شود. برای پیدا کردن ایمیل در Gmail، کد <b class="ref">IMATI-…</b> را که در موضوع ایمیل گذاشتی جست‌وجو کن. (اتصال خودکار به Gmail هنوز فعال نیست.)</div>
+    <details class="ac" id="nFormBox"><summary>＋ ثبت پاسخ جدید از یک شرکت</summary>
+      <div style="margin-top:12px">
+        <div class="fld"><label for="nApp">این پاسخ مربوط به کدام درخواست است؟</label><select id="nApp"></select></div>
+        <div class="fld"><label for="nFrom">فرستنده</label><input id="nFrom" dir="ltr" maxlength="200" placeholder="recruiter@hospital.org"></div>
+        <div class="fld"><label for="nSubj">موضوع ایمیل</label><input id="nSubj" dir="ltr" maxlength="300"></div>
+        <div class="fld"><label for="nBody">متن پاسخ (کپی از ایمیل)</label><textarea id="nBody" dir="ltr" rows="7" maxlength="8000"></textarea></div>
+        <div class="fld"><label for="nDate">تاریخ دریافت (اختیاری)</label><input id="nDate" type="date"></div>
+        <button class="btn" id="nSave">ذخیرهٔ پاسخ</button>
+      </div></details>
+    <div id="noticeList"></div></section>
+</div>
+<div id="v-resume" class="view" hidden>
+  <section class="panel"><h2>رزومه و اطلاعات نامه‌ها</h2>
+    <div class="note2">این اطلاعات فقط در دیتابیس خصوصی پشت رمز ذخیره می‌شود. نامه‌ها فقط از همین متن ساخته می‌شوند؛ چیزی را که اینجا ننوشته باشی در نامه نمی‌آید. هر چیزی که می‌نویسی باید درست باشد.</div>
+    <div class="fld"><label for="pName">نام کامل</label><input id="pName" dir="ltr" maxlength="120"></div>
+    <div class="fld"><label for="pEmail">ایمیل</label><input id="pEmail" dir="ltr" maxlength="160"></div>
+    <div class="fld"><label for="pPhone">تلفن</label><input id="pPhone" dir="ltr" maxlength="40"></div>
+    <div class="fld"><label for="pCity">شهر فعلی</label><input id="pCity" dir="ltr" maxlength="120"></div>
+    <div class="fld"><label for="pAvail">آمادگی شروع کار (پیش‌فرض)</label><input id="pAvail" dir="ltr" maxlength="300" placeholder="e.g. Available to start within 8 weeks of an offer"></div>
+    <div class="fld"><label for="pSummary">خلاصهٔ کوتاه (۲-۳ جمله، انگلیسی)</label><textarea id="pSummary" dir="ltr" rows="4" maxlength="1500"></textarea></div>
+    <div class="fld"><label for="pCv">متن کامل رزومه (انگلیسی)</label><textarea id="pCv" dir="ltr" rows="18" maxlength="20000"></textarea><small>این متن مبنای همهٔ نامه‌هاست و با هر درخواست، نسخه‌ای از آن کنار درخواست ذخیره می‌شود.</small></div>
+    <div class="rw"><button class="btn" id="pSave">ذخیره</button></div>
+    <h3 style="margin:22px 0 8px;font-size:14px">فایل PDF رزومه</h3>
+    <div class="rw"><input type="file" id="pPdf" accept="application/pdf"><button class="btn sec" id="pUp">بارگذاری</button><a class="btn sec" id="pDl" href="/api/cv" hidden style="text-decoration:none">دانلود PDF</a></div>
+    <small style="color:var(--mute)">حداکثر ۱ مگابایت. این فایل را خودت هنگام درخواست روی سایت کارفرما پیوست می‌کنی.</small>
+  </section>
+</div>
+<div id="v-guide" class="view" hidden>
+  <section class="panel guide"><h2>راهنمای استفاده</h2>
+    <ol>
+      <li><b>ورود:</b> با رمزی که برادرت داده وارد شو. اگر صفحه بالا نیامد و خطا دیدی، یک بار Ctrl+F5 بزن.</li>
+      <li><b>رزومه:</b> از منوی «رزومه و کاورلتر» مشخصات و متن انگلیسی رزومه را بررسی و در صورت نیاز اصلاح کن و ذخیره کن. فایل PDF را هم همان‌جا بارگذاری کن.</li>
+      <li><b>پیدا کردن آگهی:</b> در «آخرین فرصت‌های شغلی» کشور یا عبارت را جست‌وجو کن. دکمهٔ «به‌روزرسانی آگهی‌ها» آگهی‌های جدید را می‌گیرد؛ خودکار هم هر ۶ ساعت انجام می‌شود.</li>
+      <li><b>نامهٔ انگیزه:</b> کنار هر آگهی روی «نامه انگیزه» بزن. چند سؤال دربارهٔ همان آگهی می‌پرسد (مجوز پرستاری آن کشور، اجازهٔ کار، زمان شروع، دلیل علاقه). هر چه خالی بماند در نامه نوشته نمی‌شود. نامه ساخته می‌شود و می‌توانی آن را ویرایش کنی.</li>
+      <li><b>ارسال:</b> داشبورد به‌جای تو درخواست نمی‌فرستد. نامه را کپی کن، «باز کردن آگهی» را بزن، روی سایت کارفرما درخواست بده و رزومهٔ PDF را پیوست کن. اگر ایمیل می‌زنی، کد <b class="ref">IMATI-…</b> را در موضوع بگذار.</li>
+      <li><b>ثبت:</b> فقط وقتی واقعاً فرستادی، «ثبت به‌عنوان ارسال‌شده» را بزن. درخواست با نامه و نسخهٔ رزومه در «درخواست‌های ارسال‌شده» می‌ماند و وضعیتش را می‌توانی عوض کنی.</li>
+      <li><b>پاسخ شرکت:</b> وقتی شرکت جواب داد، ایمیلش را در «اطلاعیه‌ها» ثبت کن و درخواست مربوطه را انتخاب کن. پاسخ کنار نام آگهی و کد درخواست نشان داده می‌شود تا پیگیری راحت باشد.</li>
+    </ol>
+    <h3>مهم بدانی</h3>
+    <p>هر کشور شرایط جدا دارد (مثلاً NMC در بریتانیا، NCLEX در آمریکا، AHPRA در استرالیا، BIG در هلند). پیش از درخواست، شرایط را در سایت رسمی کارفرما و نهاد مربوطه بررسی کن. نامه‌ها را قبل از ارسال حتماً بخوان و هر چیز نادرستی را اصلاح کن.</p>
+  </section>
+</div>
     </main>
   </div>
   <footer class="foot">آگهی‌ها از منابع عمومی و <a href="https://www.adzuna.com" target="_blank" rel="noopener noreferrer" style="color:#b9a7ff">Jobs by Adzuna</a> گرفته می‌شوند. GlobalCare — پوشش همهٔ آگهی‌ها تضمین‌شده نیست؛ برای جزئیات و شرایط به منبع اصلی آگهی مراجعه کنید. پیش از درخواست، شرایط مجوز پرستاری، زبان و ویزا را در سایت رسمی کارفرما بررسی کنید.</footer>
+</div>
+<div class="modal" id="lm" hidden role="dialog" aria-modal="true" aria-labelledby="lmT">
+  <div class="mbox">
+    <h2 id="lmT" style="margin:0 0 4px;font-size:16px"></h2>
+    <p id="lmSub" style="margin:0 0 14px;color:var(--mute);font-size:12px;direction:ltr;text-align:right"></p>
+    <div id="lmForm">
+      <div class="note2">این سؤال‌ها را برای همین آگهی جواب بده. هر چه خالی بماند در نامه نوشته نمی‌شود و چیزی از خودمان اضافه نمی‌کنیم. فقط واقعیت بنویس.</div>
+      <div class="fld"><label for="lmReg" id="lmRegL"></label><input id="lmReg" dir="ltr" maxlength="600"><small id="lmRegH"></small></div>
+      <div class="fld"><label for="lmAuth">وضعیت اجازهٔ کار / ویزا برای این کشور</label><input id="lmAuth" dir="ltr" maxlength="600" placeholder="e.g. I will need visa sponsorship / I have the right to work"></div>
+      <div class="fld"><label for="lmAvail">از چه زمانی می‌توانی شروع کنی؟</label><input id="lmAvail" dir="ltr" maxlength="300" placeholder="e.g. Available to relocate and start within 3 months"></div>
+      <div class="fld"><label for="lmNote">چرا این کارفرما یا این شهر؟ (یک یا دو جمله با زبان خودت، فارسی یا انگلیسی)</label><textarea id="lmNote" dir="auto" rows="3" maxlength="600"></textarea></div>
+      <div class="rw"><button class="btn" id="lmGen">نوشتن نامه انگیزه</button><button class="btn sec" id="lmClose">بستن</button></div>
+    </div>
+    <div id="lmOut" hidden>
+      <div class="fld"><label for="lmSubj">موضوع ایمیل (برای پیدا کردن پاسخ‌ها این کد را نگه دار)</label><input id="lmSubj" dir="ltr" readonly></div>
+      <div class="fld"><label for="lmLetter">نامه (قابل ویرایش)</label><textarea id="lmLetter" dir="ltr" rows="16" maxlength="6000"></textarea></div>
+      <div class="note2" id="lmWarn"></div>
+      <div class="rw">
+        <button class="btn" id="lmCopy">کپی نامه</button>
+        <button class="btn sec" id="lmCopyS">کپی موضوع</button>
+        <button class="btn sec" id="lmOpen">باز کردن آگهی</button>
+        <button class="btn" id="lmSent" style="background:linear-gradient(90deg,#1fc38b,#139e70)">ثبت به‌عنوان ارسال‌شده</button>
+        <button class="btn sec" id="lmBack">بازگشت</button>
+      </div>
+      <small style="color:var(--mute);display:block;margin-top:8px;line-height:1.8">«ثبت» را فقط بعد از اینکه واقعاً درخواست را روی سایت کارفرما فرستادی بزن.</small>
+    </div>
+  </div>
 </div>
 <div class="toast" id="toast" role="status"></div>
 
@@ -291,7 +402,7 @@ const SAMPLE=[
   {title:'Registered Nurse – Med/Surg',company:'HCA Healthcare',country:'us'},
   {title:'Verpleegkundige (Nurse)',company:'Zorggroep',country:'nl'}
 ];
-let apiErr='',all=[],isSample=true,apiOk=false,lastSuccess=null,selCountry='',toastT;
+let applied=new Set(),apps=[],notices=[],prof={},hasPdf=false,curJob=null,curRef='',curSubj='',apiErr='',all=[],isSample=true,apiOk=false,lastSuccess=null,selCountry='',toastT;
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),5500)}
 function when(iso){const t=iso?new Date(iso).getTime():NaN;if(!isFinite(t))return{b:'فعال',c:'b-ok',l:''};
@@ -317,8 +428,11 @@ function render(){renderLoc();const list=filtered();
   $('sampleNote').innerHTML=isSample?(apiErr?'<div class="sample" dir="ltr" style="text-align:left;color:#fda4af;border-color:#8a2c55;background:#4d183366">API error: '+esc(apiErr)+'</div>':'')+'<div class="sample">این چهار کارت فقط <b>نمونهٔ طراحی</b> هستند و آگهی واقعی نیستند. بعد از اولین جمع‌آوری، آگهی‌های واقعی جایگزین می‌شوند.</div>':'';
   if(!list.length){$('jobs').innerHTML='<div class="empty">آگهی‌ای با این فیلتر پیدا نشد.<br>کشور یا عبارت دیگری را امتحان کن.</div>';return}
   $('jobs').innerHTML=list.slice(0,100).map(j=>{const w=isSample?{b:'نمونه',c:'b-info',l:''}:when(j.posted_at||j.collected_at);const ok=/^https?:\/\//i.test(j.url||'');
-    const o=ok?`a href="${esc(j.url)}" target="_blank" rel="noopener noreferrer"`:'div';const e=ok?'a':'div';
-    return `<${o} class="job"><div class="jb"><svg><use href="#i-cross"/></svg></div><div class="in"><h3>${esc(j.title||'Untitled')}</h3><p>${esc(j.company||'—')}${j.location?' · '+esc(j.location):''}</p><div class="c">${CN[j.country]?flag(j.country):''}<span>${esc({us:'United States',uk:'United Kingdom',au:'Australia',nl:'Netherlands'}[j.country]||'')}</span></div></div><div class="m"><span class="badge ${w.c}">${w.b}</span><small>${w.l}</small></div><span class="go">›</span></${e}>`}).join('')}
+    const flagHtml=CN[j.country]?flag(j.country):'';const cn={us:'United States',uk:'United Kingdom',au:'Australia',nl:'Netherlands'}[j.country]||'';
+    const inner=`<h3>${esc(j.title||'Untitled')}</h3><p>${esc(j.company||'—')}${j.location?' · '+esc(j.location):''}</p><div class="c">${flagHtml}<span>${esc(cn)}</span></div>`;
+    const done=j.id&&applied.has(j.id);
+    const btn=(isSample||!j.id)?'':`<button class="mk${done?' done':''}" data-id="${esc(j.id)}">${done?'✔ ثبت شده':'✉ نامه انگیزه'}</button>`;
+    return `<div class="job"><div class="jb"><svg><use href="#i-cross"/></svg></div>${ok?`<a class="in" href="${esc(j.url)}" target="_blank" rel="noopener noreferrer">${inner}</a>`:`<div class="in">${inner}</div>`}<div class="m"><span class="badge ${w.c}">${w.b}</span><small>${w.l}</small></div>${btn}</div>`}).join('')}
 function setStatus(txt,cls){$('status').textContent=txt;$('status').className='pill '+cls}
 async function load(){
   setStatus('● در حال بررسی اتصال','warn');
@@ -363,12 +477,128 @@ $('refreshJobs').addEventListener('click',async()=>{
 $('allJobs').addEventListener('click',()=>{$('q').value='';$('country').value='';selCountry='';render()});
 $('osWin').addEventListener('click',()=>toast('برای ساخت میانبر: در Edge، منوی ⋯ ← Apps ← Install this site as an app'));
 $('osMac').addEventListener('click',()=>toast('در مک (Safari): Share ← Add to Dock'));
+
+/* ---------- applications, letters, notices ---------- */
+const ST={sent:'ارسال شد',replied:'پاسخ داد',interview:'مصاحبه',offer:'پیشنهاد کار',rejected:'رد شد',withdrawn:'انصراف'};
+const REGH={us:['مجوز / آزمون پرستاری آمریکا (مثل NCLEX)','e.g. I plan to sit the NCLEX-RN / I have not started yet'],
+  uk:['ثبت‌نام پرستاری بریتانیا (NMC)','e.g. I am preparing for the NMC registration process'],
+  au:['ثبت‌نام پرستاری استرالیا (AHPRA)','e.g. I intend to apply to AHPRA for registration'],
+  nl:['ثبت‌نام پرستاری هلند (BIG)','e.g. I intend to apply for BIG registration']};
+async function api(path,opts){const r=await fetch(path,Object.assign({cache:'no-store'},opts));const d=await r.json().catch(()=>({}));
+  if(!r.ok){const e=new Error(d.error||('HTTP '+r.status));e.status=r.status;e.data=d;throw e}return d}
+const jsend=(p,b,m='POST')=>api(p,{method:m,headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});
+const fdate=iso=>{const t=iso?new Date(iso):null;return t&&isFinite(t)?t.toLocaleDateString('fa-IR',{year:'numeric',month:'short',day:'numeric'}):'—'};
+function badgeNav(){
+  const unread=notices.filter(n=>!n.is_read).length;
+  const a=$('nbApps'),n=$('nbNotices');a.hidden=!apps.length;a.textContent=fa(apps.length);n.hidden=!unread;n.textContent=fa(unread);
+  $('stSent').textContent=fa(apps.length);
+  $('stSentNote').textContent=apps.length?'در پایگاه داده ثبت شده':'هنوز درخواستی ثبت نشده';
+  const rev=apps.filter(x=>['sent','replied','interview'].includes(x.status)).length;
+  $('stReview').textContent=fa(rev);
+  $('stReviewNote').textContent=notices.length?fa(notices.length)+' پاسخ ثبت شده':'هنوز پاسخی ثبت نشده';
+  $('stAction').textContent=fa(unread);
+  $('stActionNote').textContent=unread?'پاسخ خوانده‌نشده داری':'همه‌چیز مرتب است';
+  applied=new Set(apps.map(x=>x.job_id));
+}
+async function loadApps(){try{apps=(await api('/api/applications')).applications||[]}catch(e){if($('v-apps').hidden===false)toast('خطا: '+e.message)}
+  badgeNav();renderApps();if(!isSample)render()}
+async function loadNotices(){try{notices=(await api('/api/notices')).notices||[]}catch(e){if($('v-notices').hidden===false)toast('خطا: '+e.message)}
+  badgeNav();renderNotices()}
+async function loadProfile(){try{const d=await api('/api/profile');prof=d.profile||{};hasPdf=!!d.has_pdf}catch(e){toast('خطا: '+e.message);return}
+  $('pName').value=prof.name||'';$('pEmail').value=prof.email||'';$('pPhone').value=prof.phone||'';$('pCity').value=prof.city||'';
+  $('pAvail').value=prof.availability||'';$('pSummary').value=prof.summary||'';$('pCv').value=prof.cv||'';$('pDl').hidden=!hasPdf}
+function refreshMeta(){return Promise.all([loadApps(),loadNotices(),api('/api/profile').then(d=>{prof=d.profile||{};hasPdf=!!d.has_pdf}).catch(()=>{})])}
+
+function renderApps(){
+  $('appCount').textContent=apps.length?fa(apps.length)+' درخواست':'';
+  if(!apps.length){$('appList').innerHTML='<div class="empty">هنوز درخواستی ثبت نشده.<br>از فهرست آگهی‌ها روی «نامه انگیزه» بزن، نامه را بنویس، درخواست را روی سایت کارفرما بفرست و بعد اینجا ثبتش کن.</div>';return}
+  $('appList').innerHTML=apps.map(a=>{
+    const nn=notices.filter(n=>n.application_id===a.id);
+    const opts=Object.keys(ST).map(k=>`<option value="${k}"${a.status===k?' selected':''}>${ST[k]}</option>`).join('');
+    return `<div class="ac"><h3>${CN[a.country]?flag(a.country):''}<span dir="ltr">${esc(a.title)}</span><span class="ref">${esc(a.ref)}</span></h3>
+    <div class="meta" dir="ltr" style="text-align:right">${esc(a.company||'—')}${a.location?' · '+esc(a.location):''}</div>
+    <div class="meta">ارسال: ${fdate(a.sent_at)} · ${nn.length?fa(nn.length)+' پاسخ ثبت شده':'بدون پاسخ ثبت‌شده'}</div>
+    <div class="rw" style="margin-top:8px"><label style="font-size:12px">وضعیت:</label><select data-st="${a.id}">${opts}</select>
+      ${/^https?:\/\//i.test(a.url||'')?`<a class="btn sec" style="text-decoration:none;padding:6px 12px" href="${esc(a.url)}" target="_blank" rel="noopener noreferrer">آگهی</a>`:''}
+      <button class="btn sec" style="padding:6px 12px" data-reply="${a.id}">ثبت پاسخ شرکت</button></div>
+    <details><summary>نامهٔ ارسال‌شده</summary><pre>${esc(a.letter)}</pre></details>
+    <details><summary>رزومهٔ ارسال‌شده (نسخهٔ متن)</summary><pre>${esc(a.cv_snapshot)}</pre>${hasPdf?'<a href="/api/cv" style="color:#b9a7ff;font-size:12px">دانلود فایل PDF رزومه</a>':''}</details></div>`}).join('');
+}
+function renderNotices(){
+  const sel=$('nApp'),keep=sel.value;
+  sel.innerHTML=apps.length?apps.map(a=>`<option value="${a.id}">${esc(a.ref)} · ${esc(a.title)} — ${esc(a.company||'')}</option>`).join(''):'<option value="">اول یک درخواست ثبت کن</option>';
+  if(keep)sel.value=keep;
+  if(!notices.length){$('noticeList').innerHTML='<div class="empty">هنوز پاسخی ثبت نشده.<br>وقتی شرکتی جواب داد، متن ایمیل را بالا ثبت کن.</div>';return}
+  $('noticeList').innerHTML=notices.map(n=>`<div class="ac${n.is_read?'':' unread'}"><h3>${n.is_read?'':'<span style="color:#ee3d8a">●</span>'}<span dir="ltr">${esc(n.subject||'(بدون موضوع)')}</span></h3>
+    <div class="meta">پیوست درخواست: <b dir="ltr">${esc(n.title||'—')}</b> — <span dir="ltr">${esc(n.company||'')}</span> <span class="ref">${esc(n.ref||'')}</span> · ارسال‌شده در ${fdate(n.sent_at)}</div>
+    <div class="meta" dir="ltr" style="text-align:right">From: ${esc(n.from_name||'—')} · ${fdate(n.received_at||n.created_at)}</div>
+    <pre>${esc(n.body)}</pre>${n.is_read?'':`<div class="rw" style="margin-top:8px"><button class="btn sec" style="padding:6px 12px" data-read="${n.id}">خوانده شد</button></div>`}</div>`).join('');
+}
+function showView(v){['dash','apps','notices','resume','guide'].forEach(x=>{$('v-'+x).hidden=x!==v});
+  if(v==='apps')loadApps();if(v==='notices')loadNotices();if(v==='resume')loadProfile();window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();
-  if(a.dataset.soon){toast(a.dataset.soon);return}
-  const el=$(a.dataset.go);if(el){el.scrollIntoView({behavior:'smooth',block:'start'});document.querySelectorAll('.nav a').forEach(x=>x.classList.remove('on'));a.classList.add('on')}}));
+  showView(a.dataset.view||'dash');document.querySelectorAll('.nav a').forEach(x=>x.classList.remove('on'));a.classList.add('on');
+  if(a.dataset.go){const el=$(a.dataset.go);if(el)setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),60)}}));
+$('appList').addEventListener('change',async e=>{const s=e.target.closest('select[data-st]');if(!s)return;
+  try{await jsend('/api/applications/status',{id:Number(s.dataset.st),status:s.value});toast('وضعیت ذخیره شد.');await loadApps()}catch(x){toast('ذخیره نشد: '+x.message)}});
+$('appList').addEventListener('click',e=>{const b=e.target.closest('button[data-reply]');if(!b)return;
+  document.querySelector('.nav a[data-view="notices"]').click();$('nFormBox').open=true;setTimeout(()=>{$('nApp').value=b.dataset.reply},80)});
+$('noticeList').addEventListener('click',async e=>{const b=e.target.closest('button[data-read]');if(!b)return;
+  try{await jsend('/api/notices/read',{id:Number(b.dataset.read)});await loadNotices()}catch(x){toast('خطا: '+x.message)}});
+$('markAll').addEventListener('click',async()=>{try{await jsend('/api/notices/read',{all:true});await loadNotices()}catch(x){toast('خطا: '+x.message)}});
+$('nSave').addEventListener('click',async()=>{
+  const id=Number($('nApp').value);if(!id){toast('اول درخواست مربوطه را انتخاب کن.');return}
+  const b=$('nSave');b.disabled=true;
+  try{await jsend('/api/notices',{application_id:id,from:$('nFrom').value,subject:$('nSubj').value,body:$('nBody').value,received_at:$('nDate').value||null});
+    toast('پاسخ ثبت شد.');['nFrom','nSubj','nBody','nDate'].forEach(k=>$(k).value='');$('nFormBox').open=false;await Promise.all([loadNotices(),loadApps()])}
+  catch(x){toast('ثبت نشد: '+x.message)}b.disabled=false});
+
+/* resume */
+$('pSave').addEventListener('click',async()=>{const b=$('pSave');b.disabled=true;
+  try{await jsend('/api/profile',{name:$('pName').value,email:$('pEmail').value,phone:$('pPhone').value,city:$('pCity').value,availability:$('pAvail').value,summary:$('pSummary').value,cv:$('pCv').value},'PUT');toast('ذخیره شد.')}
+  catch(x){toast('ذخیره نشد: '+x.message)}b.disabled=false});
+$('pUp').addEventListener('click',async()=>{const f=$('pPdf').files[0];if(!f){toast('اول یک فایل PDF انتخاب کن.');return}
+  const b=$('pUp');b.disabled=true;
+  try{await api('/api/cv',{method:'POST',headers:{'Content-Type':'application/pdf'},body:f});hasPdf=true;$('pDl').hidden=false;toast('PDF رزومه ذخیره شد.')}
+  catch(x){toast('بارگذاری نشد: '+x.message)}b.disabled=false});
+
+/* cover letter modal */
+$('jobs').addEventListener('click',e=>{const b=e.target.closest('button.mk');if(!b)return;openLetter(b.dataset.id)});
+function openLetter(id){
+  const j=all.find(x=>x.id===id);if(!j)return;curJob=j;
+  if(applied.has(id)){toast('برای این آگهی قبلاً درخواست ثبت کرده‌ای. از «درخواست‌های ارسال‌شده» ببین.');return}
+  $('lmT').textContent='نامه انگیزه — '+(j.title||'');
+  $('lmSub').textContent=[j.company,j.location].filter(Boolean).join(' · ');
+  const h=REGH[j.country]||['مجوز پرستاری آن کشور','']; $('lmRegL').textContent='وضعیت '+h[0];$('lmRegH').textContent='';$('lmReg').placeholder=h[1];
+  $('lmReg').value=prof['reg_'+j.country]||'';$('lmAuth').value=prof['auth_'+j.country]||'';$('lmAvail').value=prof.availability||'';$('lmNote').value='';
+  $('lmForm').hidden=false;$('lmOut').hidden=true;$('lm').hidden=false;$('lmReg').focus()}
+function closeLetter(){$('lm').hidden=true}
+$('lmClose').addEventListener('click',closeLetter);
+$('lm').addEventListener('click',e=>{if(e.target===$('lm'))closeLetter()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('lm').hidden)closeLetter()});
+$('lmBack').addEventListener('click',()=>{$('lmOut').hidden=true;$('lmForm').hidden=false});
+$('lmGen').addEventListener('click',async()=>{
+  const b=$('lmGen');b.disabled=true;b.textContent='در حال نوشتن… (تا ۳۰ ثانیه)';
+  try{const d=await jsend('/api/letter',{job_id:curJob.id,answers:{registration:$('lmReg').value,authorization:$('lmAuth').value,availability:$('lmAvail').value,note:$('lmNote').value}});
+    prof['reg_'+curJob.country]=$('lmReg').value;prof['auth_'+curJob.country]=$('lmAuth').value;if($('lmAvail').value)prof.availability=$('lmAvail').value;
+    curRef=d.ref;curSubj=d.subject;$('lmSubj').value=d.subject;$('lmLetter').value=d.letter;
+    $('lmWarn').textContent=d.source==='ai'?'این نامه خودکار نوشته شده. قبل از ارسال کامل بخوان و هر جمله‌ای که درست نیست را اصلاح کن.':'نوشتن هوشمند الان در دسترس نبود و از قالب ساده استفاده شد. نامه را بخوان و در صورت نیاز ویرایش کن.';
+    $('lmForm').hidden=true;$('lmOut').hidden=false}
+  catch(x){toast('نامه ساخته نشد: '+x.message)}
+  b.disabled=false;b.textContent='نوشتن نامه انگیزه'});
+async function copyText(t,msg){try{await navigator.clipboard.writeText(t);toast(msg)}catch(e){const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast(msg)}catch(x){toast('کپی نشد؛ متن را دستی انتخاب کن.')}ta.remove()}}
+$('lmCopy').addEventListener('click',()=>copyText($('lmLetter').value,'نامه کپی شد.'));
+$('lmCopyS').addEventListener('click',()=>copyText($('lmSubj').value,'موضوع کپی شد.'));
+$('lmOpen').addEventListener('click',()=>{if(curJob&&/^https?:\/\//i.test(curJob.url||''))window.open(curJob.url,'_blank','noopener,noreferrer')});
+$('lmSent').addEventListener('click',async()=>{
+  if(!confirm('فقط اگر درخواست را واقعاً روی سایت کارفرما فرستاده‌ای ثبت کن. ثبت شود؟'))return;
+  const b=$('lmSent');b.disabled=true;
+  try{await jsend('/api/applications',{job_id:curJob.id,letter:$('lmLetter').value});toast('درخواست ثبت شد. در «درخواست‌های ارسال‌شده» می‌بینیش.');closeLetter();await loadApps()}
+  catch(x){toast(x.status===409?'برای این آگهی قبلاً درخواست ثبت شده.':'ثبت نشد: '+x.message)}b.disabled=false});
+
 renderStatic();tick();setInterval(tick,30000);
 all=SAMPLE;isSample=true;render();renderPipe();
-load();
+load();refreshMeta();
 </script>
 </body>
 </html>

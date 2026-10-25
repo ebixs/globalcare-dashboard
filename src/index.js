@@ -1,4 +1,5 @@
 import { collect } from './collect.js';
+import { handleApply } from './apply.js';
 import dashboardHtml from './dashboard.html';
 import { isLoggedIn, passwordMatches, sessionCookie, clearedCookie, loginPage, setupPage } from './auth.js';
 
@@ -17,7 +18,7 @@ async function listJobs(url, env) {
   }
   const country = (url.searchParams.get('country') || '').toLowerCase();
   const q = (url.searchParams.get('q') || '').slice(0, 100);
-  let sql = 'SELECT title, company, location, country, source, url, posted_at, collected_at FROM jobs WHERE 1=1';
+  let sql = 'SELECT id, title, company, location, country, source, url, posted_at, collected_at FROM jobs WHERE 1=1';
   const args = [];
   if (COUNTRIES.includes(country)) { sql += ' AND country = ?'; args.push(country); }
   if (q) { sql += ' AND (title LIKE ? OR company LIKE ? OR location LIKE ?)'; args.push(`%${q}%`, `%${q}%`, `%${q}%`); }
@@ -109,6 +110,16 @@ export default {
       } catch (e) {
         console.error('refresh failed', String(e && e.message || e));
         return Response.json({ ok: false, error: String(e.message || e).slice(0, 200) }, { status: 500, headers: cors() });
+      }
+    }
+
+    if (/^\/api\/(profile|letter|applications|notices|cv)(\/|$)/.test(path)) {
+      try {
+        const res = await handleApply(request, env, path);
+        if (res) return res;
+      } catch (e) {
+        console.error('apply route failed', path, String(e && e.message || e));
+        return Response.json({ error: String(e.message || e).slice(0, 200) }, { status: 500, headers: cors() });
       }
     }
 

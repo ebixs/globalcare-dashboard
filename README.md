@@ -19,6 +19,7 @@ The dashboard is deployed from this repository through Cloudflare's Git integrat
 - `src/dashboard.html` — dashboard UI (served by the Worker, only after login)
 - `public/assets/` — decorative images (public, no private data)
 - `src/index.js` — Worker entry: `/api/jobs`, `/api/collect`, static assets, cron handler
+- `src/apply.js` — cover letters, applications, employer replies, CV storage (all behind login)
 - `src/collect.js` — feed collector that writes to D1
 - `wrangler.jsonc` — Worker, assets, D1 binding and cron configuration
 - `sql/schema.sql` — D1 schema
@@ -26,7 +27,7 @@ The dashboard is deployed from this repository through Cloudflare's Git integrat
 
 ## Important limitations
 
-Listings are informational and may be incomplete or stale. Verify each role and eligibility requirements on the employer's official website. The collector uses public feeds and keyword-based filtering; it is not a comprehensive search of every employer or country. The dashboard does not submit job applications.
+Listings are informational and may be incomplete or stale. Verify each role and eligibility requirements on the employer's official website. The collector uses public feeds and keyword-based filtering; it is not a comprehensive search of every employer or country. The dashboard does not submit job applications: it drafts a cover letter per listing (Cloudflare Workers AI, with a plain template fallback), the applicant sends the application herself on the employer's site, then records it here. Employer replies are pasted into the Notices page and linked to the application by a reference code (IMATI-XXXXXX). Personal data (CV text, letters) is stored only in D1 behind the login, never in this repository.
 
 ## Setup overview
 
