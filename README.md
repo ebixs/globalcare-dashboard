@@ -34,7 +34,7 @@ Listings are informational and may be incomplete or stale. Verify each role and 
 1. Create a D1 database and run `sql/schema.sql` in its Console.
 2. Put the database ID in `wrangler.jsonc`.
 3. Connect this repository to a Cloudflare Worker named `globalcare-dashboard` (Workers & Pages → Git integration).
-   Target countries: US, UK, Australia, Netherlands.
+   Target countries: US, UK, Australia, Netherlands, Turkey (Turkey has no free job API, so its listings come from search links and the manual "add listing" button).
 4. Set a `APP_PASSWORD` secret (Workers & Pages → the Worker → Settings → Variables and Secrets → type **Secret**). Without it the site shows only a setup notice. Everything, including the API, requires this password.
 5. Optional, for real listings: create a free Adzuna developer account and set two Secrets, `ADZUNA_APP_ID` and `ADZUNA_APP_KEY`. Check Adzuna's terms and keep the "Jobs by Adzuna" attribution. Without the keys only the small public Arbeitnow feeds are used.
 6. Optional extra sources, each only active when its free API key is set as a Secret: `REED_API_KEY` (UK, Reed) and `JOOBLE_API_KEY` (Jooble, all four countries). Indeed and LinkedIn have no public job API and forbid scraping, so listings found there are added with the "add listing" button.

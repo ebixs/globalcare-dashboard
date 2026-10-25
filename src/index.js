@@ -3,7 +3,7 @@ import { handleApply } from './apply.js';
 import dashboardHtml from './dashboard.html';
 import { isLoggedIn, passwordMatches, sessionCookie, clearedCookie, loginPage, setupPage } from './auth.js';
 
-const COUNTRIES = ['us', 'uk', 'au', 'nl'];
+const COUNTRIES = ['us', 'uk', 'au', 'nl', 'tr'];
 
 const cors = () => ({ 'Cache-Control': 'no-store' });
 

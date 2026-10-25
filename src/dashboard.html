@@ -210,6 +210,7 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
   <symbol id="f-uk" viewBox="0 0 24 24"><g clip-path="url(#fc)"><use href="#jack"/></g></symbol>
   <symbol id="f-us" viewBox="0 0 24 24"><g clip-path="url(#fc)"><rect width="24" height="24" fill="#fff"/><path d="M0 .9h24M0 4.6h24M0 8.3h24M0 12h24M0 15.7h24M0 19.4h24M0 23.1h24" stroke="#b22234" stroke-width="1.85"/><rect width="12" height="13" fill="#3c3b6e"/><g fill="#fff"><circle cx="2.5" cy="2.5" r=".7"/><circle cx="6" cy="2.5" r=".7"/><circle cx="9.5" cy="2.5" r=".7"/><circle cx="4.2" cy="5.8" r=".7"/><circle cx="7.8" cy="5.8" r=".7"/><circle cx="2.5" cy="9.2" r=".7"/><circle cx="6" cy="9.2" r=".7"/><circle cx="9.5" cy="9.2" r=".7"/></g></g></symbol>
   <symbol id="f-au" viewBox="0 0 24 24"><g clip-path="url(#fc)"><rect width="24" height="24" fill="#012169"/><g transform="scale(.5)"><use href="#jack"/></g><g fill="#fff"><circle cx="6.5" cy="18" r="2"/><circle cx="17" cy="4.5" r="1.1"/><circle cx="20.5" cy="9.5" r="1.1"/><circle cx="14.5" cy="11.5" r="1.1"/><circle cx="18" cy="18.5" r="1.1"/></g></g></symbol>
+  <symbol id="f-tr" viewBox="0 0 24 24"><g clip-path="url(#fc)"><rect width="24" height="24" fill="#e30a17"/><circle cx="9.3" cy="12" r="5.2" fill="#fff"/><circle cx="10.8" cy="12" r="4.2" fill="#e30a17"/><polygon fill="#fff" points="17.20,12.00 15.67,12.56 15.61,14.19 14.61,12.90 13.04,13.35 13.95,12.00 13.04,10.65 14.61,11.10 15.61,9.81 15.67,11.44"/></g></symbol>
   <symbol id="f-nl" viewBox="0 0 24 24"><g clip-path="url(#fc)"><rect width="24" height="8" fill="#ae1c28"/><rect y="8" width="24" height="8" fill="#fff"/><rect y="16" width="24" height="8" fill="#21468b"/></g></symbol>
   <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
@@ -423,7 +424,7 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
     <div class="fld"><label for="amTitle">عنوان شغل</label><input id="amTitle" dir="ltr" maxlength="200" placeholder="Registered Nurse - Medical Ward"></div>
     <div class="fld"><label for="amCompany">کارفرما</label><input id="amCompany" dir="ltr" maxlength="200"></div>
     <div class="fld"><label for="amLoc">شهر / محل</label><input id="amLoc" dir="ltr" maxlength="200"></div>
-    <div class="fld"><label for="amCountry">کشور</label><select id="amCountry"><option value="">انتخاب کن</option><option value="us">آمریکا</option><option value="uk">بریتانیا</option><option value="au">استرالیا</option><option value="nl">هلند</option></select></div>
+    <div class="fld"><label for="amCountry">کشور</label><select id="amCountry"><option value="">انتخاب کن</option><option value="us">آمریکا</option><option value="uk">بریتانیا</option><option value="au">استرالیا</option><option value="nl">هلند</option><option value="tr">ترکیه</option></select></div>
     <div class="fld"><label for="amUrl">لینک کامل آگهی</label><input id="amUrl" dir="ltr" maxlength="800" placeholder="https://..."></div>
     <div class="fld"><label for="amDesc">متن آگهی (کپی از سایت؛ هر چه کامل‌تر، نامه دقیق‌تر)</label><textarea id="amDesc" dir="ltr" rows="8" maxlength="6000"></textarea></div>
     <div class="rw"><button class="btn" id="amSave">افزودن</button><button class="btn sec" id="amClose">بستن</button></div>
@@ -434,8 +435,8 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
 <script>
 const $=id=>document.getElementById(id);
 const fa=n=>Number(n).toLocaleString('fa-IR');
-const CN={us:'آمریکا',uk:'بریتانیا',au:'استرالیا',nl:'هلند'};
-const ORDER=['us','uk','au','nl'];
+const CN={us:'آمریکا',uk:'بریتانیا',au:'استرالیا',nl:'هلند',tr:'ترکیه'};
+const ORDER=['us','uk','au','nl','tr'];
 const flag=(c,cls='')=>`<svg class="flag ${cls}" viewBox="0 0 24 24" aria-hidden="true"><use href="#f-${c}"/></svg>`;
 const SAMPLE=[
   {title:'Registered Nurse – Medical Ward',company:"St. Vincent's Hospital, Sydney",country:'au'},
@@ -469,7 +470,7 @@ function render(){renderLoc();renderQlinks();const list=filtered();
   $('sampleNote').innerHTML=isSample?(apiErr?'<div class="sample" dir="ltr" style="text-align:left;color:#fda4af;border-color:#8a2c55;background:#4d183366">API error: '+esc(apiErr)+'</div>':'')+'<div class="sample">این چهار کارت فقط <b>نمونهٔ طراحی</b> هستند و آگهی واقعی نیستند. بعد از اولین جمع‌آوری، آگهی‌های واقعی جایگزین می‌شوند.</div>':'';
   if(!list.length){$('jobs').innerHTML='<div class="empty">آگهی‌ای با این فیلتر پیدا نشد.<br>کشور یا عبارت دیگری را امتحان کن.</div>';return}
   $('jobs').innerHTML=list.slice(0,100).map(j=>{const w=isSample?{b:'نمونه',c:'b-info',l:''}:when(j.posted_at||j.collected_at);const ok=/^https?:\/\//i.test(j.url||'');
-    const flagHtml=CN[j.country]?flag(j.country):'';const cn={us:'United States',uk:'United Kingdom',au:'Australia',nl:'Netherlands'}[j.country]||'';
+    const flagHtml=CN[j.country]?flag(j.country):'';const cn={us:'United States',uk:'United Kingdom',au:'Australia',nl:'Netherlands',tr:'Turkey'}[j.country]||'';
     const inner=`<h3>${esc(j.title||'Untitled')}</h3><p>${esc(j.company||'—')}${j.location?' · '+esc(j.location):''}</p><div class="c">${flagHtml}<span>${esc(cn)}</span>${j.source&&!isSample?`<span class="src" title="منبع آگهی">${esc(String(j.source).slice(0,28))}</span>`:''}</div>`;
     const done=j.id&&applied.has(j.id);
     const btn=(isSample||!j.id)?'':`<button class="mk${done?' done':''}" data-id="${esc(j.id)}">${done?'✔ ثبت شده':'✉ نامه انگیزه'}</button>`;
@@ -524,7 +525,8 @@ const ST={sent:'ارسال شد',replied:'پاسخ داد',interview:'مصاحب
 const REGH={us:['مجوز / آزمون پرستاری آمریکا (مثل NCLEX)','e.g. I plan to sit the NCLEX-RN / I have not started yet'],
   uk:['ثبت‌نام پرستاری بریتانیا (NMC)','e.g. I am preparing for the NMC registration process'],
   au:['ثبت‌نام پرستاری استرالیا (AHPRA)','e.g. I intend to apply to AHPRA for registration'],
-  nl:['ثبت‌نام پرستاری هلند (BIG)','e.g. I intend to apply for BIG registration']};
+  nl:['ثبت‌نام پرستاری هلند (BIG)','e.g. I intend to apply for BIG registration'],
+  tr:['وضعیت دیپلم و مجوز کار پرستاری در ترکیه (وزارت بهداشت)','e.g. Nursing diploma from Fenerbahçe University (2025)']};
 async function api(path,opts){const r=await fetch(path,Object.assign({cache:'no-store'},opts));const d=await r.json().catch(()=>({}));
   if(!r.ok){const e=new Error(d.error||('HTTP '+r.status));e.status=r.status;e.data=d;throw e}return d}
 const jsend=(p,b,m='POST')=>api(p,{method:m,headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});
@@ -654,12 +656,13 @@ $('amSave').addEventListener('click',async()=>{const b=$('amSave');b.disabled=tr
 function renderQlinks(){
   const c=$('country').value||selCountry,box=$('qlinks');
   if(!c){box.innerHTML='<span>برای جستجو در سایت‌های دیگر یک کشور انتخاب کن.</span>';return}
-  const q=encodeURIComponent($('q').value.trim()||(c==='nl'?'verpleegkundige':'registered nurse')),CT={us:'United States',uk:'United Kingdom',au:'Australia',nl:'Netherlands'}[c];
-  const L=[['Indeed',{us:'https://www.indeed.com/jobs?q=',uk:'https://uk.indeed.com/jobs?q=',au:'https://au.indeed.com/jobs?q=',nl:'https://nl.indeed.com/jobs?q='}[c]+q],
+  const q=encodeURIComponent($('q').value.trim()||(c==='nl'?'verpleegkundige':c==='tr'?'hemşire':'registered nurse')),CT={us:'United States',uk:'United Kingdom',au:'Australia',nl:'Netherlands',tr:'Turkey'}[c];
+  const L=[['Indeed',{us:'https://www.indeed.com/jobs?q=',uk:'https://uk.indeed.com/jobs?q=',au:'https://au.indeed.com/jobs?q=',nl:'https://nl.indeed.com/jobs?q=',tr:'https://tr.indeed.com/jobs?q='}[c]+q],
     ['LinkedIn','https://www.linkedin.com/jobs/search/?keywords='+q+'&location='+encodeURIComponent(CT)]];
   if(c==='uk')L.push(['NHS Jobs','https://www.jobs.nhs.uk/candidate/search/results?keyword='+q]);
   if(c==='au')L.push(['SEEK','https://www.seek.com.au/jobs?keywords='+q]);
   if(c==='us')L.push(['USAJOBS','https://www.usajobs.gov/Search/Results?k='+q]);
+  if(c==='tr')L.push(['Kariyer.net','https://www.kariyer.net/is-ilanlari?kw='+q]);
   box.innerHTML='<span>جستجو در سایت‌های دیگر:</span>'+L.map(x=>`<a href="${esc(x[1])}" target="_blank" rel="noopener noreferrer">${x[0]} ↗</a>`).join('')+'<span>آگهی خوب پیدا کردی؟ «＋ افزودن آگهی دستی» را بزن.</span>';
 }
 

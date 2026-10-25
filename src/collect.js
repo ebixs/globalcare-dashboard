@@ -14,7 +14,7 @@ const ADZUNA_MARKETS = [
   { code: 'nl', country: 'nl', terms: ['verpleegkundige', 'nurse'] }
 ];
 
-const NURSING = /\bnurs(e|ing|es)\b|registered nurse|staff nurse|healthcare assistant|care assistant|midwi(fe|fery)|verpleegkundige|pflegefach|pflegekraft|clinical support worker|patient care/i;
+const NURSING = /\bnurs(e|ing|es)\b|hemşire|hemsire|registered nurse|staff nurse|healthcare assistant|care assistant|midwi(fe|fery)|verpleegkundige|pflegefach|pflegekraft|clinical support worker|patient care/i;
 
 function countryOf(s = '') {
   s = s.toLowerCase();
@@ -132,7 +132,8 @@ const JOOBLE_MARKETS = [
   { country: 'us', location: 'United States', keywords: 'registered nurse' },
   { country: 'uk', location: 'United Kingdom', keywords: 'registered nurse' },
   { country: 'au', location: 'Australia', keywords: 'registered nurse' },
-  { country: 'nl', location: 'Netherlands', keywords: 'verpleegkundige' }
+  { country: 'nl', location: 'Netherlands', keywords: 'verpleegkundige' },
+  { country: 'tr', location: 'Turkey', keywords: 'hemşire' }
 ];
 async function collectJooble(env, collected) {
   const rows = [], errors = [];
