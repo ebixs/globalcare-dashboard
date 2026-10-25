@@ -105,7 +105,7 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
 .s3{background:linear-gradient(135deg,rgba(14,110,92,.58),rgba(12,62,84,.7))}.s3 .ic{background:#1fc38b}
 .s4{background:linear-gradient(135deg,rgba(160,28,98,.58),rgba(88,28,110,.7))}.s4 .ic{background:#ee3d8a}
 /* columns */
-.cols{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
+.cols{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:16px;align-items:start}
 .stack{display:grid;gap:16px;min-width:0}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .panel{border:1px solid var(--line);border-radius:19px;background:var(--glass);padding:17px 18px;min-width:0}
@@ -122,17 +122,17 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
 .filters input,.filters select{width:100%;background:#0a083088;border:1px solid var(--line);border-radius:11px;padding:9px 11px;font-size:12.5px}
 .filters input{direction:ltr;text-align:left}
 .filters button{border:0;border-radius:11px;padding:0 16px;background:linear-gradient(90deg,#7c5cff,#6a4ae6);font-weight:700;font-size:13px}
-.jobs{display:grid;gap:9px;max-height:376px;overflow-y:auto;overflow-x:hidden;direction:ltr;padding:1px 6px 1px 0}
+.jobs{display:grid;gap:9px;max-height:640px;overflow-y:auto;overflow-x:hidden;direction:ltr;padding:1px 6px 1px 0}
 .job{display:flex;align-items:center;gap:12px;direction:ltr;padding:10px 11px;border:1px solid #ffffff17;border-radius:14px;background:#ffffff09;text-decoration:none;color:inherit;transition:border-color .15s,background .15s}
 .job:hover{border-color:#8b78ffaa;background:#ffffff12}
 .job .jb{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#4a45c9,#2d2a8c);display:grid;place-items:center;flex:none}
 .job .jb svg{width:21px;height:21px}
 .job .in{flex:1;min-width:0;direction:ltr;text-align:left}
-.job h3{margin:0 0 3px;font-size:12.5px;font-weight:600;font-family:"Segoe UI",system-ui,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.job p{margin:0;font-size:11px;color:var(--mute);font-family:"Segoe UI",system-ui,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.job h3{margin:0 0 3px;font-size:13px;font-weight:600;font-family:"Segoe UI",system-ui,sans-serif;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
+.job p{margin:0;font-size:11.5px;color:var(--mute);font-family:"Segoe UI",system-ui,sans-serif;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
 .job .c{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:11px;color:#d7d3ff;direction:ltr;font-family:"Segoe UI",system-ui,sans-serif}
 .job .c .flag{width:15px;height:15px}
-.job .m{text-align:center;flex:none}
+.job .m{text-align:center;flex:none;min-width:84px}
 .job .m small{display:block;margin-top:6px;font-size:10.5px;color:var(--mute)}
 .job .go{color:var(--mute);font-size:20px;line-height:1}
 .badge{display:inline-block;font-size:10.5px;border-radius:9px;padding:4px 10px;border:1px solid;white-space:nowrap}
@@ -187,6 +187,7 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
 .mk{flex:none;background:linear-gradient(90deg,#7c5cff,#6a4ae6);border:0;border-radius:10px;padding:8px 11px;font-size:11.5px;font-weight:600;color:#fff;white-space:nowrap}
 .mk.done{background:#0c3a3699;border:1px solid #177a6b;color:#5eead4}
 .job a.in{display:block;color:inherit;text-decoration:none}
+.qlinks{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:11.5px;color:var(--mute);margin:-2px 0 10px;direction:rtl}.qlinks a{color:#b9a7ff;text-decoration:none;border:1px solid #6a58c8;border-radius:9px;padding:2px 9px;font-family:"Segoe UI",system-ui,sans-serif;direction:ltr}.qlinks a:hover{background:#7c5cff30}
 .nbd{font-style:normal;background:#ee3d8a;color:#fff;border-radius:10px;font-size:11px;padding:1px 7px;margin-inline-start:auto}
 .guide ol{margin:0;padding:0 20px 0 0;display:grid;gap:12px;line-height:2;font-size:13.5px}
 .guide h3{margin:18px 0 6px;font-size:14px;color:#cfc4ff}
@@ -295,12 +296,13 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
         </div>
         <div class="stack">
           <section class="panel" id="jobsPanel">
-            <h2>آخرین فرصت‌های شغلی <span style="display:flex;gap:14px"><button id="refreshJobs" title="جمع‌آوری آگهی‌های جدید (هر ۳۰ دقیقه یک بار)">به‌روزرسانی آگهی‌ها</button><button id="allJobs">مشاهده همه</button></span></h2>
+            <h2>آخرین فرصت‌های شغلی <span style="display:flex;gap:14px"><button id="addJob" title="آگهی‌ای که در Indeed، LinkedIn یا سایت دیگری پیدا کردی را اضافه کن">＋ افزودن آگهی دستی</button><button id="refreshJobs" title="جمع‌آوری آگهی‌های جدید (هر ۳۰ دقیقه یک بار)">به‌روزرسانی آگهی‌ها</button><button id="allJobs">مشاهده همه</button></span></h2>
             <div class="filters">
               <button id="search">جستجو</button>
               <select id="country" aria-label="کشور"></select>
               <input id="q" placeholder="Registered Nurse" aria-label="جست‌وجوی عنوان، کارفرما یا مکان">
             </div>
+            <div class="qlinks" id="qlinks"></div>
             <div id="sampleNote"></div>
             <div class="jobs" id="jobs" aria-live="polite"></div>
           </section>
@@ -367,6 +369,7 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
     <p id="lmSub" style="margin:0 0 14px;color:var(--mute);font-size:12px;direction:ltr;text-align:right"></p>
     <div id="lmForm">
       <div class="note2">این سؤال‌ها را برای همین آگهی جواب بده. هر چه خالی بماند در نامه نوشته نمی‌شود و چیزی از خودمان اضافه نمی‌کنیم. فقط واقعیت بنویس.</div>
+      <div class="fld"><label for="lmPost">متن آگهی (نامه با این متن تطبیق داده می‌شود)</label><textarea id="lmPost" dir="ltr" rows="6" maxlength="5000"></textarea><small id="lmPostH"></small></div>
       <div class="fld"><label for="lmReg" id="lmRegL"></label><input id="lmReg" dir="ltr" maxlength="600"><small id="lmRegH"></small></div>
       <div class="fld"><label for="lmAuth">وضعیت اجازهٔ کار / ویزا برای این کشور</label><input id="lmAuth" dir="ltr" maxlength="600" placeholder="e.g. I will need visa sponsorship / I have the right to work"></div>
       <div class="fld"><label for="lmAvail">از چه زمانی می‌توانی شروع کنی؟</label><input id="lmAvail" dir="ltr" maxlength="300" placeholder="e.g. Available to relocate and start within 3 months"></div>
@@ -377,6 +380,7 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
       <div class="fld"><label for="lmSubj">موضوع ایمیل (برای پیدا کردن پاسخ‌ها این کد را نگه دار)</label><input id="lmSubj" dir="ltr" readonly></div>
       <div class="fld"><label for="lmLetter">نامه (قابل ویرایش)</label><textarea id="lmLetter" dir="ltr" rows="16" maxlength="6000"></textarea></div>
       <div class="note2" id="lmWarn"></div>
+      <div class="note2" id="lmGaps" hidden style="color:#fda4af;border-color:#8a2c55;background:#4d183355"></div>
       <div class="rw">
         <button class="btn" id="lmCopy">کپی نامه</button>
         <button class="btn sec" id="lmCopyS">کپی موضوع</button>
@@ -386,6 +390,19 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
       </div>
       <small style="color:var(--mute);display:block;margin-top:8px;line-height:1.8">«ثبت» را فقط بعد از اینکه واقعاً درخواست را روی سایت کارفرما فرستادی بزن.</small>
     </div>
+  </div>
+</div>
+<div class="modal" id="am" hidden role="dialog" aria-modal="true" aria-labelledby="amT">
+  <div class="mbox">
+    <h2 id="amT" style="margin:0 0 4px;font-size:16px">افزودن آگهی از سایت دیگر</h2>
+    <p style="margin:0 0 14px;color:var(--mute);font-size:12px;line-height:1.9">آگهی را در Indeed، LinkedIn، سایت بیمارستان یا هر جای دیگر پیدا کن، مشخصاتش را اینجا بچسبان. بعد همین دکمهٔ «نامه انگیزه» برایش کار می‌کند.</p>
+    <div class="fld"><label for="amTitle">عنوان شغل</label><input id="amTitle" dir="ltr" maxlength="200" placeholder="Registered Nurse - Medical Ward"></div>
+    <div class="fld"><label for="amCompany">کارفرما</label><input id="amCompany" dir="ltr" maxlength="200"></div>
+    <div class="fld"><label for="amLoc">شهر / محل</label><input id="amLoc" dir="ltr" maxlength="200"></div>
+    <div class="fld"><label for="amCountry">کشور</label><select id="amCountry"><option value="">انتخاب کن</option><option value="us">آمریکا</option><option value="uk">بریتانیا</option><option value="au">استرالیا</option><option value="nl">هلند</option></select></div>
+    <div class="fld"><label for="amUrl">لینک کامل آگهی</label><input id="amUrl" dir="ltr" maxlength="800" placeholder="https://..."></div>
+    <div class="fld"><label for="amDesc">متن آگهی (کپی از سایت؛ هر چه کامل‌تر، نامه دقیق‌تر)</label><textarea id="amDesc" dir="ltr" rows="8" maxlength="6000"></textarea></div>
+    <div class="rw"><button class="btn" id="amSave">افزودن</button><button class="btn sec" id="amClose">بستن</button></div>
   </div>
 </div>
 <div class="toast" id="toast" role="status"></div>
@@ -421,7 +438,7 @@ function renderPipe(){const live=apiOk&&!isSample;
   const steps=[['جست‌وجوی روزانه (بدون تاریخ پایان)',lastSuccess!==null],['فیلتر عنوان‌های پرستاری و کشورهای هدف',lastSuccess!==null],['ذخیره در دیتابیس',apiOk],['نمایش آگهی‌ها در داشبورد',live]];
   $('pipe').innerHTML=steps.map(([t,ok])=>`<li><svg style="color:${ok?'#2bd6a0':'#4d4a86'}"><use href="#i-check"/></svg><span style="${ok?'':'color:var(--mute)'}">${t}</span></li>`).join('');
   const t=$('pipeTag');t.textContent=live?'فعال':apiOk?'منتظر اولین جمع‌آوری':'نیازمند تنظیم';t.className='tag'+(live?'':' warn')}
-function render(){renderLoc();const list=filtered();
+function render(){renderLoc();renderQlinks();const list=filtered();
   const day=all.filter(j=>{const t=new Date(j.collected_at||j.posted_at).getTime();return isFinite(t)&&Date.now()-t<864e5}).length;
   $('stNew').textContent=isSample?'—':fa(day);
   $('stNewNote').textContent=isSample?'در انتظار اولین جمع‌آوری':'در ۲۴ ساعت گذشته جمع‌آوری شد';
@@ -571,18 +588,24 @@ function openLetter(id){
   $('lmSub').textContent=[j.company,j.location].filter(Boolean).join(' · ');
   const h=REGH[j.country]||['مجوز پرستاری آن کشور','']; $('lmRegL').textContent='وضعیت '+h[0];$('lmRegH').textContent='';$('lmReg').placeholder=h[1];
   $('lmReg').value=prof['reg_'+j.country]||'';$('lmAuth').value=prof['auth_'+j.country]||'';$('lmAvail').value=prof.availability||'';$('lmNote').value='';
-  $('lmForm').hidden=false;$('lmOut').hidden=true;$('lm').hidden=false;$('lmReg').focus()}
+  $('lmPost').value='';$('lmPostH').textContent='در حال گرفتن متن آگهی…';
+  $('lmForm').hidden=false;$('lmOut').hidden=true;$('lm').hidden=false;$('lmReg').focus();
+  api('/api/job?id='+encodeURIComponent(id)).then(d=>{if(!curJob||curJob.id!==id)return;$('lmPost').value=d.description||'';postHint()}).catch(()=>{$('lmPostH').textContent='متن آگهی گرفته نشد؛ می‌توانی خودت بچسبانی.'})}
+function postHint(){const n=$('lmPost').value.trim().length;
+  $('lmPostH').textContent=n>=600?'متن آگهی موجود است؛ نامه با آن تطبیق داده می‌شود.':n>=40?'فقط خلاصهٔ کوتاهی از آگهی داریم. متن کامل را از سایت کارفرما کپی و اینجا جایگذاری کن تا نامه دقیق‌تر شود.':'متن آگهی نداریم. متن را از سایت کارفرما کپی و اینجا بچسبان؛ وگرنه نامه فقط بر اساس عنوان و کارفرما نوشته می‌شود.'}
+$('lmPost').addEventListener('input',postHint);
 function closeLetter(){$('lm').hidden=true}
 $('lmClose').addEventListener('click',closeLetter);
 $('lm').addEventListener('click',e=>{if(e.target===$('lm'))closeLetter()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('lm').hidden)closeLetter()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('lm').hidden)closeLetter();if(!$('am').hidden)$('am').hidden=true}});
 $('lmBack').addEventListener('click',()=>{$('lmOut').hidden=true;$('lmForm').hidden=false});
 $('lmGen').addEventListener('click',async()=>{
   const b=$('lmGen');b.disabled=true;b.textContent='در حال نوشتن… (تا ۳۰ ثانیه)';
-  try{const d=await jsend('/api/letter',{job_id:curJob.id,answers:{registration:$('lmReg').value,authorization:$('lmAuth').value,availability:$('lmAvail').value,note:$('lmNote').value}});
+  try{const d=await jsend('/api/letter',{job_id:curJob.id,answers:{registration:$('lmReg').value,authorization:$('lmAuth').value,availability:$('lmAvail').value,note:$('lmNote').value},posting:$('lmPost').value});
     prof['reg_'+curJob.country]=$('lmReg').value;prof['auth_'+curJob.country]=$('lmAuth').value;if($('lmAvail').value)prof.availability=$('lmAvail').value;
     curRef=d.ref;curSubj=d.subject;$('lmSubj').value=d.subject;$('lmLetter').value=d.letter;
     $('lmWarn').textContent=d.source==='ai'?'این نامه خودکار نوشته شده. قبل از ارسال کامل بخوان و هر جمله‌ای که درست نیست را اصلاح کن.':'نوشتن هوشمند الان در دسترس نبود و از قالب ساده استفاده شد. نامه را بخوان و در صورت نیاز ویرایش کن.';
+    const g=$('lmGaps');const gp=Array.isArray(d.gaps)?d.gaps:[];g.hidden=!gp.length;g.innerHTML=gp.length?'<b>موارد آگهی که در رزومهٔ تو دیده نشد (در نامه ادعا نشده‌اند):</b><br>'+gp.map(x=>'• '+esc(x)).join('<br>'):'';
     $('lmForm').hidden=true;$('lmOut').hidden=false}
   catch(x){toast('نامه ساخته نشد: '+x.message)}
   b.disabled=false;b.textContent='نوشتن نامه انگیزه'});
@@ -595,6 +618,26 @@ $('lmSent').addEventListener('click',async()=>{
   const b=$('lmSent');b.disabled=true;
   try{await jsend('/api/applications',{job_id:curJob.id,letter:$('lmLetter').value});toast('درخواست ثبت شد. در «درخواست‌های ارسال‌شده» می‌بینیش.');closeLetter();await loadApps()}
   catch(x){toast(x.status===409?'برای این آگهی قبلاً درخواست ثبت شده.':'ثبت نشد: '+x.message)}b.disabled=false});
+
+/* manual listings + search links for other sites */
+$('addJob').addEventListener('click',()=>{['amTitle','amCompany','amLoc','amUrl','amDesc'].forEach(k=>$(k).value='');$('amCountry').value=$('country').value||'';$('am').hidden=false;$('amTitle').focus()});
+$('amClose').addEventListener('click',()=>{$('am').hidden=true});
+$('am').addEventListener('click',e=>{if(e.target===$('am'))$('am').hidden=true});
+$('amSave').addEventListener('click',async()=>{const b=$('amSave');b.disabled=true;
+  try{const d=await jsend('/api/job/add',{title:$('amTitle').value,company:$('amCompany').value,location:$('amLoc').value,country:$('amCountry').value,url:$('amUrl').value,description:$('amDesc').value});
+    $('am').hidden=true;toast('آگهی اضافه شد.');$('q').value='';$('country').value='';selCountry='';await load();openLetter(d.id)}
+  catch(x){toast('اضافه نشد: '+x.message)}b.disabled=false});
+function renderQlinks(){
+  const c=$('country').value||selCountry,box=$('qlinks');
+  if(!c){box.innerHTML='<span>برای جستجو در سایت‌های دیگر یک کشور انتخاب کن.</span>';return}
+  const q=encodeURIComponent($('q').value.trim()||(c==='nl'?'verpleegkundige':'registered nurse')),CT={us:'United States',uk:'United Kingdom',au:'Australia',nl:'Netherlands'}[c];
+  const L=[['Indeed',{us:'https://www.indeed.com/jobs?q=',uk:'https://uk.indeed.com/jobs?q=',au:'https://au.indeed.com/jobs?q=',nl:'https://nl.indeed.com/jobs?q='}[c]+q],
+    ['LinkedIn','https://www.linkedin.com/jobs/search/?keywords='+q+'&location='+encodeURIComponent(CT)]];
+  if(c==='uk')L.push(['NHS Jobs','https://www.jobs.nhs.uk/candidate/search/results?keyword='+q]);
+  if(c==='au')L.push(['SEEK','https://www.seek.com.au/jobs?keywords='+q]);
+  if(c==='us')L.push(['USAJOBS','https://www.usajobs.gov/Search/Results?k='+q]);
+  box.innerHTML='<span>جستجو در سایت‌های دیگر:</span>'+L.map(x=>`<a href="${esc(x[1])}" target="_blank" rel="noopener noreferrer">${x[0]} ↗</a>`).join('')+'<span>آگهی خوب پیدا کردی؟ «＋ افزودن آگهی دستی» را بزن.</span>';
+}
 
 renderStatic();tick();setInterval(tick,30000);
 all=SAMPLE;isSample=true;render();renderPipe();
