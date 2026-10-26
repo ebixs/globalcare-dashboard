@@ -69,7 +69,7 @@ export default {
       const jobsCheck = hasDb ? await check('SELECT 1 FROM jobs LIMIT 1') : { ok: false, ms: 0 };
       const metaCheck = hasDb ? await check('SELECT 1 FROM metadata LIMIT 1') : { ok: false, ms: 0 };
       const jobs = jobsCheck.ok, metadata = metaCheck.ok;
-      return Response.json({ ok: true, db: hasDb, tables: { jobs, metadata }, ms: { jobs: jobsCheck.ms, metadata: metaCheck.ms }, login: Boolean(env.APP_PASSWORD), adzuna: Boolean(env.ADZUNA_APP_ID && env.ADZUNA_APP_KEY), reed: Boolean(env.REED_API_KEY), jooble: Boolean(env.JOOBLE_API_KEY), ai: Boolean(env.AI) }, { headers: cors() });
+      return Response.json({ ok: true, db: hasDb, tables: { jobs, metadata }, ms: { jobs: jobsCheck.ms, metadata: metaCheck.ms }, login: Boolean(env.APP_PASSWORD), adzuna: Boolean(env.ADZUNA_APP_ID && env.ADZUNA_APP_KEY), reed: Boolean(env.REED_API_KEY), jooble: Boolean(env.JOOBLE_API_KEY), careerjet: Boolean(env.CAREERJET_API_KEY), ai: Boolean(env.AI) }, { headers: cors() });
     }
 
     // Fail closed: without APP_PASSWORD nothing else is served.
@@ -105,8 +105,8 @@ export default {
           return Response.json({ error: 'Collected recently', retry_after_min: Math.ceil(30 - mins) }, { status: 429, headers: cors() });
         }
         await withTimeout(env.DB.prepare("INSERT INTO metadata(key,value) VALUES('last_manual',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value").bind(new Date().toISOString()).run(), 5000, 'metadata write');
-        const summary = await withTimeout(collect(env), 25000, 'collection');
-        return Response.json({ ok: true, matched: summary.matched, sources: summary.sources, adzuna: summary.adzuna, reed: summary.reed, jooble: summary.jooble, errors: summary.errors }, { headers: cors() });
+        const summary = await withTimeout(collect(env, { ip: request.headers.get('CF-Connecting-IP'), ua: request.headers.get('User-Agent') }), 25000, 'collection');
+        return Response.json({ ok: true, matched: summary.matched, sources: summary.sources, adzuna: summary.adzuna, reed: summary.reed, jooble: summary.jooble, careerjet: summary.careerjet, careerjet_ran: summary.careerjet_ran, errors: summary.errors }, { headers: cors() });
       } catch (e) {
         console.error('refresh failed', String(e && e.message || e));
         return Response.json({ ok: false, error: String(e.message || e).slice(0, 200) }, { status: 500, headers: cors() });

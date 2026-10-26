@@ -159,6 +159,47 @@ async function collectJooble(env, collected) {
   return { rows, errors, configured: true };
 }
 
+// Careerjet v4 (https://search.api.careerjet.net/v4/query, Basic auth, key as user name).
+// The API requires the IP and user agent of the person whose action triggered the call,
+// so it only runs for a manual refresh by a logged-in user, never from the scheduled run.
+const CAREERJET_MARKETS = [
+  { locale: 'tr_TR', country: 'tr', keywords: 'hemşire' },
+  { locale: 'en_GB', country: 'uk', keywords: 'registered nurse' },
+  { locale: 'en_US', country: 'us', keywords: 'registered nurse' },
+  { locale: 'en_AU', country: 'au', keywords: 'registered nurse' },
+  { locale: 'nl_NL', country: 'nl', keywords: 'verpleegkundige' }
+];
+async function collectCareerjet(env, collected, viewer) {
+  const rows = [], errors = [];
+  if (!env.CAREERJET_API_KEY) return { rows, errors, configured: false, ran: false };
+  if (!viewer || !viewer.ip || !viewer.ua) return { rows, errors, configured: true, ran: false };
+  for (const m of CAREERJET_MARKETS) {
+    try {
+      const u = new URL('https://search.api.careerjet.net/v4/query');
+      u.searchParams.set('locale_code', m.locale);
+      u.searchParams.set('keywords', m.keywords);
+      u.searchParams.set('sort', 'date');
+      u.searchParams.set('page_size', '50');
+      u.searchParams.set('fragment_size', '500');
+      u.searchParams.set('user_ip', viewer.ip);
+      u.searchParams.set('user_agent', viewer.ua.slice(0, 300));
+      const r = await fetch(u.toString(), { headers: { Accept: 'application/json', Authorization: 'Basic ' + btoa(env.CAREERJET_API_KEY + ':') } });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const body = await r.json();
+      if (body.type && body.type !== 'JOBS') throw new Error(String(body.message || body.type).slice(0, 80));
+      for (const j of Array.isArray(body.jobs) ? body.jobs : []) {
+        const title = strip(j.title, 300);
+        if (!NURSING.test(title)) continue;
+        const link = String(j.url || '');
+        if (!/^https?:\/\//i.test(link)) continue;
+        rows.push({ id: 'careerjet:' + link.slice(0, 180), title, company: text(j.company), location: text(j.locations), country: m.country,
+          source: 'Careerjet', url: link, posted: toIso(j.date), collected, description: strip(j.description) });
+      }
+    } catch (e) { errors.push(`Careerjet ${m.locale}: ${clean(e.message || e)}`); }
+  }
+  return { rows, errors, configured: true, ran: true };
+}
+
 async function ensureColumns(env) {
   try { await env.DB.prepare('ALTER TABLE jobs ADD COLUMN description TEXT').run(); }
   catch (e) { if (!/duplicate column/i.test(String(e && e.message || e))) throw e; }
@@ -177,17 +218,17 @@ async function upsert(env, rows) {
 const setMeta = (env, key, value) =>
   env.DB.prepare('INSERT INTO metadata(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value').bind(key, value).run();
 
-export async function collect(env) {
+export async function collect(env, viewer) {
   if (!env.DB) throw new Error('D1 binding DB is not configured');
   const collected = new Date().toISOString();
   await ensureColumns(env);
   await setMeta(env, 'last_attempt', collected);
 
-  const [a, z, rd, jb] = await Promise.all([collectArbeitnow(collected), collectAdzuna(env, collected), collectReed(env, collected), collectJooble(env, collected)]);
-  const errors = [...a.errors, ...z.errors, ...rd.errors, ...jb.errors];
+  const [a, z, rd, jb, cj] = await Promise.all([collectArbeitnow(collected), collectAdzuna(env, collected), collectReed(env, collected), collectJooble(env, collected), collectCareerjet(env, collected, viewer)]);
+  const errors = [...a.errors, ...z.errors, ...rd.errors, ...jb.errors, ...cj.errors];
 
   const unique = new Map();
-  for (const r of [...a.rows, ...z.rows, ...rd.rows, ...jb.rows]) unique.set(r.id, r);
+  for (const r of [...a.rows, ...z.rows, ...rd.rows, ...jb.rows, ...cj.rows]) unique.set(r.id, r);
   const rows = [...unique.values()];
   await upsert(env, rows);
 
@@ -195,7 +236,7 @@ export async function collect(env) {
   for (const r of rows) sources[r.source] = (sources[r.source] || 0) + 1;
 
   if (rows.length > 0 || errors.length === 0) await setMeta(env, 'last_success', collected);
-  const summary = { collected, matched: rows.length, sources, adzuna: z.configured, reed: rd.configured, jooble: jb.configured, errors };
+  const summary = { collected, matched: rows.length, sources, adzuna: z.configured, reed: rd.configured, jooble: jb.configured, careerjet: cj.configured, careerjet_ran: cj.ran, errors };
   await setMeta(env, 'last_run_summary', JSON.stringify(summary));
   return summary;
 }
