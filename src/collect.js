@@ -184,7 +184,7 @@ async function collectCareerjet(env, collected, viewer) {
       u.searchParams.set('user_ip', viewer.ip);
       u.searchParams.set('user_agent', viewer.ua.slice(0, 300));
       const r = await fetch(u.toString(), { headers: { Accept: 'application/json', Authorization: 'Basic ' + btoa(env.CAREERJET_API_KEY + ':') } });
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      if (!r.ok) { const t = await r.text().catch(() => ''); throw new Error(`HTTP ${r.status} ${strip(t, 140)}`.trim()); }
       const body = await r.json();
       if (body.type && body.type !== 'JOBS') throw new Error(String(body.message || body.type).slice(0, 80));
       for (const j of Array.isArray(body.jobs) ? body.jobs : []) {

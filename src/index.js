@@ -25,15 +25,22 @@ async function listJobs(url, env) {
   sql += ' ORDER BY COALESCE(posted_at, collected_at) DESC LIMIT 200';
   const started = Date.now();
   const stmt = args.length ? env.DB.prepare(sql).bind(...args) : env.DB.prepare(sql);
-  const [rows, meta] = await Promise.all([
+  const since = new Date(Date.now() - 864e5).toISOString();
+  const [rows, meta, cnt, fresh] = await Promise.all([
     withTimeout(stmt.all(), 9000, 'jobs query'),
-    withTimeout(env.DB.prepare('SELECT value FROM metadata WHERE key = ?').bind('last_success').first(), 9000, 'metadata query')
+    withTimeout(env.DB.prepare('SELECT value FROM metadata WHERE key = ?').bind('last_success').first(), 9000, 'metadata query'),
+    withTimeout(env.DB.prepare('SELECT country, COUNT(*) AS n FROM jobs GROUP BY country').all(), 9000, 'count query'),
+    withTimeout(env.DB.prepare('SELECT COUNT(*) AS n FROM jobs WHERE COALESCE(posted_at, collected_at) > ?').bind(since).first(), 9000, 'fresh count query')
   ]);
   const results = rows.results || [];
+  const counts = {};
+  for (const r of cnt.results || []) counts[r.country] = r.n;
   return Response.json({
     jobs: results,
     count: results.length,
     last_success: meta?.value || null,
+    counts,
+    new24: fresh ? fresh.n : 0,
     ms: Date.now() - started,
     source_coverage: 'Public Arbeitnow feeds and Adzuna (when configured); not comprehensive.'
   }, { headers: cors() });
@@ -96,13 +103,13 @@ export default {
       return isApi ? Response.json({ error: 'Login required' }, { status: 401, headers: cors() }) : loginPage();
     }
 
-    // Logged-in users can trigger a collection, at most once every 30 minutes.
+    // Logged-in users can trigger a collection, at most once every 10 minutes.
     if (path === '/api/refresh' && request.method === 'POST') {
       try {
         const last = await withTimeout(env.DB.prepare("SELECT value FROM metadata WHERE key = 'last_manual'").first(), 5000, 'metadata query');
         const mins = last && last.value ? (Date.now() - Date.parse(last.value)) / 60000 : Infinity;
-        if (mins < 30) {
-          return Response.json({ error: 'Collected recently', retry_after_min: Math.ceil(30 - mins) }, { status: 429, headers: cors() });
+        if (mins < 10) {
+          return Response.json({ error: 'Collected recently', retry_after_min: Math.ceil(10 - mins) }, { status: 429, headers: cors() });
         }
         await withTimeout(env.DB.prepare("INSERT INTO metadata(key,value) VALUES('last_manual',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value").bind(new Date().toISOString()).run(), 5000, 'metadata write');
         const summary = await withTimeout(collect(env, { ip: request.headers.get('CF-Connecting-IP'), ua: request.headers.get('User-Agent') }), 25000, 'collection');

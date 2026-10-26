@@ -298,7 +298,7 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
         </div>
         <div class="stack">
           <section class="panel" id="jobsPanel">
-            <h2>آخرین فرصت‌های شغلی <span style="display:flex;gap:14px"><button id="addJob" title="آگهی‌ای که در Indeed، LinkedIn یا سایت دیگری پیدا کردی را اضافه کن">＋ افزودن آگهی دستی</button><button id="refreshJobs" title="جمع‌آوری آگهی‌های جدید (هر ۳۰ دقیقه یک بار)">به‌روزرسانی آگهی‌ها</button><button id="allJobs">مشاهده همه</button></span></h2>
+            <h2>آخرین فرصت‌های شغلی <span style="display:flex;gap:14px"><button id="addJob" title="آگهی‌ای که در Indeed، LinkedIn یا سایت دیگری پیدا کردی را اضافه کن">＋ افزودن آگهی دستی</button><button id="refreshJobs" title="جمع‌آوری آگهی‌های جدید (هر ۱۰ دقیقه یک بار)">به‌روزرسانی آگهی‌ها</button><button id="allJobs">مشاهده همه</button></span></h2>
             <div class="filters">
               <button id="search">جستجو</button>
               <select id="country" aria-label="کشور"></select>
@@ -377,7 +377,7 @@ button,input,select{font:inherit;color:inherit}button{cursor:pointer}
       <li><b>پاسخ شرکت‌ها:</b> ایمیل را در «اطلاعیه‌ها» ثبت کن و درخواست مربوطه را انتخاب کن. کد <b class="ref">IMATI-…</b> در موضوع ایمیل برای پیدا کردن آن در Gmail کمک می‌کند.</li>
       <li><b>نامه‌ها را بخوان:</b> نامه‌ها خودکار نوشته می‌شوند و ممکن است اشتباه کنند. قبل از ارسال حتماً بخوان و درستش کن.</li>
       <li><b>حریم خصوصی:</b> رزومه و نامه‌ها فقط در پایگاه دادهٔ خصوصی پشت رمز ذخیره می‌شوند. رمز را به کسی نده و بعد از کار روی کامپیوتر مشترک با دکمهٔ خروج بیرون بیا.</li>
-      <li><b>آگهی‌ها به‌روز می‌شوند:</b> خودکار هر ۶ ساعت. دکمهٔ «به‌روزرسانی آگهی‌ها» هر ۳۰ دقیقه یک بار کار می‌کند. آگهی‌های ترکیه (منبع Careerjet) فقط وقتی می‌آیند که خودت این دکمه را بزنی.</li>
+      <li><b>آگهی‌ها به‌روز می‌شوند:</b> خودکار هر ۶ ساعت. دکمهٔ «به‌روزرسانی آگهی‌ها» هر ۱۰ دقیقه یک بار کار می‌کند. آگهی‌های ترکیه (منبع Careerjet) فقط وقتی می‌آیند که خودت این دکمه را بزنی.</li>
       <li><b>اگر باز نشد یا خطا داد:</b> یک بار Ctrl+F5 بزن. اگر ادامه داشت، VPN را روشن کن (اگر در ایران هستی) و به برادرت بگو.</li>
     </ol>
     <h3>مهم بدانی</h3>
@@ -444,7 +444,7 @@ const SAMPLE=[
   {title:'Registered Nurse – Med/Surg',company:'HCA Healthcare',country:'us'},
   {title:'Verpleegkundige (Nurse)',company:'Zorggroep',country:'nl'}
 ];
-let applied=new Set(),apps=[],notices=[],prof={},hasPdf=false,curJob=null,curRef='',curSubj='',apiErr='',all=[],isSample=true,apiOk=false,lastSuccess=null,selCountry='',toastT;
+let counts=null,new24=0,applied=new Set(),apps=[],notices=[],prof={},hasPdf=false,curJob=null,curRef='',curSubj='',apiErr='',all=[],isSample=true,apiOk=false,lastSuccess=null,selCountry='',toastT;
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),5500)}
 function when(iso){const t=iso?new Date(iso).getTime():NaN;if(!isFinite(t))return{b:'فعال',c:'b-ok',l:''};
@@ -456,16 +456,16 @@ function renderStatic(){
   $('heroFlags').innerHTML=ORDER.map(c=>`<div><span>${CN[c]}</span>${flag(c)}</div>`).join('');
   $('country').innerHTML='<option value="">همهٔ کشورها</option>'+ORDER.map(c=>`<option value="${c}">${CN[c]}</option>`).join('');
   $('sched').innerHTML=`<li><time>۶ ساعت</time><span>جمع‌آوری خودکار آگهی‌های جدید (هر ۶ ساعت)</span></li><li><time>—</time><span>فیلتر عنوان‌های پرستاری و کشورهای هدف</span></li><li><time>—</time><span>ذخیره در دیتابیس و نمایش در همین داشبورد</span></li>`}
-function renderLoc(){const cnt={};ORDER.forEach(c=>cnt[c]=0);all.forEach(j=>{if(cnt[j.country]!==undefined)cnt[j.country]++});
+function renderLoc(){const cnt={};ORDER.forEach(c=>cnt[c]=0);all.forEach(j=>{if(cnt[j.country]!==undefined)cnt[j.country]++});if(counts&&!isSample)ORDER.forEach(c=>{cnt[c]=counts[c]||0});
   $('locList').innerHTML=ORDER.map(k=>`<button class="crow ${selCountry===k?'sel':''}" data-c="${k}">${flag(k)}<span>${CN[k]}</span><b>${isSample?'—':fa(cnt[k])}</b><i>›</i></button>`).join('');
-  document.querySelectorAll('.crow').forEach(r=>r.addEventListener('click',()=>{selCountry=selCountry===r.dataset.c?'':r.dataset.c;$('country').value=selCountry;render();$('jobsPanel').scrollIntoView({behavior:'smooth',block:'nearest'})}));return cnt}
+  document.querySelectorAll('.crow').forEach(r=>r.addEventListener('click',()=>{selCountry=selCountry===r.dataset.c?'':r.dataset.c;$('country').value=selCountry;fetchJobs();$('jobsPanel').scrollIntoView({behavior:'smooth',block:'nearest'})}));return cnt}
 function renderPipe(){const live=apiOk&&!isSample;
   const steps=[['جست‌وجوی روزانه (بدون تاریخ پایان)',lastSuccess!==null],['فیلتر عنوان‌های پرستاری و کشورهای هدف',lastSuccess!==null],['ذخیره در دیتابیس',apiOk],['نمایش آگهی‌ها در داشبورد',live]];
   $('pipe').innerHTML=steps.map(([t,ok])=>`<li><svg style="color:${ok?'#2bd6a0':'#4d4a86'}"><use href="#i-check"/></svg><span style="${ok?'':'color:var(--mute)'}">${t}</span></li>`).join('');
   const t=$('pipeTag');t.textContent=live?'فعال':apiOk?'منتظر اولین جمع‌آوری':'نیازمند تنظیم';t.className='tag'+(live?'':' warn')}
 function render(){renderLoc();renderQlinks();const list=filtered();
   const day=all.filter(j=>{const t=new Date(j.collected_at||j.posted_at).getTime();return isFinite(t)&&Date.now()-t<864e5}).length;
-  $('stNew').textContent=isSample?'—':fa(day);
+  $('stNew').textContent=isSample?'—':fa(counts?new24:day);
   $('stNewNote').textContent=isSample?'در انتظار اولین جمع‌آوری':'در ۲۴ ساعت گذشته جمع‌آوری شد';
   $('sampleNote').innerHTML=isSample?(apiErr?'<div class="sample" dir="ltr" style="text-align:left;color:#fda4af;border-color:#8a2c55;background:#4d183366">API error: '+esc(apiErr)+'</div>':'')+'<div class="sample">این چهار کارت فقط <b>نمونهٔ طراحی</b> هستند و آگهی واقعی نیستند. بعد از اولین جمع‌آوری، آگهی‌های واقعی جایگزین می‌شوند.</div>':'';
   if(!list.length){$('jobs').innerHTML='<div class="empty">آگهی‌ای با این فیلتر پیدا نشد.<br>کشور یا عبارت دیگری را امتحان کن.</div>';return}
@@ -483,7 +483,7 @@ async function load(){
   try{let r;
     for(let n=0;n<2;n++){try{r=await fetch('/api/jobs',{cache:'no-store',signal:ac.signal});break}catch(err){if(n===1||err.name==='AbortError')throw err;await new Promise(z=>setTimeout(z,1500))}}
     const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||'HTTP '+r.status);
-    const jobs=Array.isArray(d.jobs)?d.jobs:[];apiOk=true;lastSuccess=d.last_success||null;
+    const jobs=Array.isArray(d.jobs)?d.jobs:[];apiOk=true;lastSuccess=d.last_success||null;counts=d.counts||null;new24=d.new24||0;
     if(jobs.length){all=jobs;isSample=false}else{all=SAMPLE;isSample=true}
     setStatus('● API متصل','ok');
   }catch(e){apiOk=false;lastSuccess=null;all=SAMPLE;isSample=true;setStatus('● نیازمند تنظیم API','warn');apiErr=e.name==='AbortError'?'No response from the server within 25 seconds':String(e.message||e).slice(0,160);$('status').title=apiErr}
@@ -505,18 +505,18 @@ function tick(){const d=new Date();$('clk').textContent=d.toLocaleTimeString('en
   const tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';const off=-d.getTimezoneOffset();const h=Math.trunc(off/60),m=Math.abs(off%60);
   $('clkTz').textContent=tz.split('/').pop().replace(/_/g,' ')+' (GMT'+(off>=0?'+':'-')+Math.abs(h)+(m?':'+String(m).padStart(2,'0'):'')+')'}
 $('refresh').addEventListener('click',load);
-$('search').addEventListener('click',render);
-$('q').addEventListener('keydown',e=>{if(e.key==='Enter')render()});
-$('country').addEventListener('change',()=>{selCountry=$('country').value;render()});
+$('search').addEventListener('click',()=>fetchJobs());
+$('q').addEventListener('keydown',e=>{if(e.key==='Enter')fetchJobs()});
+$('country').addEventListener('change',()=>{selCountry=$('country').value;fetchJobs()});
 $('refreshJobs').addEventListener('click',async()=>{
   const b=$('refreshJobs');b.disabled=true;toast('در حال جمع‌آوری آگهی‌ها… چند ثانیه صبر کن.');
   try{const r=await fetch('/api/refresh',{method:'POST'});const d=await r.json().catch(()=>({}));
     if(r.status===429)toast('به‌تازگی جمع‌آوری شده. '+fa(d.retry_after_min||30)+' دقیقهٔ دیگر دوباره امتحان کن.');
     else if(!r.ok)toast('جمع‌آوری انجام نشد: '+String(d.error||('HTTP '+r.status)).slice(0,120));
-    else{toast(d.adzuna?(fa(d.matched)+' آگهی ذخیره شد.'):'کلید Adzuna هنوز تنظیم نشده؛ فقط منبع عمومی بررسی شد ('+fa(d.matched)+' آگهی).');await load();}
+    else{const er=Array.isArray(d.errors)&&d.errors.length?' | هشدار: '+String(d.errors[0]).slice(0,110)+(d.errors.length>1?' (+'+fa(d.errors.length-1)+')':''):'';toast((d.adzuna?(fa(d.matched)+' آگهی ذخیره شد.'):'کلید Adzuna هنوز تنظیم نشده؛ فقط منبع عمومی بررسی شد ('+fa(d.matched)+' آگهی).')+er);await load();}
   }catch(e){toast('اتصال برقرار نشد.')}
   b.disabled=false});
-$('allJobs').addEventListener('click',()=>{$('q').value='';$('country').value='';selCountry='';render()});
+$('allJobs').addEventListener('click',()=>{$('q').value='';$('country').value='';selCountry='';fetchJobs()});
 $('osWin').addEventListener('click',()=>toast('برای ساخت میانبر: در Edge، منوی ⋯ ← Apps ← Install this site as an app'));
 $('osMac').addEventListener('click',()=>toast('در مک (Safari): Share ← Add to Dock'));
 
@@ -645,6 +645,13 @@ $('lmSent').addEventListener('click',async()=>{
   try{await jsend('/api/applications',{job_id:curJob.id,letter:$('lmLetter').value});toast('درخواست ثبت شد. در «درخواست‌های ارسال‌شده» می‌بینیش.');closeLetter();await loadApps()}
   catch(x){toast(x.status===409?'برای این آگهی قبلاً درخواست ثبت شده.':'ثبت نشد: '+x.message)}b.disabled=false});
 
+async function fetchJobs(){
+  if(!apiOk||isSample&&!counts){render();return}
+  const c=$('country').value||selCountry,q=$('q').value.trim(),qs=new URLSearchParams();if(c)qs.set('country',c);if(q)qs.set('q',q);
+  try{const r=await fetch('/api/jobs?'+qs.toString(),{cache:'no-store'});const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||('HTTP '+r.status));
+    all=Array.isArray(d.jobs)?d.jobs:[];counts=d.counts||counts;new24=d.new24||new24;isSample=false}
+  catch(e){toast('جست‌وجو انجام نشد: '+String(e.message||e).slice(0,100))}
+  render()}
 /* manual listings + search links for other sites */
 $('addJob').addEventListener('click',()=>{['amTitle','amCompany','amLoc','amUrl','amDesc'].forEach(k=>$(k).value='');$('amCountry').value=$('country').value||'';$('am').hidden=false;$('amTitle').focus()});
 $('amClose').addEventListener('click',()=>{$('am').hidden=true});
